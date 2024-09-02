@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,6 +35,10 @@ public class UserEntity implements UserDetails {
 
     @Column
     private String description;
+
+    @ElementCollection
+    @CollectionTable(name = "user_references", joinColumns = @JoinColumn(name = "user_id"))
+    private List<Reference> references;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -124,13 +130,21 @@ public class UserEntity implements UserDetails {
     public void setLocation(String location) {
         this.location = location;
     }
-    
+
     public String getDescription() {
         return this.description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Reference> getReferences() {
+        return this.references;
+    }
+
+    public void setReferences(List<Reference> references) {
+        this.references = references;
     }
 
     public void setUsername(String username) {

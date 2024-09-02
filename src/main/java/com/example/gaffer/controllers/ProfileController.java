@@ -7,22 +7,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.gaffer.models.ReferenceRequestDTO;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.UserEntityRepository;
+import com.example.gaffer.services.UserService;
 
 @Controller
 public class ProfileController {
 
     UserEntityRepository repository;
+    UserService userService;
 
-    public ProfileController(UserEntityRepository repository){
+    public ProfileController(UserEntityRepository repository, UserService userService){
         this.repository=repository;
+        this.userService=userService;
     }
 
     @GetMapping("/profile")
     public String profile(Model model, Authentication authentication) {
         UserEntity entity = (UserEntity) authentication.getPrincipal();
-        model.addAttribute("user", entity);
+        ReferenceRequestDTO profile = userService.getUserProfile(entity.getId());
+        model.addAttribute("user", profile);
         return "profile";
     }
 

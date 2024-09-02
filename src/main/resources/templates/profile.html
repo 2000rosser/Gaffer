@@ -52,8 +52,37 @@
                 border-radius: 3px;
                 font-size: 14px;
             }
+            .reference-button {
+                position: absolute;
+                top: 250px;
+                right: 10px;
+                padding: 5px 10px;
+                background-color: #007bff;
+                color: white;
+                text-decoration: none;
+                border-radius: 3px;
+                font-size: 14px;
+            }
             .edit-button:hover {
                 background-color: #0056b3;
+            }
+            .references-container {
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid #dee2e6;
+            }
+            .reference {
+                margin-bottom: 20px;
+                padding: 10px;
+                border: 1px solid #ced4da;
+                border-radius: 3px;
+                background-color: #e9ecef;
+            }
+            .reference h4 {
+                margin: 0 0 10px;
+            }
+            .reference p {
+                margin: 5px 0;
             }
         </style>
     </head>
@@ -75,10 +104,22 @@
         <div class="profile-container">
             <a th:href="@{/edit-profile}" class="edit-button">Edit Profile</a>
             <h2>User Profile</h2>
-            <p><label>Name:</label> <span th:text="${user.name}">John Doe</span></p>
-            <p><label>Email:</label> <span th:text="${user.username}">johndoe@example.com</span></p>
-            <p><label>Location:</label> <span th:text="${user.location}">New York, USA</span></p>
-            <p><label>Description:</label> <span th:text="${user.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></p>
+            <p><label>Name:</label> <span th:text="${user.name}"></span></p>
+            <p><label>Email:</label> <span th:text="${user.username}"></span></p>
+            <p><label>Location:</label> <span th:text="${user.location}"></span></p>
+            <p><label>Description:</label> <span th:text="${user.description}"></span></p>
+
+            <div class="references-container">
+                <h3>References</h3>
+                <a th:href="@{/add-reference}" class="reference-button">Add Reference</a>
+                <div th:each="reference : ${user.references}" class="reference">
+                    <h4 th:text="'Type: ' + ${reference.type}"></h4>
+                    <p><label>Provider Name:</label> <span th:text="${reference.provideName}"></span></p>
+                    <p th:if="${reference.providerEmail}"><label>Provider Email:</label> <span th:text="${reference.providerEmail}"></span></p>
+                    <p th:if="${reference.providerPhoneNumber}"><label>Provider Phone Number:</label> <span th:text="${reference.providerPhoneNumber}"></span></p>
+                    <p><label>Description:</label> <span th:text="${reference.description}"></span></p>
+                </div>
+            </div>
         </div>
 
     </body>

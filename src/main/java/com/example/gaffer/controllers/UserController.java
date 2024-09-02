@@ -40,7 +40,7 @@ public class UserController {
     @Transactional
     public String register(@ModelAttribute RegisterRequestDTO request) {
         UserEntity entity = new UserEntity();
-        entity.setUsername(request.getEmail());
+        entity.setUsername(request.getUsername());
         entity.setPassword(passwordEncoder.encode(request.getPassword()));
         entity.setEnabled(false);
         entity.setAccountNonExpired(false);
