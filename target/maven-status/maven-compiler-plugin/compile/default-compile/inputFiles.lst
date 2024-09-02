@@ -1,0 +1,9 @@
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\config\MvcConfig.java
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\config\SecurityConfig.java
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\models\RegisterRequestDTO.java
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\services\SecurityUserDetailsService.java
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\models\UserEntity.java
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\Gaffer.java
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\services\UserMailService.java
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\controllers\UserController.java
+E:\Repos\Gaffer\src\main\java\com\example\gaffer\repositories\UserEntityRepository.java
