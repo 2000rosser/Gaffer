@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>User Profile</title>
+        <style>
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                background-color: #f8f9fa;
+                border-bottom: 1px solid #dee2e6;
+            }
+            .navbar a {
+                text-decoration: none;
+                color: #007bff;
+                margin: 0 15px;
+                font-size: 16px;
+            }
+            .navbar a:hover {
+                text-decoration: underline;
+            }
+            .navbar .left,
+            .navbar .right {
+                display: flex;
+            }
+            .profile-container {
+                position: relative;
+                margin: 20px;
+                padding: 20px;
+                border: 1px solid #dee2e6;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+            .profile-container h2 {
+                margin-bottom: 15px;
+            }
+            .profile-container p {
+                margin: 10px 0;
+            }
+            .profile-container label {
+                font-weight: bold;
+            }
+            .edit-button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                padding: 5px 10px;
+                background-color: #007bff;
+                color: white;
+                text-decoration: none;
+                border-radius: 3px;
+                font-size: 14px;
+            }
+            .edit-button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="navbar">
+            <div class="left">
+                <a th:href="@{/}">Home</a>
+            </div>
+            <div class="right" sec:authorize="isAuthenticated()">
+                <a th:href="@{/profile}">Profile</a>
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+            <div class="right" sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}">Login</a>
+            </div>
+        </div>
+
+        <div class="profile-container">
+            <a th:href="@{/edit-profile}" class="edit-button">Edit Profile</a>
+            <h2>User Profile</h2>
+            <p><label>Name:</label> <span th:text="${user.name}">John Doe</span></p>
+            <p><label>Email:</label> <span th:text="${user.username}">johndoe@example.com</span></p>
+            <p><label>Location:</label> <span th:text="${user.location}">New York, USA</span></p>
+            <p><label>Description:</label> <span th:text="${user.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></p>
+        </div>
+
+    </body>
+</html>
