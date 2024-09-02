@@ -1,12 +1,17 @@
 package com.example.gaffer.models;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,12 +46,22 @@ public class UserEntity implements UserDetails {
     @Column(name = "verification_code")
     private String verificationCode;
 
-    @Column
-    private String authorities;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;  // Simplify for now, replace with actual implementation if needed
+        return roles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
 
     public boolean getEnabled() {
@@ -77,7 +92,6 @@ public class UserEntity implements UserDetails {
         this.verificationCode = verificationCode;
     }
     
-    // Getters and setters for the fields
     public Long getId() {
         return id;
     }

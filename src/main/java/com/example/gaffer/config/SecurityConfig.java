@@ -2,41 +2,50 @@ package com.example.gaffer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.example.gaffer.repositories.UserEntityRepository;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // @Bean
-    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    //     http
-    //         .authorizeHttpRequests((requests) -> requests
-    //             .requestMatchers("/", "/home", "/login", "/register", "/h2-console/**").permitAll()  // Ensure H2 console is accessible
-    //             .requestMatchers(HttpMethod.POST, "/api/user").anonymous()
-    //             .requestMatchers(HttpMethod.POST, "/api/user/verify").anonymous()
-    //             .anyRequest().authenticated()
-    //         )
-    //         .formLogin((form) -> form
-    //             .loginPage("/login")
-    //             .permitAll()
-    //         )
-    //         .logout((logout) -> logout.permitAll())
-    //         .csrf(csrf -> csrf
-    //             .ignoringRequestMatchers("/h2-console/**")  // Disable CSRF protection for H2 console
-    //         )
-    //         .headers(headers -> headers
-    //             .frameOptions(frameOptions -> frameOptions.sameOrigin())  // Allow H2 console frames
-    //         );
+    UserEntityRepository repository;
 
-    //     return http.build();
-    // }
+    public SecurityConfig(UserEntityRepository repository){
+        this.repository=repository;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .authorizeHttpRequests((requests) -> requests
+                .requestMatchers("/", "/home", "/register", "/api/user", "/h2-console").permitAll()
+                .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                .requestMatchers("/admin/**", "/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .headers(headers -> headers.frameOptions().disable())
+            .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
+            .formLogin((form) -> form
+                .loginPage("/login")
+                .defaultSuccessUrl("/home", false)
+                .permitAll()
+            )
+            .logout((logout) -> logout.permitAll())
+            .userDetailsService(userDetailsService(repository)); 
+
+        return http.build();
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -44,15 +53,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder.encode("password"))
-                .roles("USER")
-                .build();
-        
-        return new InMemoryUserDetailsManager(user);
+    public UserDetailsService userDetailsService(UserEntityRepository repository) {
+        return username -> repository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
+
 }
 
 

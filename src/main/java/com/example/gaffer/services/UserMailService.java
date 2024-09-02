@@ -43,7 +43,6 @@ public class UserMailService {
         try {
             mailSender.send(createMessage(entity, content));
         } catch (MessagingException ex) {
-            // throw new Exception("Could not send e-mail to verify user with e-mail '" + entity.getUsername() + "'", ex);
             System.out.println("failed to send message" + ex.toString());
         }
     }
