@@ -1,51 +1,99 @@
-# Gaffer
+# **Gaffer**
 
-## Local setup
+Welcome to Gaffer! This guide will help you set up the project locally on your machine.
 
-### Windows
+---
 
-1. Download git
-> [Git](https://git-scm.com/download/win) Follow instructions here
+## **Local Setup**
 
-1. Download Java 21
-> [Java 21](https://www.oracle.com/ie/java/technologies/downloads/#jdk21-windows) Select the x64 installer
+### **Windows**
 
-1. Install maven
-> [Maven 3.9.9](https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.zip) Move the zip file out of downloads (Documents or something)
-> Extract it
-> Navigate inside the `bin` directory
-> Click the url at the top of windows explorer to get the full path (it should end in /bin)
-> Press the windows key and search for environment variables.
-> Select the path option for either System or User variables.
-> Add a new option and paste the url to the /bin folder
-> Open terminal and type mvn -v
-Output should be like:
-```
-Maven home: /opt/homebrew/Cellar/maven/3.9.9/libexec
-Java version: 22.0.2, vendor: Homebrew, runtime: /opt/homebrew/Cellar/openjdk/22.0.2/libexec/openjdk.jdk/Contents/Home
-Default locale: en_IE, platform encoding: UTF-8
-OS name: "mac os x", version: "14.4.1", arch: "aarch64", family: "mac"
-```
-As long as you have a Java version above 21 your good to go
+1. **Download Git**
+   - [Download Git](https://git-scm.com/download/win) and follow the instructions to install.
 
-### Mac
-1. Install homebrew - Open terminal and paste the command below in then press enter\
-`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-1. Install Git - to do this paste the command below then press enter\
-`brew install git`
-1. Install Java 21 - to do this paste the command below then press enter\
-`brew install openjdk@21`
-1. Install maven - to do this paste the command below then press enter\
-`brew install maven`
+2. **Download Java 21**
+   - [Download Java 21](https://www.oracle.com/ie/java/technologies/downloads/#jdk21-windows) and select the x64 installer.
 
-### Running the App
-1. Clone the repo into your documents folder. You will probably need to create an API key since repo is private [Steps here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). Use your normal username when authenticating and then use the API key when prompted for password.\
-`cd ~/Documents` then\
-`git clone https://github.com/2000rosser/Gaffer.git`
-1. Navigate inside project directory\
-`cd ~/Documents/Gaffer`
-1. Deploy the project\
-`mvn spring-boot:run`
-1. Navigate to `http://localhost:8080` in your web browser
-1. You can use email address `a@a.com` with password `a` to login.
-1. Email verification wont work unless you have `mailhog` setup
+3. **Install Maven**
+   - [Download Maven 3.9.9](https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.zip).
+   - Move the zip file to a desired location (e.g., Documents).
+   - Extract the contents.
+   - Navigate to the `bin` directory.
+   - Copy the path to the `bin` folder from the Windows Explorer address bar.
+   - Press the Windows key, search for "Environment Variables", and select the `Path` option under System or User variables.
+   - Add a new entry and paste the path to the `bin` folder.
+   - Open the terminal and type `mvn -v` to verify the installation. The output should look something like this:
+
+     ```
+     Maven home: /opt/homebrew/Cellar/maven/3.9.9/libexec
+     Java version: 22.0.2, vendor: Homebrew, runtime: /opt/homebrew/Cellar/openjdk/22.0.2/libexec/openjdk.jdk/Contents/Home
+     Default locale: en_IE, platform encoding: UTF-8
+     OS name: "mac os x", version: "14.4.1", arch: "aarch64", family: "mac"
+     ```
+   - As long as you have a Java version above 21, you're good to go!
+
+---
+
+### **Mac**
+
+1. **Install Homebrew**
+   - Open the terminal and run the following command:
+     ```bash
+     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     ```
+
+2. **Install Git**
+   - Run the command:
+     ```bash
+     brew install git
+     ```
+
+3. **Install Java 21**
+   - Run the command:
+     ```bash
+     brew install openjdk@21
+     ```
+
+4. **Install Maven**
+   - Run the command:
+     ```bash
+     brew install maven
+     ```
+
+---
+
+### **Running the App**
+
+1. **Clone the Repository**
+   - You may need to create an API key since the repo is private. Follow the [steps here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). Use your GitHub username when authenticating, and use the API key as the password.
+   - Navigate to your Documents folder:
+     ```bash
+     cd ~/Documents
+     ```
+   - Clone the repo:
+     ```bash
+     git clone https://github.com/2000rosser/Gaffer.git
+     ```
+
+2. **Navigate Inside the Project Directory**
+   - Move into the project directory:
+     ```bash
+     cd ~/Documents/Gaffer
+     ```
+
+3. **Deploy the Project**
+   - Run the project:
+     ```bash
+     mvn spring-boot:run
+     ```
+
+4. **Access the App**
+   - Open your web browser and go to: `http://localhost:8080`
+
+5. **Login**
+   - Use the email `a@a.com` with the password `a` to log in.
+
+6. **Email Verification**
+   - Note that email verification won't work unless you have `mailhog` set up.
+
+---
