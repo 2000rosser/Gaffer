@@ -39,7 +39,7 @@ As long as you have a Java version above 21 your good to go
 `brew install maven`
 
 ### Running the App
-1. Clone the repo into your documents folder (you will probably need to create an API key since repo is private [Steps here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token))\
+1. Clone the repo into your documents folder. You will probably need to create an API key since repo is private [Steps here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). Use your normal username when authenticating and then use the API key when prompted for password.\
 `cd ~/Documents` then\
 `git clone https://github.com/2000rosser/Gaffer.git`
 1. Navigate inside project directory\
