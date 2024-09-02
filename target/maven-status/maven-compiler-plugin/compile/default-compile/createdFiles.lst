@@ -1,9 +1,0 @@
-com\example\gaffer\Gaffer.class
-com\example\gaffer\services\SecurityUserDetailsService.class
-com\example\gaffer\models\UserEntity.class
-com\example\gaffer\models\RegisterRequestDTO.class
-com\example\gaffer\repositories\UserEntityRepository.class
-com\example\gaffer\config\SecurityConfig.class
-com\example\gaffer\services\UserMailService.class
-com\example\gaffer\controllers\UserController.class
-com\example\gaffer\config\MvcConfig.class
