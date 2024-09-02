@@ -8,4 +8,6 @@ import com.example.gaffer.models.UserEntity;
 
 public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUsername(String username);
+
+    Optional<UserEntity> findByVerificationCode(String code);
 }

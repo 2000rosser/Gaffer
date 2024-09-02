@@ -27,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/home", "/register", "/api/user", "/h2-console").permitAll()
+                .requestMatchers("/", "/home", "/register", "/api/user", "/api/user/verify", "/api/user/login", "/h2-console").permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                 .requestMatchers("/admin/**", "/**").hasRole("ADMIN")
                 .anyRequest().authenticated()

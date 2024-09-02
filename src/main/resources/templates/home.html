@@ -1,13 +1,51 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-    <head>
-        <title>Spring Security Example</title>
-    </head>
-    <body>
-        <h1>Welcome!</h1>
+<head>
+    <title>Spring Security Example</title>
+    <style>
+        /* Basic styling for the navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 15px;
+            font-size: 16px;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .navbar .left,
+        .navbar .right {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
 
-        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
-        <p>Click <a th:href="@{/api/user/login}">here</a> to login.</p>
-        
-    </body>
+    <div class="navbar">
+        <div class="left">
+            <a th:href="@{/}">Home</a>
+        </div>
+        <div class="right" sec:authorize="isAuthenticated()">
+            <a th:href="@{/profile}">Profile</a>
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+        <div class="right" sec:authorize="!isAuthenticated()">
+            <a th:href="@{/profile}">Profile</a>
+            <a th:href="@{/login}">Login</a>
+        </div>
+    </div>
+
+    <h1>Welcome!</h1>
+
+    <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+
+</body>
 </html>

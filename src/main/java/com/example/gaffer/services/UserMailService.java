@@ -23,7 +23,7 @@ public class UserMailService {
 
     private String getVerificationMailContent(UserEntity entity) {
         Context context = new Context();
-        String verificationUrl = String.format("http://localhost:8080/verify?code=%s", entity.getVerificationCode());
+        String verificationUrl = String.format("http://localhost:8080/api/user/verify?code=%s", entity.getVerificationCode());
         context.setVariable("applicationUrl", verificationUrl);
         return templateEngine.process("user-verify", context);
     }
