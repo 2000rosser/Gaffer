@@ -18,6 +18,7 @@ public class UserService {
 
     public ReferenceRequestDTO getUserProfile(Long userId) {
         UserEntity user = repository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return new ReferenceRequestDTO(user.getName(), user.getUsername(), user.getLocation(), user.getDescription(), user.getReferences());
+        return new ReferenceRequestDTO(user.getName(), user.getUsername(), user.getLocation(), user.getDescription(), 
+                                    user.getReferences(), user.getOccupation(), user.getPlaceOfWork());
     }
 }

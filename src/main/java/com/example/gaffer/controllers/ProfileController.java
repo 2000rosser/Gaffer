@@ -45,6 +45,8 @@ public class ProfileController {
         entity.setUsername(updatedUser.getUsername());
         entity.setLocation(updatedUser.getLocation());
         entity.setDescription(updatedUser.getDescription());
+        entity.setOccupation(updatedUser.getOccupation());
+        entity.setPlaceOfWork(updatedUser.getPlaceOfWork());
 
         repository.save(entity);
 

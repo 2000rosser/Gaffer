@@ -9,15 +9,19 @@ public class ReferenceRequestDTO {
     private String location;
     private String description;
     private List<Reference> references;
+    private String occupation;
+    private String placeOfWork;
 
     public ReferenceRequestDTO() {}
 
-    public ReferenceRequestDTO(String name, String username, String location, String description, List<Reference> references) {
+    public ReferenceRequestDTO(String name, String username, String location, String description, List<Reference> references, String occupation, String placeofWork) {
         this.name = name;
         this.username = username;
         this.location = location;
         this.description = description;
         this.references = references;
+        this.occupation = occupation;
+        this.placeOfWork = placeofWork;
     }
 
     public String getusername() {
@@ -66,5 +70,21 @@ public class ReferenceRequestDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getOccupation() {
+        return this.occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public String getPlaceOfWork() {
+        return this.placeOfWork;
+    }
+
+    public void setPlaceOfWork(String placeOfWork) {
+        this.placeOfWork = placeOfWork;
     }
 }

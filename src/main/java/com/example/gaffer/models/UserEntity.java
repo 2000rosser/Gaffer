@@ -40,6 +40,12 @@ public class UserEntity implements UserDetails {
     @CollectionTable(name = "user_references", joinColumns = @JoinColumn(name = "user_id"))
     private List<Reference> references;
 
+    @Column
+    private String occupation;
+
+    @Column
+    private String placeOfWork;
+
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -145,6 +151,22 @@ public class UserEntity implements UserDetails {
 
     public void setReferences(List<Reference> references) {
         this.references = references;
+    }
+
+    public String getOccupation() {
+        return this.occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public String getPlaceOfWork() {
+        return this.placeOfWork;
+    }
+
+    public void setPlaceOfWork(String placeOfWork) {
+        this.placeOfWork = placeOfWork;
     }
 
     public void setUsername(String username) {

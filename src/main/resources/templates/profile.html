@@ -94,7 +94,9 @@
             </div>
             <div class="right" sec:authorize="isAuthenticated()">
                 <a th:href="@{/profile}">Profile</a>
-                <a th:href="@{/logout}">Logout</a>
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit" style="background:none;border:none;padding:0;margin:0;color:inherit;text-decoration:underline;cursor:pointer;">Logout</button>
+                </form>
             </div>
             <div class="right" sec:authorize="!isAuthenticated()">
                 <a th:href="@{/login}">Login</a>
@@ -107,6 +109,8 @@
             <p><label>Name:</label> <span th:text="${user.name}"></span></p>
             <p><label>Email:</label> <span th:text="${user.username}"></span></p>
             <p><label>Location:</label> <span th:text="${user.location}"></span></p>
+            <p><label>Occupation:</label> <span th:text="${user.occupation}"></span></p>
+            <p><label>Place of Work:</label> <span th:text="${user.placeOfWork}"></span></p>
             <p><label>Description:</label> <span th:text="${user.description}"></span></p>
 
             <div class="references-container">
