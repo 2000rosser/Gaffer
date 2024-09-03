@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.gaffer.config.EmailComponent;
 import com.example.gaffer.models.RegisterRequestDTO;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.UserEntityRepository;
@@ -25,6 +26,8 @@ import jakarta.transaction.Transactional;
 @RequestMapping("/api/user")
 public class UserController {
 
+    @Autowired
+    private EmailComponent emailComponent;
     private final UserEntityRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final UserMailService userMailService;
@@ -47,8 +50,18 @@ public class UserController {
         entity.setAccountNonLocked(false);
         entity.setCredentialsNonExpired(false);
         entity.setVerificationCode(RandomStringUtils.randomAlphanumeric(32));
-        repository.save(entity);
-        userMailService.sendVerificationMail(entity);
+        if(emailComponent.getEnabled().equals("false")){
+            entity.setEnabled(true);
+            entity.setAccountNonExpired(true);
+            entity.setAccountNonLocked(true);
+            entity.setCredentialsNonExpired(true);
+            entity.setRoles(new ArrayList<>(List.of("ROLE_ADMIN")));
+            entity.setVerificationCode(null);
+            repository.save(entity);
+        } else {
+            repository.save(entity);
+            userMailService.sendVerificationMail(entity);
+        }
         return "redirect:/login?registered";
     }
 

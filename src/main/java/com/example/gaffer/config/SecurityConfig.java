@@ -37,7 +37,7 @@ public class SecurityConfig {
             //             .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
             .formLogin((form) -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/home", false)
+                .defaultSuccessUrl("/home", true)
                 .permitAll()
             )
             .logout((logout) -> logout.permitAll().logoutSuccessUrl("/home"))

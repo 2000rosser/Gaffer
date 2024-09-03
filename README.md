@@ -91,9 +91,9 @@ Welcome to Gaffer! This guide will help you set up the project locally on your m
    - Open your web browser and go to: `http://localhost:8080`
 
 5. **Login**
-   - Use the email `a@a.com` with the password `a` to log in.
+   - Use the email `a@a.com` with the password `a` to log in, or create a new user.
 
 6. **Email Verification**
-   - Note that email verification won't work unless you have `mailhog` set up.
+   - Email verification is disabled by default. To test it, use `mailhog` and set `email.verification` to true in `application.properties`
 
 ---
