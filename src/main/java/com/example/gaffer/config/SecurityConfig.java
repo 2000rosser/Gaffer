@@ -33,8 +33,8 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .headers(headers -> headers.frameOptions().disable())
-            // .csrf(csrf -> csrf
-            //             .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
+            .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
             .formLogin((form) -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/home", true)
