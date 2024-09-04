@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.gaffer.models.Reference;
 import com.example.gaffer.models.UserEntity;
-import com.example.gaffer.repositories.UserEntityRepository;
+import com.example.gaffer.services.UserService;
 
 import java.util.Optional;
 
@@ -17,10 +17,10 @@ import org.springframework.security.core.Authentication;
 @Controller
 public class ReferenceController {
 
-    UserEntityRepository repository;
+    private final UserService userService;
 
-    public ReferenceController(UserEntityRepository repository){
-        this.repository=repository;
+    public ReferenceController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/add-reference")
@@ -32,13 +32,12 @@ public class ReferenceController {
     @PostMapping("/add-reference")
     public String addReference(@ModelAttribute Reference reference, Authentication authentication) {
         UserEntity dtoObject = (UserEntity) authentication.getPrincipal();
-        Optional<UserEntity> optionalEntity = repository.findByUsername(dtoObject.getUsername());
-        if(!optionalEntity.isPresent()){
+        Optional<UserEntity> optionalEntity = userService.findUserByUsername(dtoObject.getUsername());
+        if (!optionalEntity.isPresent()) {
             return "error";
         }
         UserEntity entity = optionalEntity.get();
-        entity.getReferences().add(reference);
-        repository.save(entity);
+        userService.addReferenceToUser(entity, reference);
         return "redirect:/profile";
     }
 }

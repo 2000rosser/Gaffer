@@ -25,7 +25,7 @@ import jakarta.transaction.Transactional;
 @Controller
 @RequestMapping("/api/user")
 public class UserController {
-
+    // TODO: Move business logic and interactions to UserService and keep controller for REST logic
     @Autowired
     private EmailComponent emailComponent;
     private final UserEntityRepository repository;

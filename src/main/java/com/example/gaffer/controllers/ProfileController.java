@@ -9,17 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.gaffer.models.ReferenceRequestDTO;
 import com.example.gaffer.models.UserEntity;
-import com.example.gaffer.repositories.UserEntityRepository;
 import com.example.gaffer.services.UserService;
 
 @Controller
 public class ProfileController {
 
-    UserEntityRepository repository;
     UserService userService;
 
-    public ProfileController(UserEntityRepository repository, UserService userService){
-        this.repository=repository;
+    public ProfileController(UserService userService){
         this.userService=userService;
     }
 
@@ -41,15 +38,7 @@ public class ProfileController {
     @PostMapping("/edit-profile")
     public String updateProfile(@ModelAttribute("user") UserEntity updatedUser, Authentication authentication) {
         UserEntity entity = (UserEntity) authentication.getPrincipal();
-        entity.setName(updatedUser.getName());
-        entity.setUsername(updatedUser.getUsername());
-        entity.setLocation(updatedUser.getLocation());
-        entity.setDescription(updatedUser.getDescription());
-        entity.setOccupation(updatedUser.getOccupation());
-        entity.setPlaceOfWork(updatedUser.getPlaceOfWork());
-
-        repository.save(entity);
-
+        userService.updateUserProfile(entity, updatedUser);
         return "redirect:/profile";
     }
 }

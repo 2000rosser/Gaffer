@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.gaffer.repositories.LocationRepository;
-import com.example.gaffer.services.AutoApplyService;
+import com.example.gaffer.services.AutoRentService;
 
 
 
@@ -19,10 +18,7 @@ import com.example.gaffer.services.AutoApplyService;
 public class AutoApplyController {
     
     @Autowired
-    AutoApplyService autoService;
-
-    @Autowired
-    LocationRepository repository;
+    AutoRentService autoService;
 
     @GetMapping("auto-rent")
     public String getAutoRent(){
@@ -32,10 +28,8 @@ public class AutoApplyController {
     @GetMapping("/autocomplete-auto")
     @ResponseBody
     public List<String> getLocations(@RequestParam("term") String term) {
-        System.out.println("Retrieving locations");
         Pageable limit = PageRequest.of(0, 5);
-        List<String> result = repository.findByNameContaining(term.toLowerCase(), limit);
-        System.out.println(result.size());
+        List<String> result = autoService.getBigName(term.toLowerCase(), limit);
         return result;
     }
 }
