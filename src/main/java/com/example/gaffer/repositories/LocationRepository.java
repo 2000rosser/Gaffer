@@ -11,7 +11,7 @@ import com.example.gaffer.models.LocationEntity;
 
 public interface LocationRepository extends JpaRepository<LocationEntity, String> {
 
-    @Query("SELECT l.name FROM LocationEntity l WHERE l.name LIKE %:term%")
+    @Query("SELECT l.name FROM LocationEntity l WHERE LOWER(l.name) LIKE %:term%")
     List<String> findByNameContaining(@Param("term") String term, Pageable pageable);
 
     @Query("SELECT l.bigName FROM LocationEntity l WHERE l.bigName LIKE %:term%")

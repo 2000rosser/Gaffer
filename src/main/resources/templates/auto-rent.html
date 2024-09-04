@@ -89,7 +89,7 @@
         <h1>Select your search filters</h1>
 
         <div class="add-auto-container">
-            <form th:action="@{/add-auto}" th:object="${reference}" method="post">
+            <form th:action="@{/add-auto}" th:object="${autorent}" method="post">
                 Location: <input type="text" id="locations" name="locations" >
 
                 <label for="minPrice">Select Min Price:</label>
@@ -101,6 +101,14 @@
                     <select id="minBeds" name="minBeds"></select>
                 <label for="maxBeds">Select Max Beds:</label>
                     <select id="maxBeds" name="maxBeds"></select>
+                    
+                <label for="type">Type:</label>
+                <select id="type">
+                    <option value="ANY">Any Property</option>
+                    <option value="HOUSE">House</option>
+                    <option value="APARTMENT">Apartment</option>
+                    <option value="STUDIO_APARTMENT">Studio Apartment</option>
+                </select>
 
                 <button type="submit">Create Auto Apply Service</button>
             </form>
@@ -127,7 +135,7 @@
         function generatePrices() {
             var res = [];
             var incrementer=100;
-            for (var i = 200; i < 20000; i+=incrementer){
+            for (var i = 200; i < 20001; i+=incrementer){
                 res.push(i);
                 if(i==2500){
                     incrementer=500;
@@ -152,8 +160,8 @@
             var $selectMinBeds = $("#minBeds");
             var $selectMaxBeds = $("#maxBeds");
             prices.forEach(function(price) {
-                $selectMinPrice.append($('<option></option>').val(price).text(price));
-                $selectMaxPrice.append($('<option></option>').val(price).text(price));
+                $selectMinPrice.append($('<option></option>').val(price).text('€' + price));
+                $selectMaxPrice.append($('<option></option>').val(price).text('€' + price));
             });
             beds.forEach(function(bed) {
                 $selectMinBeds.append($('<option></option>').val(bed).text(bed));

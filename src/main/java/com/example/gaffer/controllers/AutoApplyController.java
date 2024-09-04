@@ -34,7 +34,7 @@ public class AutoApplyController {
     public List<String> getLocations(@RequestParam("term") String term) {
         System.out.println("Retrieving locations");
         Pageable limit = PageRequest.of(0, 5);
-        List<String> result = repository.findByNameContaining(term, limit);
+        List<String> result = repository.findByNameContaining(term.toLowerCase(), limit);
         System.out.println(result.size());
         return result;
     }
