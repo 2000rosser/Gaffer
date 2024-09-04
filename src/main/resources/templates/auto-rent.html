@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
     <head>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <title>Spring Security Example</title>
         <style>
             .navbar {
@@ -24,6 +27,45 @@
             .navbar .right {
                 display: flex;
             }
+            .add-auto-container {
+                margin: 20px;
+                padding: 20px;
+                border: 1px solid #dee2e6;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+            .add-auto-container h2 {
+                margin-bottom: 15px;
+            }
+            .add-auto-container form {
+                display: flex;
+                flex-direction: column;
+            }
+            .add-auto-container label {
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            .add-auto-container input,
+            .add-auto-container textarea,
+            .add-auto-container select {
+                margin-bottom: 15px;
+                padding: 8px;
+                border: 1px solid #ced4da;
+                border-radius: 3px;
+                font-size: 16px;
+            }
+            .add-auto-container button {
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            .add-auto-container button:hover {
+                background-color: #0056b3;
+            }
         </style>
     </head>
     <body>
@@ -44,9 +86,33 @@
             </div>
         </div>
 
-        <h1>Select your search filters below</h1>
+        <h1>Select your search filters</h1>
 
-        <a th:href="@{/auto-rent}">Automatic rental applications</a>
+        <div class="add-auto-container">
+            <form th:action="@{/add-auto}" th:object="${reference}" method="post">
+                Location: <input type="text" id="locations" name="locations" >
 
+                <button type="submit">Create Auto Apply Service</button>
+            </form>
+        </div>
     </body>
+    <script>
+        $(function() {
+            $("#locations").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "/autocomplete-auto",
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function(data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 3
+            });
+        });
+    </script>
 </html>

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.gaffer.models.Reference;
-import com.example.gaffer.models.ReferenceRequestDTO;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.UserEntityRepository;
 

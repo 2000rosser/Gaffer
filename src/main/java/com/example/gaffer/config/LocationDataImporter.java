@@ -30,47 +30,18 @@ public class LocationDataImporter implements CommandLineRunner {
             lines = reader.lines().collect(Collectors.toList());
         }
 
-        List<String> currentEntry = new ArrayList<>();
         for (String line : lines) {
-            line = line.trim();
-
-            if (line.isEmpty()) {
-                continue;
-            }
-
-            if (line.endsWith("),")) {
-                currentEntry.add(line);
-                processEntry(currentEntry);
-                currentEntry.clear();
-            } else {
-                currentEntry.add(line);
-            }
+            String[] splitLines = line.split(",");
+            LocationEntity location = new LocationEntity();
+            location.setBigName(splitLines[0].replace(",", ""));
+            location.setCode(splitLines[1].replace(",", ""));
+            location.setName(splitLines[2].replace(",", ""));
+            location.setSlug(splitLines[3].replace(",", ""));
+            locationEntityRepository.save(location);
         }
 
         System.out.println("Locations have been imported successfully.");
     }
 
-    private void processEntry(List<String> entryLines) {
-        if (entryLines.size() < 4) {
-            System.err.println("Invalid entry found, skipping: " + entryLines);
-            return;
-        }
-
-        try {
-            String code = entryLines.get(1).replace("\"", "").trim();
-            String name = entryLines.get(2).replace("\"", "").trim();
-            String slug = entryLines.get(3).replace("\"", "").replace("),", "").trim();
-
-            LocationEntity location = new LocationEntity();
-            location.setCode(code.replaceAll(",", ""));
-            location.setName(name);
-            location.setSlug(slug);
-
-            locationEntityRepository.save(location);
-
-        } catch (Exception e) {
-            System.err.println("Failed to process entry: " + entryLines + ", due to: " + e.getMessage());
-        }
-    }
 }
 

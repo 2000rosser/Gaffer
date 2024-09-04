@@ -9,6 +9,8 @@ public class LocationEntity {
     @Id
     private String code;
 
+    private String bigName;
+
     private String name;
 
     private String slug;
@@ -19,6 +21,14 @@ public class LocationEntity {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getBigName() {
+        return this.bigName;
+    }
+
+    public void setBigName(String bigName) {
+        this.bigName = bigName;
     }
 
     public String getName() {
