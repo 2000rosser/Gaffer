@@ -92,6 +92,16 @@
             <form th:action="@{/add-auto}" th:object="${reference}" method="post">
                 Location: <input type="text" id="locations" name="locations" >
 
+                <label for="minPrice">Select Min Price:</label>
+                    <select id="minPrice" name="minPrice"></select>
+                <label for="maxPrice">Select Max Price:</label>
+                    <select id="maxPrice" name="maxPrice"></select>
+
+                <label for="minBeds">Select Min Beds:</label>
+                    <select id="minBeds" name="minBeds"></select>
+                <label for="maxBeds">Select Max Beds:</label>
+                    <select id="maxBeds" name="maxBeds"></select>
+
                 <button type="submit">Create Auto Apply Service</button>
             </form>
         </div>
@@ -113,6 +123,46 @@
                 },
                 minLength: 3
             });
+        });
+        function generatePrices() {
+            var res = [];
+            var incrementer=100;
+            for (var i = 200; i < 20000; i+=incrementer){
+                res.push(i);
+                if(i==2500){
+                    incrementer=500;
+                }
+            }
+            return res;
+        }
+
+        function generateBeds() {
+            var res = [];
+            for (var i = 1; i < 16; i+=1){
+                res.push(i);
+            }
+            return res;
+        }
+
+        function populateSelectOptions() {
+            var prices = generatePrices();
+            var beds = generateBeds();
+            var $selectMinPrice = $("#minPrice");
+            var $selectMaxPrice = $("#maxPrice");
+            var $selectMinBeds = $("#minBeds");
+            var $selectMaxBeds = $("#maxBeds");
+            prices.forEach(function(price) {
+                $selectMinPrice.append($('<option></option>').val(price).text(price));
+                $selectMaxPrice.append($('<option></option>').val(price).text(price));
+            });
+            beds.forEach(function(bed) {
+                $selectMinBeds.append($('<option></option>').val(bed).text(bed));
+                $selectMaxBeds.append($('<option></option>').val(bed).text(bed));
+            });
+        }
+
+        $(document).ready(function() {
+            populateSelectOptions();
         });
     </script>
 </html>
