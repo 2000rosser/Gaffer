@@ -118,6 +118,20 @@
                 </select>
 
                 <button type="submit">Create Auto Apply Service</button>
+
+                <div th:if="${listings != null}">
+                    <h2>Listings</h2>
+                    <div th:each="listing : ${listings}" class="listing-box">
+                        <div class="listing-title" th:text="${listing.title}">Listing Title</div>
+                        <div class="listing-price" th:text="${listing.price}">€1000 per month</div>
+                        <img th:src="${listing.images.get(0)}" class="listing-image" alt="Listing Image"/>
+                        <div class="listing-details">
+                            <p>Bedrooms: <span th:text="${listing.numBedrooms}">2 Beds</span></p>
+                            <p>Bathrooms: <span th:text="${listing.numBathrooms}">1 Bath</span></p>
+                            <p>Property Type: <span th:text="${listing.propertyType}">Apartment</span></p>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </body>

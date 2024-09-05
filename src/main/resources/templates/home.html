@@ -24,6 +24,9 @@
             .navbar .right {
                 display: flex;
             }
+            .background {
+                background-image: url('../static/images/x.png');
+            }
         </style>
     </head>
     <body>
@@ -44,10 +47,12 @@
                 <a th:href="@{/login}">Login</a>
             </div>
         </div>
-
-        <h1>Welcome!</h1>
-
-        <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+        <div class="background">
+            
+            <h1>Welcome!</h1>
+            <img th:src="@{images/x.png}" alt="cat">
+            <p>Click <a th:href="@{/hello}">here</a> to see a greeting.</p>
+        </div>
 
     </body>
 </html>

@@ -2,11 +2,11 @@ package com.example.gaffer.controllers;
 
 import java.util.List;
 
+import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.gaffer.models.AutoServiceDTO;
+import com.example.gaffer.models.Listing;
 import com.example.gaffer.services.AutoRentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -45,16 +46,19 @@ public class AutoApplyController {
     }
 
     @PostMapping("/add-auto")
-    public String fetchListings(@ModelAttribute AutoServiceDTO autoDto) throws JsonProcessingException{
+    public String fetchListings(@ModelAttribute AutoServiceDTO autoDto, Model model) throws JsonProcessingException, ParseException{
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("Request reveived");
         HttpEntity<String> entity = autoService.createListingRequest(autoDto);
 
-        
         String url = "https://gateway.daft.ie/old/v1/listings";
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
         System.out.println("Response reveived\n" + response.getBody());
+        List<Listing> result = autoService.generateListings(response);
 
-        return "";
+        model.addAttribute("listings", result);
+        model.addAttribute("autoDto", new AutoServiceDTO());
+        
+        return "auto-rent";
     }
 }

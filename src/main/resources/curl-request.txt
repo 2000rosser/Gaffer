@@ -51,3 +51,95 @@ curl -X POST "https://gateway.daft.ie/old/v1/listings" \
         "pagesize": "1"
     }
     }'
+
+
+    {
+   "listings":[
+      {
+         "listing":{
+            "id":5813628,
+            "title":"Spiddal Road,Dublin 10, Cherry Orchard, Dublin 22",
+            "seoTitle":"Spiddal Road,Dublin 10, Cherry Orchard, Dublin 22",
+            "sections":[],
+            "saleType":[],
+            "featuredLevel":"PREMIUM",
+            "featuredLevelFull":"PREMIUM",
+            "publishDate":1725284914498,
+            "price":"€1,100 per month",
+            "abbreviatedPrice":"€1,100",
+            "numBedrooms":"1 Bed",
+            "numBathrooms":"1 Bath",
+            "propertyType":"Apartment",
+            "daftShortcode":"25813628",
+            "seller":{},
+            "dateOfConstruction":"NA",
+            "media":{
+               "images":[
+                  {}]
+            },
+            "ber":{
+               "rating":"SI_666"
+            },
+            "platform":"WEB",
+            "point":{},
+            "seoFriendlyPath":"/for-rent/apartment-spiddal-road-dublin-10-cherry-orchard-dublin-22/5813628",
+            "pageBranding":{
+               "squareLogos":[
+                  
+               ]
+            },
+            "category":"Rent",
+            "state":"PUBLISHED",
+            "premierPartner":false
+         },
+         "savedAd":false
+      },
+      {
+         "listing":{
+            "id":5795658,
+            "title":"30 Nelson Street, Dublin 7",
+            "seoTitle":"30 Nelson Street, Dublin 7",
+            "sections":[
+               "Property",
+               "Residential",
+               "Apartment"
+            ],
+            "saleType":[
+               "To Let"
+            ],
+            "featuredLevel":"STANDARD",
+            "featuredLevelFull":"STANDARD",
+            "publishDate":1725533525609,
+            "price":"€1,042 per month",
+            "abbreviatedPrice":"€1,040",
+            "numBedrooms":"1 Bed",
+            "numBathrooms":"1 Bath",
+            "propertyType":"Apartment",
+            "daftShortcode":"219847530",
+            "seller":{
+               
+            },
+            "dateOfConstruction":"NA",
+            "media":{
+               "images":[
+                  {}
+               ],
+               "totalImages":7,
+               "hasVideo":false,
+               "hasVirtualTour":false,
+               "hasBrochure":false
+            },
+            "ber":{
+               
+            },
+            "platform":"WEB",
+            "point":{},
+            "seoFriendlyPath":"/for-rent/apartment-30-nelson-street-dublin-7/5795658",
+            "pageBranding":{},
+            "category":"Rent",
+            "state":"PUBLISHED",
+            "premierPartner":false
+         },
+         "savedAd":false
+      },
+   ]
