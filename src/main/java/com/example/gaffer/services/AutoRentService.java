@@ -18,13 +18,15 @@ import org.springframework.stereotype.Service;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.example.gaffer.models.Application;
 import com.example.gaffer.models.AutoServiceDTO;
 import com.example.gaffer.models.Filter;
 import com.example.gaffer.models.GeoFilter;
 import com.example.gaffer.models.Listing;
-import com.example.gaffer.models.ListingReguest;
+import com.example.gaffer.models.ListingRequest;
 import com.example.gaffer.models.Paging;
 import com.example.gaffer.models.Range;
+import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.LocationRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,7 +46,7 @@ public class AutoRentService {
 
     public HttpEntity<String> createListingRequest(AutoServiceDTO autoDto) throws JsonProcessingException{
 
-        ListingReguest listingRequest = new ListingReguest();
+        ListingRequest listingRequest = new ListingRequest();
         listingRequest.setSection("residential-to-rent");
 
         List<Filter> filters = new ArrayList<>();
@@ -62,8 +64,6 @@ public class AutoRentService {
         }
         listingRequest.setFilters(filters);
         
-        System.out.println(autoDto.getLocations().get(0));
-        System.out.println(repository.findByName(autoDto.getLocations().get(0)).getCode());
         GeoFilter geoFilter = new GeoFilter();
         geoFilter.setStoredShapeIds(List.of(repository.findByName(autoDto.getLocations().get(0)).getCode()));
         geoFilter.setGeoSearchType("STORED_SHAPES");
@@ -89,8 +89,6 @@ public class AutoRentService {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonPayload = objectMapper.writeValueAsString(listingRequest);
 
-        System.out.println("Payload Crafted\n" + jsonPayload);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15");
@@ -107,14 +105,11 @@ public class AutoRentService {
         try {
             JSONObject obj = new JSONObject(response.getBody());
             JSONArray jsonlisting = obj.getJSONArray("listings");
-            System.out.println(jsonlisting.length());
             for (int i=0; i<jsonlisting.length(); i++) {
                 JSONObject listingObject = jsonlisting.getJSONObject(i).getJSONObject("listing");
 
                 String id = String.valueOf(listingObject.getInt("id"));
-                System.out.println(id);
                 String title = listingObject.optString("title");
-                System.out.println(title);
                 String seoTitle = listingObject.getString("seoTitle");
 
                 JSONArray sectionsArray = listingObject.getJSONArray("sections");
@@ -160,5 +155,27 @@ public class AutoRentService {
         }
         return listings;
     
+    }
+
+    public HttpEntity<String> createApplication(Listing listing, UserEntity user) throws JsonProcessingException{
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Host", "gateway.daft.ie");
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Connection", "keep-alive");
+        headers.add("platform", "iOS");
+        headers.add("Accept", "application/json");
+        headers.add("brand", "daft");
+        headers.add("Accept-Language", "en-GB,en;q=0.9");
+        headers.add("Accept-Encoding", "gzip, deflate, br");
+        headers.add("User-Agent", "Daft.ie/0 CFNetwork/1335.0.3 Darwin/21.6.0");
+
+        Application application = new Application(user.getName(), true, user.getUsername(), user.getDescription(), Integer.valueOf(listing.getId()), user.getPhoneNumber());
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonPayload = objectMapper.writeValueAsString(application);
+
+        System.out.println(jsonPayload);
+
+        HttpEntity<String> entity = new HttpEntity<>(jsonPayload, headers);
+        return entity;
     }
 }

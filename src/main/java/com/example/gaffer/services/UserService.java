@@ -21,13 +21,14 @@ public class UserService {
 
     public ReferenceRequestDTO getUserProfile(Long userId) {
         UserEntity user = repository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return new ReferenceRequestDTO(user.getName(), user.getUsername(), user.getLocation(), user.getDescription(), 
+        return new ReferenceRequestDTO(user.getName(), user.getUsername(), user.getPhoneNumber(), user.getLocation(), user.getDescription(), 
                                     user.getReferences(), user.getOccupation(), user.getPlaceOfWork());
     }
 
     public void updateUserProfile(UserEntity entity, UserEntity updatedUser) {
         entity.setName(updatedUser.getName());
         entity.setUsername(updatedUser.getUsername());
+        entity.setPhoneNumber(updatedUser.getPhoneNumber());
         entity.setLocation(updatedUser.getLocation());
         entity.setDescription(updatedUser.getDescription());
         entity.setOccupation(updatedUser.getOccupation());

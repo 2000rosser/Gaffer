@@ -6,6 +6,7 @@ public class ReferenceRequestDTO {
     
     private String name;
     private String username;
+    private String phoneNumber;
     private String location;
     private String description;
     private List<Reference> references;
@@ -14,9 +15,10 @@ public class ReferenceRequestDTO {
 
     public ReferenceRequestDTO() {}
 
-    public ReferenceRequestDTO(String name, String username, String location, String description, List<Reference> references, String occupation, String placeofWork) {
+    public ReferenceRequestDTO(String name, String username, String phoneNumber, String location, String description, List<Reference> references, String occupation, String placeofWork) {
         this.name = name;
         this.username = username;
+        this.phoneNumber = phoneNumber;
         this.location = location;
         this.description = description;
         this.references = references;
@@ -38,6 +40,14 @@ public class ReferenceRequestDTO {
 
     public void setReferences(List<Reference> references) {
         this.references = references;
+    }
+
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {

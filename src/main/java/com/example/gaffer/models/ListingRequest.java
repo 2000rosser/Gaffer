@@ -2,7 +2,7 @@ package com.example.gaffer.models;
 
 import java.util.List;
 
-public class ListingReguest {
+public class ListingRequest {
     
     private String section;
     private List<Filter> filters;

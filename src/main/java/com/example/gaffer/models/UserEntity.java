@@ -31,6 +31,9 @@ public class UserEntity implements UserDetails {
     private String name;
 
     @Column
+    private String phoneNumber;
+
+    @Column
     private String location;
 
     @Column
@@ -89,6 +92,13 @@ public class UserEntity implements UserDetails {
         return this.enabled;
     }
 
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public boolean getAccountNonExpired() {
         return this.accountNonExpired;
