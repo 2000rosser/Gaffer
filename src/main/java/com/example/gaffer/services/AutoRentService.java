@@ -45,10 +45,11 @@ public class AutoRentService {
         propertyFilter.setValues(List.of(autoDto.getPropertyType()));
         filters.add(propertyFilter);
         
+        Filter furnishFilter = new Filter();
         if(!autoDto.getFurnishing().equals("ANY")) {
-            Filter furnishFilter = new Filter();
             furnishFilter.setName("furnishing");
             furnishFilter.setValues(List.of(autoDto.getFurnishing()));
+            filters.add(furnishFilter);
         }
         listingRequest.setFilters(filters);
         
