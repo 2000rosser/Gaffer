@@ -16,4 +16,7 @@ public interface LocationRepository extends JpaRepository<LocationEntity, String
 
     @Query("SELECT l.bigName FROM LocationEntity l WHERE l.bigName LIKE %:term%")
     List<String> findByBigNameContaining(@Param("term") String term, Pageable pageable);
+
+    @Query("SELECT l FROM LocationEntity l WHERE TRIM(l.name) = TRIM(:name)")
+    LocationEntity findByName(@Param("name") String name);
 }

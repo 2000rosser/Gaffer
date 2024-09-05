@@ -1,0 +1,53 @@
+Resources: https://github.com/AnthonyBloomer/daftlistings/issues/83
+            https://github.com/AnthonyBloomer/daftlistings/pull/112
+
+curl -X POST "https://gateway.daft.ie/old/v1/listings" \
+-H "Content-Type: application/json" \
+-H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15" \
+-H "brand: daft" \
+-H "platform: web" \
+-d '{
+    "section": "residential-to-rent",
+    "filters": [
+        {
+            "name": "propertyType",
+            "values": ["apartments"]
+        },
+        {
+            "name": "furnishing",
+            "values": ["furnished"]
+        },
+        {
+            "name": "adState",
+            "values": ["published"]
+        }
+    ],
+    "andFilters": [
+        {
+            "name": "facilities",
+            "values": [
+                "alarm"
+            ]
+        }
+    ],
+    "geoFilter": {
+        "storedShapeIds": ["1"],
+        "geoSearchType": "STORED_SHAPES"
+    },
+    "ranges": [
+        {
+            "name": "numBeds",
+            "from": "1",
+            "to": "3"
+        },
+        {
+            "name": "rentalPrice",
+            "from": "1000",
+            "to": "5000"
+        }
+    ],
+    "paging": {
+        "from": "0",
+        "pagesize": "1"
+    }
+    }'

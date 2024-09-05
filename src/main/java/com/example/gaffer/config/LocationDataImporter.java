@@ -3,7 +3,6 @@ package com.example.gaffer.config;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,6 @@ import com.example.gaffer.repositories.LocationRepository;
 
 @Component
 public class LocationDataImporter implements CommandLineRunner {
-
     @Autowired
     private LocationRepository locationEntityRepository;
 
@@ -33,10 +31,10 @@ public class LocationDataImporter implements CommandLineRunner {
         for (String line : lines) {
             String[] splitLines = line.split(",");
             LocationEntity location = new LocationEntity();
-            location.setBigName(splitLines[0].replace(",", ""));
-            location.setCode(splitLines[1].replace(",", ""));
-            location.setName(splitLines[2].replace(",", ""));
-            location.setSlug(splitLines[3].replace(",", ""));
+            location.setBigName(splitLines[0].replace(",", "").trim());
+            location.setCode(splitLines[1].replace(",", "").trim());
+            location.setName(splitLines[2].replace(",", "").trim());
+            location.setSlug(splitLines[3].replace(",", "").trim());
             locationEntityRepository.save(location);
         }
 
