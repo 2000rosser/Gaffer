@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.gaffer.config.EmailComponent;
+import com.example.gaffer.config.ComponentProperties;
 import com.example.gaffer.models.RegisterRequestDTO;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.UserEntityRepository;
@@ -26,14 +26,14 @@ import jakarta.transaction.Transactional;
 @RequestMapping("/api/user")
 public class UserController {
     // TODO: Move business logic and interactions to UserService and keep controller for REST logic
-    @Autowired
-    private EmailComponent emailComponent;
+    private final ComponentProperties emailComponent;
     private final UserEntityRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final UserMailService userMailService;
 
     @Autowired
-    public UserController(UserEntityRepository repository, PasswordEncoder passwordEncoder, UserMailService userMailService) {
+    public UserController(UserEntityRepository repository, PasswordEncoder passwordEncoder, UserMailService userMailService, ComponentProperties emailComponent) {
+        this.emailComponent = emailComponent;
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.userMailService = userMailService;

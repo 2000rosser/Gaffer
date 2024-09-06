@@ -27,34 +27,34 @@
             .navbar .right {
                 display: flex;
             }
-            .add-auto-container {
+            .search-container {
                 margin: 20px;
                 padding: 20px;
                 border: 1px solid #dee2e6;
                 border-radius: 5px;
                 background-color: #f9f9f9;
             }
-            .add-auto-container h2 {
+            .search-container h2 {
                 margin-bottom: 15px;
             }
-            .add-auto-container form {
+            .search-container form {
                 display: flex;
                 flex-direction: column;
             }
-            .add-auto-container label {
+            .search-container label {
                 margin-bottom: 5px;
                 font-weight: bold;
             }
-            .add-auto-container input,
-            .add-auto-container textarea,
-            .add-auto-container select {
+            .search-container input,
+            .search-container textarea,
+            .search-container select {
                 margin-bottom: 15px;
                 padding: 8px;
                 border: 1px solid #ced4da;
                 border-radius: 3px;
                 font-size: 16px;
             }
-            .add-auto-container button {
+            .search-container button {
                 padding: 10px;
                 background-color: #007bff;
                 color: white;
@@ -63,7 +63,7 @@
                 font-size: 16px;
                 cursor: pointer;
             }
-            .add-auto-container button:hover {
+            .search-container button:hover {
                 background-color: #0056b3;
             }
         </style>
@@ -88,8 +88,8 @@
 
         <h1>Select your search filters</h1>
 
-        <div class="add-auto-container">
-            <form th:action="@{/add-auto}" th:object="${autoDto}" method="post">
+        <div class="search-container">
+            <form id="searchForm" th:action="@{/search}" th:object="${autoDto}" method="post">
                 Location: <input type="text" id="locations" th:field="*{locations}" name="locations">  
                 <label for="minPrice">Select Min Price:</label>
                 <select id="minPrice" name="minPrice" th:field="*{minPrice}"></select>
@@ -116,7 +116,9 @@
                     <option value="unfurnished">Unfurnished</option>
                 </select>
         
-                <button type="submit">Create Auto Apply Service</button>
+                <button type="button" onclick="submitForm('/search')">Search</button>
+            </br>
+                <button type="button" onclick="submitForm('/add-auto')">Automatically apply to future listing</button>
             </form>
         
             <div th:if="${listings != null}">
@@ -159,6 +161,9 @@
                         $('#applyButton').text("Success");
                         $('#applyButton').prop('disabled', true)
                         $('#applyButton').css('background-color', '#cccccc')
+                    },
+                    badrequest: function(response) {
+                        $('#applyButton').text("Success");
                     },
                     error: function(xhr, status, error) {
                         $('#applyButton').text('Failed');
@@ -217,6 +222,27 @@
             beds.forEach(function(bed) {
                 $selectMinBeds.append($('<option></option>').val(bed).text(bed));
                 $selectMaxBeds.append($('<option></option>').val(bed).text(bed));
+            });
+        }
+        function submitForm(actionUrl) {
+            var form = document.getElementById('searchForm');
+            form.action = actionUrl;
+            form.submit();
+        }
+        function submitAutoApplyForm() {
+            var formData = new FormData(document.getElementById('searchForm'));
+
+            fetch('/add-auto', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('responseMessage').innerText = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('responseMessage').innerText = 'An error occurred!';
             });
         }
 

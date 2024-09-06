@@ -2,13 +2,30 @@ package com.example.gaffer.models;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class AutoServiceDTO {
+    @Column
     private List<String> locations;
+
+    @Column
     private String minPrice;
+
+    @Column
     private String maxPrice;
+
+    @Column
     private String minBeds;
+
+    @Column
     private String maxBeds;
+
+    @Column
     private String propertyType;
+
+    @Column
     private String furnishing;
 
     public AutoServiceDTO(){
@@ -22,6 +39,18 @@ public class AutoServiceDTO {
         this.maxBeds=maxBeds;
         this.propertyType=propertyType;
         this.furnishing=furnishing;
+    }
+
+    public String toString() {
+        return "{" +
+            " locations='" + getLocations() + "'" +
+            ", minPrice='" + getMinPrice() + "'" +
+            ", maxPrice='" + getMaxPrice() + "'" +
+            ", minBeds='" + getMinBeds() + "'" +
+            ", maxBeds='" + getMaxBeds() + "'" +
+            ", propertyType='" + getPropertyType() + "'" +
+            ", furnishing='" + getFurnishing() + "'" +
+            "}";
     }
 
     public List<String> getLocations() {

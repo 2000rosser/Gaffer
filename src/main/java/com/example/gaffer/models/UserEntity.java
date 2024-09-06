@@ -39,7 +39,7 @@ public class UserEntity implements UserDetails {
     @Column
     private String description;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_references", joinColumns = @JoinColumn(name = "user_id"))
     private List<Reference> references;
 
@@ -67,6 +67,13 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private boolean credentialsNonExpired;
 
+    @Column
+    private boolean autoEnabled;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_autoservices", joinColumns = @JoinColumn(name = "user_id"))
+    private List<AutoServiceDTO> autoservices;
+
     @Column(name = "verification_code")
     private String verificationCode;
 
@@ -78,6 +85,30 @@ public class UserEntity implements UserDetails {
         return roles.stream()
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", name='" + getName() + "'" +
+            ", phoneNumber='" + getPhoneNumber() + "'" +
+            ", location='" + getLocation() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", references='" + getReferences() + "'" +
+            ", occupation='" + getOccupation() + "'" +
+            ", placeOfWork='" + getPlaceOfWork() + "'" +
+            ", username='" + getUsername() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", enabled='" + isEnabled() + "'" +
+            ", accountNonExpired='" + isAccountNonExpired() + "'" +
+            ", accountNonLocked='" + isAccountNonLocked() + "'" +
+            ", credentialsNonExpired='" + isCredentialsNonExpired() + "'" +
+            ", autoEnabled='" + isAutoEnabled() + "'" +
+            ", autoservices='" + getAutoservices() + "'" +
+            ", verificationCode='" + getVerificationCode() + "'" +
+            ", roles='" + getRoles() + "'" +
+            "}";
     }
 
     public List<String> getRoles() {
@@ -222,6 +253,26 @@ public class UserEntity implements UserDetails {
 
     public void setAccountNonLocked(boolean accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isAutoEnabled() {
+        return this.autoEnabled;
+    }
+
+    public boolean getAutoEnabled() {
+        return this.autoEnabled;
+    }
+
+    public void setAutoEnabled(boolean autoEnabled) {
+        this.autoEnabled = autoEnabled;
+    }
+
+    public List<AutoServiceDTO> getAutoservices() {
+        return this.autoservices;
+    }
+
+    public void setAutoservices(List<AutoServiceDTO> autoservices) {
+        this.autoservices = autoservices;
     }
 
     @Override
