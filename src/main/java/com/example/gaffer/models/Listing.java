@@ -3,24 +3,62 @@ package com.example.gaffer.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Listing {
 
+    @Id
     private String id;
+
+    @Column
     private String title;
+
+    @Column
     private String seoTitle;
+
+    @Column
     private List<String> sections;
+
+    @Column
     private List<String> saleType;
+
+    @Column
     private LocalDateTime publishDate;
+
+    @Column
     private String price;
+
+    @Column
     private String abbreviatedPrice;
+
+    @Column
     private String numBedrooms;
+
+    @Column
     private String numBathrooms;
+
+    @Column
     private String propertyType;
+
+    @Column(length = 1024)
     private List<String> images;
+
+    @Column
     private String xPoint;
+
+    @Column
     private String yPoint;
+
+    @Column
     private String seoFriendlyPath;
+
+    @Column
     private String category;
+
+    @Column
     private String state;
     // private String daftShortcode;
     // private Seller seller;

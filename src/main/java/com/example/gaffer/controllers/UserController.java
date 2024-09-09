@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.gaffer.config.ComponentProperties;
+import com.example.gaffer.components.ComponentProperties;
 import com.example.gaffer.models.RegisterRequestDTO;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.UserEntityRepository;

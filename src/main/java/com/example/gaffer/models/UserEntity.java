@@ -1,7 +1,9 @@
 package com.example.gaffer.models;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -73,6 +75,8 @@ public class UserEntity implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_autoservices", joinColumns = @JoinColumn(name = "user_id"))
     private List<AutoServiceDTO> autoservices;
+
+    private Set<String> applied;
 
     @Column(name = "verification_code")
     private String verificationCode;
@@ -273,6 +277,17 @@ public class UserEntity implements UserDetails {
 
     public void setAutoservices(List<AutoServiceDTO> autoservices) {
         this.autoservices = autoservices;
+    }
+
+    public Set<String> getApplied() {
+        return this.applied;
+    }
+
+    public void setApplied(Set<String> applied) {
+        if(this.applied==null){
+            this.applied = new HashSet<String>();
+        }
+        this.applied = applied;
     }
 
     @Override

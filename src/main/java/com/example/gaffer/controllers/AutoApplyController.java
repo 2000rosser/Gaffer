@@ -1,8 +1,10 @@
 package com.example.gaffer.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
@@ -22,7 +24,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.gaffer.config.ComponentProperties;
+import com.example.gaffer.components.ComponentProperties;
+import com.example.gaffer.components.ScheduledTasks;
 import com.example.gaffer.models.AutoServiceDTO;
 import com.example.gaffer.models.Listing;
 import com.example.gaffer.models.UserEntity;
@@ -79,7 +82,7 @@ public class AutoApplyController {
     }
 
     @PostMapping("/add-auto")
-    public String addAutoApply(@ModelAttribute AutoServiceDTO autoDto, Authentication authentication, Model model) {
+    public String addAutoApply(@ModelAttribute AutoServiceDTO autoDto, Authentication authentication, Model model) throws ClientProtocolException, IOException, ParseException {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         user.setAutoEnabled(true);
         List<AutoServiceDTO> currentServices = user.getAutoservices();
@@ -95,6 +98,8 @@ public class AutoApplyController {
         System.out.println(autoDto.toString());
 
         model.addAttribute("autoDto", new AutoServiceDTO());
+
+        // scheduledTasks.dispatchAutoApplications();
 
         // return ResponseEntity.ok("Success");
         return "auto-rent";
