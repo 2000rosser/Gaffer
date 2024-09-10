@@ -9,27 +9,6 @@
         <script src="js/navbar.js"></script>
         <title>Spring Security Example</title>
         <style>
-            .navbar {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px;
-                background-color: #f8f9fa;
-                border-bottom: 1px solid #dee2e6;
-            }
-            .navbar a {
-                text-decoration: none;
-                color: #007bff;
-                margin: 0 15px;
-                font-size: 16px;
-            }
-            .navbar a:hover {
-                text-decoration: underline;
-            }
-            .navbar .left,
-            .navbar .right {
-                display: flex;
-            }
             .search-container {
                 margin: 20px;
                 padding: 20px;
@@ -85,7 +64,8 @@
                 <!-- <a th:href="@{/find-home}">Find Home</a>
                 <a th:href="@{/landlords}">Landlords</a> -->
                 <!-- <a th:href="@{/mission}">Our Mission</a> -->
-                <a>Find Home</a>
+                <!-- <a>Find Home</a> -->
+                <a th:href="@{/auto-rent}">Find Home</a>
                 <a>Landlords</a>
                 <a>Our Mission</a>
             </div>
