@@ -27,7 +27,7 @@
             <div class="right" sec:authorize="isAuthenticated()">
                 <div class="box-profile">
                     <div class="profile-icon" onclick="toggleDropdown()">
-                        <img src="images/profile.png" alt="Profile Icon">
+                        <img src="images/profile.png" id="profileicon" alt="Profile Icon">
                     </div>
                     <div id="profileDropdown" class="dropdown-menu">
                         <a class="sign" th:href="@{/profile}">My Profile</a>
@@ -38,7 +38,7 @@
             <div class="right" sec:authorize="!isAuthenticated()">
                 <div class="box-profile">
                     <div class="profile-icon" onclick="toggleDropdown()">
-                        <img src="images/profile.png" alt="Profile Icon">
+                        <img src="images/profile.png" id="profileicon" alt="Profile Icon">
                     </div>
                     <div id="profileDropdown" class="dropdown-menu">
                         <a class="sign" th:href="@{/login}">Sign In</a>

@@ -32,9 +32,13 @@
 }
 .profile-icon img {
     width: 80px;
-    border-radius: 25%;
+    border-radius: 18px;
     cursor: pointer;
+    transition: box-shadow 0.3s ease;
 }
+/* .profile-icon img:hover {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
+} */
 .box-profile {
     position: relative;
     display: inline-block;
