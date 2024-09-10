@@ -4,6 +4,9 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <!-- <script th:src="@{/js/navbar.js}"></script> -->
+        <script src="js/navbar.js"></script>
         <title>Spring Security Example</title>
         <style>
             .navbar {
@@ -71,18 +74,43 @@
     <body>
 
         <div class="navbar">
-            <div class="left">
-                <a th:href="@{/}">Home</a>
+            <div class="logo">
+                <a th:href="@{/}">
+                <!-- <img th:src="@{images/logo.png}" alt="Homesync Logo"> -->
+                <img src="images/logo.png" alt="Homesync Logo">
+                </a>
             </div>
+            
+            <div class="center">
+                <!-- <a th:href="@{/find-home}">Find Home</a>
+                <a th:href="@{/landlords}">Landlords</a> -->
+                <!-- <a th:href="@{/mission}">Our Mission</a> -->
+                <a>Find Home</a>
+                <a>Landlords</a>
+                <a>Our Mission</a>
+            </div>
+
             <div class="right" sec:authorize="isAuthenticated()">
-                <a th:href="@{/profile}">Profile</a>
-                <form th:action="@{/logout}" method="post" style="display:inline;">
-                    <button type="submit" style="background:none;border:none;padding:0;margin:0;color:inherit;text-decoration:underline;cursor:pointer;">Logout</button>
-                </form>
+                <div class="box-profile">
+                    <div class="profile-icon" onclick="toggleDropdown()">
+                        <img src="images/profile.png" alt="Profile Icon">
+                    </div>
+                    <div id="profileDropdown" class="dropdown-menu">
+                        <a class="sign" th:href="@{/profile}">My Profile</a>
+                        <a class="sign" th:href="@{/logout}">Sign Out</a>
+                    </div>
+                </div>
             </div>
             <div class="right" sec:authorize="!isAuthenticated()">
-                <a th:href="@{/profile}">Profile</a>
-                <a th:href="@{/login}">Login</a>
+                <div class="box-profile">
+                    <div class="profile-icon" onclick="toggleDropdown()">
+                        <img src="images/profile.png" alt="Profile Icon">
+                    </div>
+                    <div id="profileDropdown" class="dropdown-menu">
+                        <a class="sign" th:href="@{/login}">Sign In</a>
+                        <a class="sign" th:href="@{/register}">Sign Up</a>
+                    </div>
+                </div>
             </div>
         </div>
 

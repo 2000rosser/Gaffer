@@ -27,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/home", "/register", "/api/user", "/api/user/verify", "/api/user/login", "/h2-console", "images/**").permitAll()
+                .requestMatchers("/", "/home", "/register", "/api/user", "/api/user/verify", "/api/user/login", "/h2-console", "images/**", "css/**", "js/**").permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                 .requestMatchers("/admin/**", "/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -40,7 +40,8 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/home", true)
                 .permitAll()
             )
-            .logout((logout) -> logout.permitAll().logoutSuccessUrl("/home"))
+            .logout((logout) -> logout.permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .logoutSuccessUrl("/home").deleteCookies("JESSIONID"))
             .userDetailsService(userDetailsService(repository)); 
 
         return http.build();
