@@ -6,13 +6,13 @@ import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.tomcat.util.json.ParseException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.gaffer.components.ComponentProperties;
-import com.example.gaffer.components.ScheduledTasks;
 import com.example.gaffer.models.AutoServiceDTO;
 import com.example.gaffer.models.Listing;
 import com.example.gaffer.models.UserEntity;
@@ -86,7 +86,7 @@ public class AutoApplyController {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         user.setAutoEnabled(true);
         List<AutoServiceDTO> currentServices = user.getAutoservices();
-        if (currentServices == null || currentServices.size() == 0) {
+        if (currentServices == null || currentServices.isEmpty()) {
             user.setAutoservices(new ArrayList<>(List.of(autoDto)));
         } else {
             currentServices.add(autoDto);
@@ -114,8 +114,8 @@ public class AutoApplyController {
         }
         HttpEntity<String> craftedRequest = autoService.createApplication(listing, userEntity);
         String url = "https://gateway.daft.ie/old/v1/reply";
-        if (properties.getAutoApply().equals("true")){
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, craftedRequest, String.class);
+        // if (properties.getAutoApply().equals("true")){
+            ResponseEntity<String> response;
             try {
                 response = restTemplate.exchange(url, HttpMethod.POST, craftedRequest, String.class);
                 if (response.getStatusCode() == HttpStatus.OK) {
@@ -128,13 +128,13 @@ public class AutoApplyController {
                     model.addAttribute("autoDto", new AutoServiceDTO());
                     return ResponseEntity.status(response.getStatusCode()).body("Failed: " + response.getStatusCode());
                 }
-            } catch (Exception e) {
+            } catch (RestClientException e) {
                 model.addAttribute("listings", listings);
                 model.addAttribute("autoDto", new AutoServiceDTO());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
             }
-        } else {
-            return ResponseEntity.ok("Success");
-        }
+        // } else {
+        //     return ResponseEntity.ok("Success");
+        // }
     }
 }

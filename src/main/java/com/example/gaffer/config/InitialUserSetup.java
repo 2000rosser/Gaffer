@@ -56,6 +56,24 @@ public class InitialUserSetup {
                 repository.save(admin);
 
             }
+
+            if (repository.findByUsername("kamilko199@gmail.com").isEmpty()) {
+                UserEntity admin = new UserEntity();
+                admin.setUsername("kamilko199@gmail.com");
+                admin.setDescription("Hi, I am interested in renting your property. Please let me know what you require and I'll provide it.");
+                admin.setPhoneNumber("0872970140");
+                admin.setName("Kamil Murphy");
+                admin.setPassword(passwordEncoder.encode("a"));
+                admin.setEnabled(true);
+                admin.setAccountNonExpired(true);
+                admin.setAccountNonLocked(true);
+                admin.setCredentialsNonExpired(true);
+                admin.setRoles(new ArrayList<>(List.of("ROLE_ADMIN")));
+                admin.setVerificationCode(null);
+
+                repository.save(admin);
+
+            }
         };
     }
 }
