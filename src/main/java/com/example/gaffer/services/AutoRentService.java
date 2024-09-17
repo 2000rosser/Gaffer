@@ -139,7 +139,7 @@ public class AutoRentService {
                 JSONArray imagesArray = listingObject.getJSONObject("media").getJSONArray("images");
                 List<String> images = new ArrayList<>();
                 for (int j = 0; j < imagesArray.length(); j++) {
-                    images.add(imagesArray.getJSONObject(j).optString("size72x52", ""));
+                    images.add(imagesArray.getJSONObject(j).optString("size720x480", ""));
                 }
 
                 String xPoint = listingObject.getJSONObject("point").optString("xPoint", "");

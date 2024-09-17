@@ -8,47 +8,6 @@
         <!-- <script th:src="@{/js/navbar.js}"></script> -->
         <script src="js/navbar.js"></script>
         <title>Spring Security Example</title>
-        <style>
-            .search-container {
-                margin: 20px;
-                padding: 20px;
-                border: 1px solid #dee2e6;
-                border-radius: 5px;
-                background-color: #f9f9f9;
-            }
-            .search-container h2 {
-                margin-bottom: 15px;
-            }
-            .search-container form {
-                display: flex;
-                flex-direction: column;
-            }
-            .search-container label {
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-            .search-container input,
-            .search-container textarea,
-            .search-container select {
-                margin-bottom: 15px;
-                padding: 8px;
-                border: 1px solid #ced4da;
-                border-radius: 3px;
-                font-size: 16px;
-            }
-            .search-container button {
-                padding: 10px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 3px;
-                font-size: 16px;
-                cursor: pointer;
-            }
-            .search-container button:hover {
-                background-color: #0056b3;
-            }
-        </style>
     </head>
     <body>
 
@@ -93,64 +52,91 @@
                 </div>
             </div>
         </div>
+        
+        <div>
+            <div class="search-container">
+                <div class="image-container">
+                    <img src="images/search-img.png" alt="Search Image" />
+                </div>
+                <div class="form-container">
+                    <h2>Set your personal filters.</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam facilisis pellentesque ut quis.</p>
+                    <form id="searchForm" th:action="@{/search}" th:object="${autoDto}" method="post">
+                        <label>Location:</label> 
+                        <input type="text" id="locations" th:field="*{locations}" name="locations">  
+                        <label for="minPrice">Select Min Price:</label>
+                        <select id="minPrice" name="minPrice" th:field="*{minPrice}"></select>
+                        <label for="maxPrice">Select Max Price:</label>
+                        <select id="maxPrice" name="maxPrice" th:field="*{maxPrice}"></select>
+                        
+                        <label for="minBeds">Select Min Beds:</label>
+                        <select id="minBeds" name="minBeds" th:field="*{minBeds}"></select>
+                        <label for="maxBeds">Select Max Beds:</label>
+                        <select id="maxBeds" name="maxBeds" th:field="*{maxBeds}"></select>
+                        
+                        <label for="type">Type:</label>
+                        <select id="type" th:field="*{propertyType}">
+                            <option value="ANY">Any Property</option>
+                            <option value="houses">House</option>
+                            <option value="apartments">Apartment</option>
+                            <option value="studio-apartments">Studio Apartment</option>
+                        </select>
+                        
+                        <label for="furnished">Furnishing:</label>
+                        <select id="furnished" th:field="*{furnishing}">
+                            <option value="Any">Any Furnishing</option>
+                            <option value="furnished">Furnished</option>
+                            <option value="unfurnished">Unfurnished</option>
+                        </select>
+                        <div class="search-buttons">
+                            <button type="button" onclick="submitForm('/search')">View Listings</button>
+                            <button type="button" onclick="submitForm('/add-auto')">Create Auto-Apply</button>
+                            <button id="save-search" type="button">Save Search</button>
+                        </div>
+                </form>
+            </div>
+        </div>
 
-        <h1>Select your search filters</h1>
-
-        <div class="search-container">
-            <form id="searchForm" th:action="@{/search}" th:object="${autoDto}" method="post">
-                Location: <input type="text" id="locations" th:field="*{locations}" name="locations">  
-                <label for="minPrice">Select Min Price:</label>
-                <select id="minPrice" name="minPrice" th:field="*{minPrice}"></select>
-                <label for="maxPrice">Select Max Price:</label>
-                <select id="maxPrice" name="maxPrice" th:field="*{maxPrice}"></select>
-        
-                <label for="minBeds">Select Min Beds:</label>
-                <select id="minBeds" name="minBeds" th:field="*{minBeds}"></select>
-                <label for="maxBeds">Select Max Beds:</label>
-                <select id="maxBeds" name="maxBeds" th:field="*{maxBeds}"></select>
-
-                <label for="type">Type:</label>
-                <select id="type" th:field="*{propertyType}">
-                    <option value="ANY">Any Property</option>
-                    <option value="houses">House</option>
-                    <option value="apartments">Apartment</option>
-                    <option value="studio-apartments">Studio Apartment</option>
-                </select>
-        
-                <label for="furnished">Furnishing:</label>
-                <select id="furnished" th:field="*{furnishing}">
-                    <option value="Any">Any Furnishing</option>
-                    <option value="furnished">Furnished</option>
-                    <option value="unfurnished">Unfurnished</option>
-                </select>
-        
-                <button type="button" onclick="submitForm('/search')">Search</button>
-            </br>
-                <button type="button" onclick="submitForm('/add-auto')">Automatically apply to future listing</button>
-            </form>
-        
-            <div th:if="${listings != null}">
-                <h2>Listings</h2>
+        <div class="listing-container">
+            <div class="single-listing">
                 <div th:each="listing : ${listings}" class="listing-box">
-                    <div class="listing-title" th:text="${listing.title}"></div>
-                    <div class="listing-price" th:text="${listing.price}"></div>
-                    <img th:src="${listing.images.get(0)}" class="listing-image" alt="Listing Image"/>
-                    <div class="listing-details">
-                        <p>Bedrooms: <span th:text="${listing.numBedrooms}"></span></p>
-                        <p>Bathrooms: <span th:text="${listing.numBathrooms}"></span></p>
-                        <p>Property Type: <span th:text="${listing.propertyType}"></span></p>
+                    <div class="image-container" th:if="${listings != null}">
+                        <div class="slideshow-container">
+
+                            <div th:each="image : ${listing.images}" class="mySlides fade">
+                              <img th:src="${image}" style="width:100%">
+                            </div>
+                          
+                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                        </div>
                     </div>
-            
-                    <form id="applyForm" th:action="@{/apply}" method="post">
-                        <input type="hidden" name="id" th:value="${listing.id}"/>
-                        <input type="hidden" name="title" th:value="${listing.title}"/>
-                        <input type="hidden" name="price" th:value="${listing.price}"/>
-                        <input type="hidden" name="numBedrooms" th:value="${listing.numBedrooms}"/>
-                        <input type="hidden" name="numBathrooms" th:value="${listing.numBathrooms}"/>
-                        <input type="hidden" name="propertyType" th:value="${listing.propertyType}"/>
-                        <button type="submit" id="applyButton">Apply to Rent</button>
-                    </form>
-            
+                    <div class="details-container" th:if="${listings != null}">
+                        <h2>Listings</h2>
+                        <div class="listing-details">
+                            <p>Property Type:</p>
+                            <p class="listing-value">dsa<span th:text="${listing.propertyType}"></span></p>
+                            <p>Location:</p>
+                            <p class="listing-value">dsa<span th:text="${listing.title}"></span></p>
+                            <p>Monthly Price (€):</p>
+                            <p class="listing-value">dsa<span th:text="${listing.price}"></span></p>
+                            <p>Bedrooms:</p>
+                            <p class="listing-value">dsa<span th:text="${listing.numBedrooms}"></span></p>
+                            <!-- <p>Furnished or Unfurnished:</p>
+                            <p><span th:text="${listing.numBathrooms}"></span></p> -->
+                        </div>
+                        
+                        <form id="applyForm" th:action="@{/apply}" method="post">
+                            <input type="hidden" name="id" th:value="${listing.id}"/>
+                            <input type="hidden" name="title" th:value="${listing.title}"/>
+                            <input type="hidden" name="price" th:value="${listing.price}"/>
+                            <input type="hidden" name="numBedrooms" th:value="${listing.numBedrooms}"/>
+                            <input type="hidden" name="numBathrooms" th:value="${listing.numBathrooms}"/>
+                            <input type="hidden" name="propertyType" th:value="${listing.propertyType}"/>
+                            <button type="submit" id="applyButton">Apply to Rent</button>
+                        </form>
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -257,5 +243,32 @@
         $(document).ready(function() {
             populateSelectOptions();
         });
+
+        let slideIndex = 1;
+            showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+        }
     </script>
 </html>

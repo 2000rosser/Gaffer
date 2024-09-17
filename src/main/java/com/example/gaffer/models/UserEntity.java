@@ -70,6 +70,9 @@ public class UserEntity implements UserDetails {
     private boolean credentialsNonExpired;
 
     @Column
+    private boolean landlord;
+
+    @Column
     private boolean autoEnabled;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -221,6 +224,18 @@ public class UserEntity implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public boolean isLandlord() {
+        return this.landlord;
+    }
+
+    public boolean getLandlord() {
+        return this.landlord;
+    }
+
+    public void setLandlord(boolean landlord) {
+        this.landlord = landlord;
     }
 
     @Override
