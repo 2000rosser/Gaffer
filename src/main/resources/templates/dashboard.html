@@ -8,10 +8,42 @@
     </head>
     <body>
         <div th:replace="~{fragments/navbar :: navbar}"></div>
-        <div class="background">
-            
-            <img th:src="@{images/background.png}" alt="cat">
-        </div>
-
+        <main>
+            <section class="dashboard-container">
+                <h1>Welcome to your Dashboard</h1>
+                <div class="card-container">
+                    <div class="card">
+                        <i class="fa fa-home icon"></i>
+                        <h2>Listings Management</h2>
+                        <p>Manage your property listings and track their performance.</p>
+                        <a href="/listing-management" class="btn">Manage Listings</a>
+                    </div>
+    
+                    <div class="card">
+                        <i class="fa fa-users icon"></i>
+                        <h2>Tenant Management</h2>
+                        <p>View and manage tenant information and communications.</p>
+                        <a href="/dashboard" class="btn">Manage Tenants</a>
+                    </div>
+    
+                    <div class="card">
+                        <i class="fa fa-chart-bar icon"></i>
+                        <h2>Statistics & Insights</h2>
+                        <p>Track statistics and gain insights from your properties.</p>
+                        <a href="/dashboard" class="btn">View Insights</a>
+                    </div>
+    
+                    <div class="card">
+                        <i class="fa fa-cog icon"></i>
+                        <h2>Account Settings</h2>
+                        <p>Update your account details and preferences.</p>
+                        <a href="/dashboard" class="btn">Account Settings</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>© 2024 Homesync</p>
+        </footer>
     </body>
 </html>

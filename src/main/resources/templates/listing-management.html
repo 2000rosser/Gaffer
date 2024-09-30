@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Homesync</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/navbar.js"></script>
+    </head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <main>
+        <section class="listings-container">
+            <h1>Manage Your Listings</h1>
+            <div class="listings-grid">
+                <div class="listing-card">
+                    <i class="fa fa-plus-circle icon"></i>
+                    <h2>Create a Listing</h2>
+                    <p>Add a new property listing to your portfolio.</p>
+                    <a href="/listings/create" class="btn">Create</a>
+                </div>
+
+                <div class="listing-card">
+                    <i class="fa fa-edit icon"></i>
+                    <h2>Edit Listings</h2>
+                    <p>Modify existing listings to keep them up-to-date.</p>
+                    <a href="/listings/edit" class="btn">Edit</a>
+                </div>
+
+                <div class="listing-card">
+                    <i class="fa fa-eye icon"></i>
+                    <h2>View Listings</h2>
+                    <p>See all your listings in one place.</p>
+                    <a href="/listings/view" class="btn">View</a>
+                </div>
+
+                <div class="listing-card">
+                    <i class="fa fa-refresh icon"></i>
+                    <h2>Renew Listings</h2>
+                    <p>Extend expired or soon-to-expire listings.</p>
+                    <a href="/listings/renew" class="btn">Renew</a>
+                </div>
+
+                <div class="listing-card">
+                    <i class="fa fa-star icon"></i>
+                    <h2>Feature Listings</h2>
+                    <p>Promote listings to attract more views.</p>
+                    <a href="/listings/feature" class="btn">Feature</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Homesync</p>
+    </footer>
+</body>
+</html>

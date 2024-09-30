@@ -29,7 +29,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/", "/home", "/register", "/api/user", "/api/user/verify", "/api/user/login", "/h2-console", "fragments/**", "images/**", "css/**", "js/**").permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                .requestMatchers("/admin/**", "/**", "/dashboard").hasRole("ADMIN")
+                .requestMatchers("/admin/**", "/**", "/dashboard", "listing-management").hasRole("ADMIN")
                 .requestMatchers("/dashboard").hasRole("LANDLORD")
                 .anyRequest().authenticated()
             )

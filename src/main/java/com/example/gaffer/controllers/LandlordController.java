@@ -11,4 +11,9 @@ public class LandlordController {
         return "dashboard";
     }
 
+    @GetMapping("/listing-management")
+    public String getListingManagement(){
+        return "listing-management";
+    }
+
 }
