@@ -9,47 +9,7 @@
         <meta name="google-signin-client_id" content="673815543430-pki6srhlh45lv6oid2q7ui393v95cif7.apps.googleusercontent.com">
     </head>
     <body>
-        <div class="navbar">
-            <div class="logo">
-                <a th:href="@{/}">
-                <!-- <img th:src="@{images/logo.png}" alt="Homesync Logo"> -->
-                <img src="images/logo.png" alt="Homesync Logo">
-                </a>
-            </div>
-            
-            <div class="center">
-                <!-- <a th:href="@{/find-home}">Find Home</a>
-                <a th:href="@{/landlords}">Landlords</a> -->
-                <!-- <a th:href="@{/mission}">Our Mission</a> -->
-                <!-- <a>Find Home</a> -->
-                <a th:href="@{/auto-rent}">Find Home</a>
-                <a>Landlords</a>
-                <a>Our Mission</a>
-            </div>
-
-            <div class="right" sec:authorize="isAuthenticated()">
-                <div class="box-profile">
-                    <div class="profile-icon" onclick="toggleDropdown()">
-                        <img src="images/profile.png" alt="Profile Icon">
-                    </div>
-                    <div id="profileDropdown" class="dropdown-menu">
-                        <a class="sign" th:href="@{/profile}">My Profile</a>
-                        <a class="sign" th:href="@{/logout}">Sign Out</a>
-                    </div>
-                </div>
-            </div>
-            <div class="right" sec:authorize="!isAuthenticated()">
-                <div class="box-profile">
-                    <div class="profile-icon" onclick="toggleDropdown()">
-                        <img src="images/profile.png" alt="Profile Icon">
-                    </div>
-                    <div id="profileDropdown" class="dropdown-menu">
-                        <a class="sign" th:href="@{/login}">Sign In</a>
-                        <a class="sign" th:href="@{/register}">Sign Up</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
         <div class="login-background-img">
             <img src="images/sign-in.jpg"/>
             <div class="parent-login-container">

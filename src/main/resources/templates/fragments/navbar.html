@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <div th:fragment="navbar">        
+        <div class="navbar">
+            <div class="logo">
+                <a th:href="@{/}">
+                    <img src="images/logo.png" alt="Homesync Logo">
+                </a>
+            </div>
+
+            <div class="center">
+                <a th:href="@{/auto-rent}">Find Home</a>
+                <a>Landlords</a>
+                <a>Our Mission</a>
+            </div>
+
+            <div class="right" sec:authorize="hasRole('ADMIN')">
+                <div class="box-profile">
+                    <div class="profile-icon" onclick="toggleDropdown()">
+                        <img src="images/profile.png" id="profileicon" alt="Profile Icon">
+                    </div>
+                    <div id="profileDropdown" class="dropdown-menu">
+                        <a class="sign" th:href="@{/profile}">My Profile</a>
+                        <a class="sign" th:href="@{/logout}">Sign Out</a>
+                        <a class="sign" th:href="@{/dashboard}">Dashboard</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right" sec:authorize="hasRole('TENANT')">
+                <div class="box-profile">
+                    <div class="profile-icon" onclick="toggleDropdown()">
+                        <img src="images/profile.png" id="profileicon" alt="Profile Icon">
+                    </div>
+                    <div id="profileDropdown" class="dropdown-menu">
+                        <a class="sign" th:href="@{/profile}">My Profile</a>
+                        <a class="sign" th:href="@{/logout}">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right" sec:authorize="!isAuthenticated()">
+                <div class="box-profile">
+                    <div class="profile-icon" onclick="toggleDropdown()">
+                        <img src="images/profile.png" id="profileicon" alt="Profile Icon">
+                    </div>
+                    <div id="profileDropdown" class="dropdown-menu">
+                        <a class="sign" th:href="@{/login}">Sign In</a>
+                        <a class="sign" th:href="@{/register}">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
