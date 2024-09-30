@@ -9,43 +9,40 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <main>
         <section class="listings-container">
-            <h1>Manage Your Listings</h1>
-            <div class="listings-grid">
-                <div class="listing-card">
-                    <i class="fa fa-plus-circle icon"></i>
-                    <h2>Create a Listing</h2>
-                    <p>Add a new property listing to your portfolio.</p>
-                    <a href="/listings/create" class="btn">Create</a>
-                </div>
+            <h1>Your Listings</h1>
 
-                <div class="listing-card">
-                    <i class="fa fa-edit icon"></i>
-                    <h2>Edit Listings</h2>
-                    <p>Modify existing listings to keep them up-to-date.</p>
-                    <a href="/listings/edit" class="btn">Edit</a>
-                </div>
-
-                <div class="listing-card">
-                    <i class="fa fa-eye icon"></i>
-                    <h2>View Listings</h2>
-                    <p>See all your listings in one place.</p>
-                    <a href="/listings/view" class="btn">View</a>
-                </div>
-
-                <div class="listing-card">
-                    <i class="fa fa-refresh icon"></i>
-                    <h2>Renew Listings</h2>
-                    <p>Extend expired or soon-to-expire listings.</p>
-                    <a href="/listings/renew" class="btn">Renew</a>
-                </div>
-
-                <div class="listing-card">
-                    <i class="fa fa-star icon"></i>
-                    <h2>Feature Listings</h2>
-                    <p>Promote listings to attract more views.</p>
-                    <a href="/listings/feature" class="btn">Feature</a>
-                </div>
+            <div class="create-listing">
+                <a href="/listings/create" class="btn create-btn">Create New Listing</a>
             </div>
+
+            <table class="listings-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Location</th>
+                        <th>Price</th>
+                        <th>Beds</th>
+                        <th>Furnishing</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <div th:if="${listings != null}">
+                        <tr th:each="listing : ${listings}">
+                            <td th:text="${listing.id}">1</td>
+                            <td th:text="${listing.title}">Modern Apartment</td>
+                            <td th:text="${listing.location}">New York</td>
+                            <td th:text="${listing.price}">$1500</td>
+                            <td th:text="${listing.beds}">2</td>
+                            <td th:text="${listing.furnishing}">Furnished</td>
+                            <td>
+                                <a th:href="@{/listings/edit/{id}(id=${listing.id})}" class="btn edit-btn">Edit</a>
+                            </td>
+                        </tr>
+                    </div>
+                </tbody>
+            </table>
         </section>
     </main>
 

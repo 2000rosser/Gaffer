@@ -471,54 +471,62 @@ footer {
     text-align: center;
 }
 
-.listings-grid {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 2rem;
-}
-
-.listing-card {
-    background-color: white;
-    width: 22%;
-    padding: 2rem;
-    margin: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    text-align: center;
-}
-
-.listing-card:hover {
-    transform: scale(1.05);
-}
-
-.listing-card .icon {
-    font-size: 3rem;
-    color: #00bfa5;
-    margin-bottom: 1rem;
-}
-
-.listing-card h2 {
-    margin: 1rem 0;
+h1 {
+    margin-bottom: 2rem;
     color: #333;
 }
 
-.listing-card p {
-    color: #777;
+.create-listing {
+    text-align: right;
+    margin-bottom: 1rem;
 }
 
-.listing-card .btn {
+.create-btn {
     background-color: #00bfa5;
     color: white;
     padding: 0.7rem 1.5rem;
     text-decoration: none;
     border-radius: 5px;
-    display: inline-block;
-    margin-top: 1rem;
+    font-size: 1rem;
 }
 
-.listing-card .btn:hover {
+.create-btn:hover {
     background-color: #009e8b;
 }
 
+.listings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.listings-table th, .listings-table td {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: left;
+}
+
+.listings-table th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.listings-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.listings-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.edit-btn {
+    background-color: #00bfa5;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.edit-btn:hover {
+    background-color: #009e8b;
+}
