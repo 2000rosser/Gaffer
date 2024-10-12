@@ -44,6 +44,7 @@ public class LandlordController {
     @PostMapping("/listings/create")
     public String createListing(@ModelAttribute("listing") Listing listing, Authentication authentication, Model model){
         UserEntity user = (UserEntity) authentication.getPrincipal();
+        listing.setSeoTitle("Dublin County");
         listing.setId(String.valueOf(new UUID(0, 20)));
         listing.setUserId(String.valueOf(user.getId()));
 

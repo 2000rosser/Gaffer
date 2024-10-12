@@ -32,16 +32,16 @@ public class Listing {
     private LocalDateTime publishDate;
 
     @Column
-    private String price;
+    private int price;
 
     @Column
     private String abbreviatedPrice;
 
     @Column
-    private String numBedrooms;
+    private int numBedrooms;
 
     @Column
-    private String numBathrooms;
+    private int numBathrooms;
 
     @Column
     private String propertyType;
@@ -77,8 +77,8 @@ public class Listing {
     public Listing(){}
 
     public Listing(String id, String title, String seoTitle, List<String> sections, List<String> saleType,
-                   LocalDateTime publishDate, String price, String abbreviatedPrice, String numBedrooms,
-                   String numBathrooms, String propertyType, List<String> images,
+                   LocalDateTime publishDate, int price, String abbreviatedPrice, int numBedrooms,
+                   int numBathrooms, String propertyType, List<String> images,
                    String xPoint, String yPoint, String seoFriendlyPath, String category, String state) {
         this.id = id;
         this.title = title;
@@ -155,11 +155,11 @@ public class Listing {
         this.publishDate = publishDate;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return this.price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -171,19 +171,19 @@ public class Listing {
         this.abbreviatedPrice = abbreviatedPrice;
     }
 
-    public String getNumBedrooms() {
+    public int getNumBedrooms() {
         return this.numBedrooms;
     }
 
-    public void setNumBedrooms(String numBedrooms) {
+    public void setNumBedrooms(int numBedrooms) {
         this.numBedrooms = numBedrooms;
     }
 
-    public String getNumBathrooms() {
+    public int getNumBathrooms() {
         return this.numBathrooms;
     }
 
-    public void setNumBathrooms(String numBathrooms) {
+    public void setNumBathrooms(int numBathrooms) {
         this.numBathrooms = numBathrooms;
     }
 

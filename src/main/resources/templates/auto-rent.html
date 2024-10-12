@@ -21,9 +21,9 @@
                 <div class="form-container">
                     <h2>Set your personal filters.</h2>
                     <p>Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam facilisis pellentesque ut quis.</p>
-                    <form id="searchForm" th:action="@{/search}" th:object="${autoDto}" method="post">
+                    <form id="searchForm" th:action="@{/search}" th:object="${listingDto}" method="post">
                         <label>Location:</label> 
-                        <input type="text" id="locations" th:field="*{locations}" name="locations">  
+                        <input type="text" id="location" th:field="*{location}" name="location">  
                         <label for="minPrice">Select Min Price:</label>
                         <select id="minPrice" name="minPrice" th:field="*{minPrice}"></select>
                         <label for="maxPrice">Select Max Price:</label>
@@ -60,7 +60,7 @@
         <div class="listing-container">
             <div class="single-listing">
                 <div th:each="listing : ${listings}" class="listing-box">
-                    <div class="image-container" th:if="${listings != null}">
+                    <!-- <div class="image-container" th:if="${listings != null}">
                         <div class="slideshow-container">
 
                             <div th:each="image : ${listing.images}" class="mySlides fade">
@@ -70,7 +70,7 @@
                             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                             <a class="next" onclick="plusSlides(1)">&#10095;</a>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="details-container" th:if="${listings != null}">
                         <h2>Listings</h2>
                         <div class="listing-details">
@@ -126,7 +126,7 @@
             });
         });
         $(function() {
-            $("#locations").autocomplete({
+            $("#location").autocomplete({
                 source: function(request, response) {
                     $.ajax({
                         url: "/autocomplete-auto",
