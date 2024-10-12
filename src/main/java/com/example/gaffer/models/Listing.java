@@ -14,6 +14,9 @@ public class Listing {
     private String id;
 
     @Column
+    private String userId;
+
+    @Column
     private String title;
 
     @Column
@@ -102,6 +105,14 @@ public class Listing {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {

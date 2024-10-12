@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Homesync</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet">
+        <script th:src="@{/js/navbar.js}"></script>
+    </head>
+    <body>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+        <div>
+            <div class="parent-login-container">
+                <div class="login-container">
+                    <h2 style="padding-left: 15px">Create Listing</h1>
+                    <form th:action="@{/listings/create}" th:object="${listing}" method="post">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" name="title" th:field="*{title}" />
+                        </div>
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="text" name="price" th:field="*{price}"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Bedrooms</label>
+                            <input type="text" name="numBedrooms" th:field="*{numBedrooms}"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Bathrooms</label>
+                            <input type="text" name="numBathrooms" th:field="*{numBathrooms}" />
+                        </div>
+                        <div class="form-group">
+                            <label>Property Type</label>
+                            <input type="text" name="propertyType" th:field="*{propertyType}"/>
+                        </div>
+                        <div class="button-container">
+                            <div class="form-group-login"><input type="submit" value="Post Listing"/></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
