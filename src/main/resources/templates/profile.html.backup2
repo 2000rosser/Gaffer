@@ -19,25 +19,22 @@
                         <form id="searchForm" th:action="@{/edit-profile}" th:object="${user}" method="post">
                             <h2>Personal Information</h2>
                             <label>Name:</label> 
-                            <input type="text" id="location" th:field="*{name}" name="name">  
-
-                            <label>Email:</label> 
-                            <input type="text" id="username" th:field="*{username}" name="name">  
+                            <input type="text" id="location" th:field="*{name}" name="name" th:placeholder="${user.name}">  
 
                             <label>Phone Number:</label>
-                            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" />
+                            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" th:placeholder="${user.phoneNumber}"/>
 
                             <label for="location">Location:</label>
-                            <input type="text" id="location" th:field="*{location}" />
+                            <input type="text" id="location" th:field="*{location}" th:placeholder="${user.location}"/>
 
                             <label for="occupation">Occupation:</label>
-                            <input type="text" id="occupation" th:field="*{occupation}"/>
+                            <input type="text" id="occupation" th:field="*{occupation}" th:placeholder="${user.occupation}"/>
 
                             <label for="placeOfWork">Place of Work:</label>
-                            <input type="text" id="placeOfWork" th:field="*{placeOfWork}"/>
+                            <input type="text" id="placeOfWork" th:field="*{placeOfWork}" th:placeholder="${user.placeOfWork}"/>
 
                             <label for="description">About me:</label>
-                            <textarea id="description" th:field="*{description}"></textarea>
+                            <textarea id="description" th:field="*{description}" th:placeholder="${user.description}"></textarea>
                             
                             <label>Attach ID (e.g. passport, driver's license):</label>
                             <input type="file" id="idDocument" name="idDocument" accept=".jpg,.jpeg,.png,.pdf" />

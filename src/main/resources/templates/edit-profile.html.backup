@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Edit Profile</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet">
+        <script th:src="@{/js/navbar.js}"></script>
+        <style>
+            .edit-profile-container {
+                margin: 20px;
+                padding: 20px;
+                border: 1px solid #dee2e6;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+            .edit-profile-container h2 {
+                margin-bottom: 15px;
+            }
+            .edit-profile-container form {
+                display: flex;
+                flex-direction: column;
+            }
+            .edit-profile-container label {
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            .edit-profile-container input,
+            .edit-profile-container textarea {
+                margin-bottom: 15px;
+                padding: 8px;
+                border: 1px solid #ced4da;
+                border-radius: 3px;
+                font-size: 16px;
+            }
+            .edit-profile-container button {
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 3px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            .edit-profile-container button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <div class="edit-profile-container">
+            <h2>Edit Profile</h2>
+            <form th:action="@{/edit-profile}" th:object="${user}" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="Enter your name" />
+
+                <label for="username">Email:</label>
+                <input type="email" id="username" th:field="*{username}" placeholder="Enter your email" />
+
+                <label for="username">Phone Number:</label>
+                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" placeholder="Enter your phone number" />
+
+                <label for="location">Location:</label>
+                <input type="text" id="location" th:field="*{location}" placeholder="Enter your location" />
+
+                <label for="occupation">Occupation:</label>
+                <input type="text" id="occupation" th:field="*{occupation}" placeholder="Enter your occupation" />
+
+                <label for="placeOfWork">Place of Work:</label>
+                <input type="text" id="placeOfWork" th:field="*{placeOfWork}" placeholder="Enter your place of work" />
+
+                <label for="description">Description:</label>
+                <textarea id="description" th:field="*{description}" placeholder="Enter a short description"></textarea>
+
+                <button type="submit">Save Changes</button>
+            </form>
+            <a th:href="@{/add-reference}" class="add-reference-button">Add Reference</a>
+        </div>
+
+    </body>
+</html>

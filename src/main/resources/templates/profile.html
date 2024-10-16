@@ -71,29 +71,45 @@
 
         <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-        <div class="profile-container">
-            <a th:href="@{/edit-profile}" class="edit-button">Edit Profile</a>
-            <h2>User Profile</h2>
-            <p><label>Name:</label> <span th:text="${user.name}"></span></p>
-            <p><label>Email:</label> <span th:text="${user.username}"></span></p>
-            <p><label>Phone Number:</label> <span th:text="${user.phoneNumber}"></span></p>
-            <p><label>Location:</label> <span th:text="${user.location}"></span></p>
-            <p><label>Occupation:</label> <span th:text="${user.occupation}"></span></p>
-            <p><label>Place of Work:</label> <span th:text="${user.placeOfWork}"></span></p>
-            <p><label>Description:</label> <span th:text="${user.description}"></span></p>
+        <div class="search-container">
+            <div class="form-container">
+                <div class="edit-profile-form">
+                    <a th:href="@{/edit-profile}">Edit Profile</a>
+                    <h2>Personal Information</h2>
 
-            <div class="references-container">
-                <h3>References</h3>
-                <a th:href="@{/add-reference}" class="reference-button">Add Reference</a>
-                <div th:each="reference : ${user.references}" class="reference">
-                    <h4 th:text="'Type: ' + ${reference.type}"></h4>
-                    <p><label>Provider Name:</label> <span th:text="${reference.provideName}"></span></p>
-                    <p th:if="${reference.providerEmail}"><label>Provider Email:</label> <span th:text="${reference.providerEmail}"></span></p>
-                    <p th:if="${reference.providerPhoneNumber}"><label>Provider Phone Number:</label> <span th:text="${reference.providerPhoneNumber}"></span></p>
-                    <p><label>Description:</label> <span th:text="${reference.description}"></span></p>
+                    <label>Name:</label> 
+                    <p th:text="${user.name}" class="profile-value"></p>
+
+                    <label>Email:</label> 
+                    <p th:text="${user.username}" class="profile-value"></p>
+                    
+                    <label>Phone Number:</label>
+                    <p th:text="${user.phoneNumber}" class="profile-value"></p>
+
+                    <label>Location:</label>
+                    <p th:text="${user.location}" class="profile-value"></p>
+
+                    <label>Occupation:</label>
+                    <p th:text="${user.occupation}" class="profile-value"></p>
+
+                    <label>Place of Work:</label>
+                    <p th:text="${user.placeOfWork}" class="profile-value"></p>
+
+                    <label>About me:</label>
+                    <p th:text="${user.description}" class="profile-value"></p>
+
+                    <h2>Verification Documents</h2>
+
+                    <label>Attached ID:</label>
+                    <!-- <p th:text="${user.idDocument ?: 'No document uploaded'}" class="profile-value"></p> -->
+
+                    <label>Work Reference:</label>
+                    <!-- <p th:text="${user.workReference ?: 'No document uploaded'}" class="profile-value"></p> -->
+
+                    <label>Previous Landlord Reference:</label>
+                    <!-- <p th:text="${user.landlordReference ?: 'No document uploaded'}" class="profile-value"></p> -->
                 </div>
             </div>
         </div>
-
     </body>
 </html>
