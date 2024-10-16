@@ -1,12 +1,15 @@
 package com.example.gaffer.controllers;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.gaffer.models.Listing;
@@ -48,9 +51,21 @@ public class LandlordController {
         UserEntity user = (UserEntity) authentication.getPrincipal();
         listing.setId(String.valueOf(listingRepository.count()+1));
         listing.setUserId(String.valueOf(user.getId()));
+        listing.setApplications(new HashSet<String>());
 
         listingRepository.save(listing);
         
         return "redirect:/listing-management";
+    }
+
+    @GetMapping("/view-applications/{id}")
+    public String viewApplications(Model model, @PathVariable(required=true, name="id") String id){
+
+        Listing listing = listingRepository.getReferenceById(id);
+        List<String> users = new ArrayList<>();
+        for(String user : listing.getApplications()) users.add(user);
+
+        model.addAttribute("users", users);
+        return "view-applications";
     }
 }

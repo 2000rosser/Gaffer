@@ -2,6 +2,7 @@ package com.example.gaffer.models;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +22,9 @@ public class Listing {
 
     @Column
     private String seoTitle;
+
+    @Column
+    private Set<String> applications;
 
     @Column
     private List<String> sections;
@@ -129,6 +133,14 @@ public class Listing {
 
     public void setSeoTitle(String seoTitle) {
         this.seoTitle = seoTitle;
+    }
+
+    public Set<String> getApplications() {
+        return this.applications;
+    }
+
+    public void setApplications(Set<String> applications) {
+        this.applications = applications;
     }
 
     public List<String> getSections() {

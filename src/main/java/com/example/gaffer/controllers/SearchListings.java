@@ -1,6 +1,8 @@
 package com.example.gaffer.controllers;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 import org.apache.tomcat.util.json.ParseException;
 import org.springframework.data.domain.PageRequest;
@@ -67,9 +69,24 @@ public class SearchListings {
         return "auto-rent";
     }
 
+    /*
+     * Landlords have a List<int> applications where each value in list is an application ID/user ID?
+     * Links to user profiles displayed on landlord applications dashboard
+     */
     @PostMapping("/apply")
     public ResponseEntity<String> applyToRent(@ModelAttribute Listing listing, Authentication authentication, Model model, @SessionAttribute("listings") List<Listing> listings) throws JsonProcessingException {
         UserEntity user = (UserEntity) authentication.getPrincipal();
+        Listing applyingTo = listingRepository.getReferenceById(listing.getId());
+        Set<String> listingApps = applyingTo.getApplications();
+        if(listingApps.contains(String.valueOf(user.getId()))) return ResponseEntity.status(409).body("Application already exists");
+        listingApps.add(String.valueOf(user.getId()));
+        applyingTo.setApplications(listingApps);
+        listingRepository.save(applyingTo);
+        if(user.getApplications()==null) user.setApplications(new HashSet<>());
+        Set<String> userApps = user.getApplications();
+        userApps.add(listing.getId());
+        user.setApplications(userApps);
+        userRepository.save(user);
         
         return ResponseEntity.ok("Success");        
     }

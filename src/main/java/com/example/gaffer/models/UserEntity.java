@@ -46,6 +46,9 @@ public class UserEntity implements UserDetails {
     private List<Reference> references;
 
     @Column
+    private Set<String> applications;
+
+    @Column
     private String occupation;
 
     @Column
@@ -199,6 +202,14 @@ public class UserEntity implements UserDetails {
 
     public void setReferences(List<Reference> references) {
         this.references = references;
+    }
+
+    public Set<String> getApplications() {
+        return this.applications;
+    }
+
+    public void setApplications(Set<String> applications) {
+        this.applications = applications;
     }
 
     public String getOccupation() {

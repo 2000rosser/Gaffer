@@ -9,36 +9,28 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <main>
         <section class="listings-container">
-            <h1>Your Listings</h1>
+            <h1>Your Applications</h1>
 
-            <div class="create-listing">
+            <!-- <div class="create-listing">
                 <a href="/listings/create" class="btn create-btn">Create New Listing</a>
-            </div>
+            </div> -->
 
             <table class="listings-table">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Title</th>
-                        <!-- <th>Location</th> -->
-                        <th>Price</th>
-                        <th>Beds</th>
-                        <th>Baths</th>
-                        <th>Type</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="listing : ${listings}">
-                        <td th:text="${listing.id}"></td>
-                        <td th:text="${listing.title}"></td>
+                    <tr th:each="userId : ${users}">
+                        <td th:text="${userId}"></td>
+                        <!-- <td th:text="${listing.title}"></td>
                         <td th:text="${listing.price}"></td>
                         <td th:text="${listing.numBedrooms}"></td>
                         <td th:text="${listing.numBathrooms}"></td>
-                        <td th:text="${listing.propertyType}"></td>
+                        <td th:text="${listing.propertyType}"></td> -->
                         <td>
-                            <a th:href="@{/listings/edit/{id}(id=${listing.id})}" class="btn edit-btn">Edit</a>
-                            <a th:href="@{/view-applications/{id}(id=${listing.id})}" class="btn edit-btn">View Applications</a>
+                            <a th:href="@{/profile/{id}(id=${userId})}" class="btn edit-btn">View Profile</a>
                         </td>
                     </tr>
                 </tbody>                
