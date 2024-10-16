@@ -75,15 +75,15 @@
                         <h2>Listings</h2>
                         <div class="listing-details">
                             <p>Property Type:</p>
-                            <p class="listing-value">dsa<span th:text="${listing.propertyType}"></span></p>
+                            <p class="listing-value"><span th:text="${listing.propertyType}"></span></p>
                             <p>Location:</p>
-                            <p class="listing-value">dsa<span th:text="${listing.title}"></span></p>
+                            <p class="listing-value"><span th:text="${listing.seoTitle}"></span></p>
                             <p>Monthly Price (€):</p>
-                            <p class="listing-value">dsa<span th:text="${listing.price}"></span></p>
+                            <p class="listing-value"><span th:text="${listing.price}"></span></p>
                             <p>Bedrooms:</p>
-                            <p class="listing-value">dsa<span th:text="${listing.numBedrooms}"></span></p>
-                            <!-- <p>Furnished or Unfurnished:</p>
-                            <p><span th:text="${listing.numBathrooms}"></span></p> -->
+                            <p class="listing-value"><span th:text="${listing.numBedrooms}"></span></p>
+                            <p>Bathrooms:</p>
+                            <p class="listing-value"><span th:text="${listing.numBathrooms}"></span></p>
                         </div>
                         
                         <form id="applyForm" th:action="@{/apply}" method="post">

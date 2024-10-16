@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.gaffer.models.Listing;
 import com.example.gaffer.models.ListingDTO;
+import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.ListingRepository;
 import com.example.gaffer.repositories.UserEntityRepository;
 import com.example.gaffer.services.AutoRentService;
@@ -68,6 +69,7 @@ public class SearchListings {
 
     @PostMapping("/apply")
     public ResponseEntity<String> applyToRent(@ModelAttribute Listing listing, Authentication authentication, Model model, @SessionAttribute("listings") List<Listing> listings) throws JsonProcessingException {
+        UserEntity user = (UserEntity) authentication.getPrincipal();
         
         return ResponseEntity.ok("Success");        
     }
