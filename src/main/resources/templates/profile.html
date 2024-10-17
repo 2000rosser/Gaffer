@@ -18,47 +18,53 @@
                             <button type="submit" class="edit-button">Edit Profile</button>
                         </form>
                     </div>
-
+            
                     <label>Name:</label> 
                     <p th:text="${user.name}" class="profile-value"></p>
-
+            
                     <label>Email:</label> 
                     <p th:text="${user.username}" class="profile-value"></p>
-                    
+            
                     <label>Phone Number:</label>
                     <p th:text="${user.phoneNumber}" class="profile-value"></p>
-
+            
                     <label>Location:</label>
                     <p th:text="${user.location}" class="profile-value"></p>
-
+            
                     <label>Occupation:</label>
                     <p th:text="${user.occupation}" class="profile-value"></p>
-
+            
                     <label>Place of Work:</label>
                     <p th:text="${user.placeOfWork}" class="profile-value"></p>
-
+            
                     <label>About me:</label>
                     <p th:text="${user.description}" class="profile-value"></p>
-
+            
                     <h2>Verification Documents</h2>
-
+            
                     <label>Attached ID:</label>
-                    <div th:if="${base64IdDocument != null}">
-                        <img th:src="'data:image/jpeg;base64,' + ${base64IdDocument}" alt="ID Document" />
-                    </div>
-                    <p th:if="${base64IdDocument == null}">No document uploaded</p>
-
+                    <ul th:if="${idDocumentUrls != null}">
+                        <li th:each="url : ${idDocumentUrls}">
+                            <a th:href="${url}" target="_blank">Download ID Document</a>
+                        </li>
+                    </ul>
+                    <p th:if="${idDocumentUrls == null}">No document uploaded</p>
+            
                     <label>Work Reference:</label>
-                    <div th:if="${base64WorkReference != null}">
-                        <img th:src="'data:image/jpeg;base64,' + ${base64WorkReference}" alt="Work Reference" />
-                    </div>
-                    <p th:if="${base64WorkReference == null}">No document uploaded</p>
-
+                    <ul th:if="${workReferenceUrls != null}">
+                        <li th:each="url : ${workReferenceUrls}">
+                            <a th:href="${url}" target="_blank">Download Work Reference</a>
+                        </li>
+                    </ul>
+                    <p th:if="${workReferenceUrls == null}">No document uploaded</p>
+            
                     <label>Previous Landlord Reference:</label>
-                    <div th:if="${base64LandlordReference != null}">
-                        <img th:src="'data:image/jpeg;base64,' + ${base64LandlordReference}" alt="Landlord Reference" />
-                    </div>
-                    <p th:if="${base64LandlordReference == null}">No document uploaded</p>
+                    <ul th:if="${landlordReferenceUrls != null}">
+                        <li th:each="url : ${landlordReferenceUrls}">
+                            <a th:href="${url}" target="_blank">Download Landlord Reference</a>
+                        </li>
+                    </ul>
+                    <p th:if="${landlordReferenceUrls == null}">No document uploaded</p>
                 </div>
             </div>
         </div>

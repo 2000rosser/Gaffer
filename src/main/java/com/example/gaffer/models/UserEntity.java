@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -19,8 +20,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "app_users")
@@ -49,17 +50,14 @@ public class UserEntity implements UserDetails {
     @Column
     private Set<String> applications;
 
-    @Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] idDocument;
+    @Column
+    private List<String> idDocument;
 
-    @Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] workReference;
+    @Column
+    private List<String> workReference;
 
-    @Lob
-    @Column(columnDefinition = "BLOB")
-    private byte[] landlordReference;
+    @Column
+    private List<String> landlordReference;
 
     @Column
     private String occupation;
@@ -102,6 +100,39 @@ public class UserEntity implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
+
+    @Transient
+    private MultipartFile idDoc;
+
+    @Transient
+    private MultipartFile workDoc;
+
+    @Transient
+    private MultipartFile landDoc;
+
+    public MultipartFile getIdDoc() {
+        return this.idDoc;
+    }
+
+    public void setIdDoc(MultipartFile idDoc) {
+        this.idDoc = idDoc;
+    }
+
+    public MultipartFile getWorkDoc() {
+        return this.workDoc;
+    }
+
+    public void setWorkDoc(MultipartFile workDoc) {
+        this.workDoc = workDoc;
+    }
+
+    public MultipartFile getLandDoc() {
+        return this.landDoc;
+    }
+
+    public void setLandDoc(MultipartFile landDoc) {
+        this.landDoc = landDoc;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -225,27 +256,27 @@ public class UserEntity implements UserDetails {
         this.applications = applications;
     }
 
-    public byte[] getIdDocument() {
+    public List<String> getIdDocument() {
         return this.idDocument;
     }
 
-    public void setIdDocument(byte[] idDocument) {
+    public void setIdDocument(List<String> idDocument) {
         this.idDocument = idDocument;
     }
 
-    public byte[] getWorkReference() {
+    public List<String> getWorkReference() {
         return this.workReference;
     }
 
-    public void setWorkReference(byte[] workReference) {
+    public void setWorkReference(List<String> workReference) {
         this.workReference = workReference;
     }
 
-    public byte[] getLandlordReference() {
+    public List<String> getLandlordReference() {
         return this.landlordReference;
     }
 
-    public void setLandlordReference(byte[] landlordReference) {
+    public void setLandlordReference(List<String> landlordReference) {
         this.landlordReference = landlordReference;
     }
 

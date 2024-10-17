@@ -96,4 +96,12 @@ Welcome to Gaffer! This guide will help you set up the project locally on your m
 6. **Email Verification**
    - Email verification is disabled by default. To test it, use `mailhog` and set `email.verification` to true in `application.properties`
 
+7. **LocalStack (s3 bucket)**
+   - https://docs.localstack.cloud/user-guide/aws/s3/
+   - `podman pull localstack/localstack:s3-latest`
+   - `podman run --rm -p 4566:4566 localstack/localstack:s3-latest`
+   - `aws configure` use dummy for secrets
+   - `aws --endpoint-url=http://localhost:4566 s3 mb s3://my-local-bucket`
+   
+
 ---
