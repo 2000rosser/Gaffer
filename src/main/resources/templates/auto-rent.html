@@ -35,15 +35,15 @@
                         
                         <label for="type">Type:</label>
                         <select id="type" th:field="*{propertyType}">
-                            <option value="ANY">Any Property</option>
-                            <option value="houses">House</option>
-                            <option value="apartments">Apartment</option>
-                            <option value="studio-apartments">Studio Apartment</option>
+                            <option value="any">Any Property</option>
+                            <option value="house">House</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="studio">Studio Apartment</option>
                         </select>
                         
                         <label for="furnished">Furnishing:</label>
                         <select id="furnished" th:field="*{furnishing}">
-                            <option value="Any">Any Furnishing</option>
+                            <option value="any">Any Furnishing</option>
                             <option value="furnished">Furnished</option>
                             <option value="unfurnished">Unfurnished</option>
                         </select>
@@ -59,17 +59,23 @@
         <div class="listing-container">
             <div class="single-listing">
                 <div th:each="listing : ${listings}" class="listing-box">
-                    <!-- <div class="image-container" th:if="${listings != null}">
+                    <div class="image-container" th:if="${listings != null}">
                         <div class="slideshow-container">
 
-                            <div th:each="image : ${listing.images}" class="mySlides fade">
+                            <!-- <div th:each="image : ${listing.images}" class="mySlides fade">
                               <img th:src="${image}" style="width:100%">
-                            </div>
+                            </div> -->
+                            <label>Attached ID:</label>
+                            <ul th:if="${listing.images != null}">
+                                <div th:each="url : ${listing.images}" class="mySlides fade">
+                                    <img th:src="${url}" target="_blank" style="width:100%">
+                                </li>
+                            </ul>
                           
                             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                             <a class="next" onclick="plusSlides(1)">&#10095;</a>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="details-container" th:if="${listings != null}">
                         <h2>Listings</h2>
                         <div class="listing-details">

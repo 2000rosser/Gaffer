@@ -59,8 +59,8 @@ public class SearchListings {
 
     @PostMapping("/search")
     public String fetchListings(@ModelAttribute ListingDTO listingDto, Model model) throws JsonProcessingException, ParseException{
-        if(listingDto.getFurnishing().equals("ANY")) listingDto.setFurnishing(null);
-        if(listingDto.getPropertyType().equals("Any")) listingDto.setPropertyType(null);
+        if(listingDto.getFurnishing().equals("any")) listingDto.setFurnishing(null);
+        if(listingDto.getPropertyType().equals("any")) listingDto.setPropertyType(null);
         List<Listing> listings = listingRepository.searchListings(listingDto.getLocation(), Integer.valueOf(listingDto.getMinPrice()), Integer.valueOf(listingDto.getMaxPrice()), 
         Integer.valueOf(listingDto.getMinBeds()), Integer.valueOf(listingDto.getMaxBeds()), listingDto.getPropertyType(), listingDto.getFurnishing());
         model.addAttribute("listings", listings);
