@@ -102,35 +102,35 @@ public class UserEntity implements UserDetails {
     private List<String> roles;
 
     @Transient
-    private MultipartFile idDoc;
+    private MultipartFile[] idDoc;
 
     @Transient
-    private MultipartFile workDoc;
+    private MultipartFile[] workDoc;
 
     @Transient
-    private MultipartFile landDoc;
+    private MultipartFile[] landDoc;
 
-    public MultipartFile getIdDoc() {
+    public MultipartFile[] getIdDoc() {
         return this.idDoc;
     }
 
-    public void setIdDoc(MultipartFile idDoc) {
+    public void setIdDoc(MultipartFile[] idDoc) {
         this.idDoc = idDoc;
     }
 
-    public MultipartFile getWorkDoc() {
+    public MultipartFile[] getWorkDoc() {
         return this.workDoc;
     }
 
-    public void setWorkDoc(MultipartFile workDoc) {
+    public void setWorkDoc(MultipartFile[] workDoc) {
         this.workDoc = workDoc;
     }
 
-    public MultipartFile getLandDoc() {
+    public MultipartFile[] getLandDoc() {
         return this.landDoc;
     }
 
-    public void setLandDoc(MultipartFile landDoc) {
+    public void setLandDoc(MultipartFile[] landDoc) {
         this.landDoc = landDoc;
     }
 

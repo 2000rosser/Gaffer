@@ -5,7 +5,7 @@ import java.util.UUID;
 import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -53,7 +53,7 @@ public class ProfileController {
         model.addAttribute("user", profile);
 
         if (entity.getIdDocument() != null && !entity.getIdDocument().isEmpty()) {
-            model.addAttribute("idDocumentUrls", entity.getIdDocument());  // List of URLs
+            model.addAttribute("idDocumentUrls", entity.getIdDocument());
         }
 
         if (entity.getWorkReference() != null && !entity.getWorkReference().isEmpty()) {
@@ -101,28 +101,55 @@ public class ProfileController {
     @PostMapping("/edit-profile")
     public String updateProfile(@ModelAttribute("user") UserEntity updatedUser,
                                 Authentication authentication,
-                                @RequestParam("idDoc") MultipartFile idDocumentFile,
-                                @RequestParam("workDoc") MultipartFile workReferenceFile,
-                                @RequestParam("landDoc") MultipartFile landlordReferenceFile) throws IOException {
+                                @RequestParam("idDoc[]") MultipartFile[] idDocumentFile,
+                                @RequestParam("workDoc[]") MultipartFile[] workReferenceFile,
+                                @RequestParam("landDoc[]") MultipartFile[] landlordReferenceFile) throws IOException {
 
         UserEntity entity = (UserEntity) authentication.getPrincipal();
 
-        if (!idDocumentFile.isEmpty()) {
-            String idDocumentUrl = uploadFileToS3(idDocumentFile, "idDocument_" + UUID.randomUUID());
-            if(entity.getIdDocument()==null) entity.setIdDocument(new ArrayList<>(List.of(idDocumentUrl)));
-            else entity.getIdDocument().add(idDocumentUrl);
+        if (idDocumentFile != null && idDocumentFile.length > 0) {
+            Arrays.stream(idDocumentFile).filter(file -> !file.isEmpty()).forEach(file -> {
+                try {
+                    String idDocumentUrl = uploadFileToS3(file, "idDocument_" + UUID.randomUUID());
+                    if (entity.getIdDocument() == null) {
+                        entity.setIdDocument(new ArrayList<>(List.of(idDocumentUrl)));
+                    } else {
+                        entity.getIdDocument().add(idDocumentUrl);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Failed to upload ID document: " + e.getMessage());
+                }
+            });
         }
 
-        if (!workReferenceFile.isEmpty()) {
-            String workReferenceUrl = uploadFileToS3(workReferenceFile, "workReference_" + UUID.randomUUID());
-            if(entity.getWorkReference()==null) entity.setWorkReference(new ArrayList<>(List.of(workReferenceUrl)));
-            else entity.getWorkReference().add(workReferenceUrl);
+        if (workReferenceFile != null && workReferenceFile.length > 0) {
+            Arrays.stream(workReferenceFile).filter(file -> !file.isEmpty()).forEach(file -> {
+                try {
+                    String workReferenceUrl = uploadFileToS3(file, "workReference_" + UUID.randomUUID());
+                    if (entity.getWorkReference() == null) {
+                        entity.setWorkReference(new ArrayList<>(List.of(workReferenceUrl)));
+                    } else {
+                        entity.getWorkReference().add(workReferenceUrl);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Failed to upload work reference: " + e.getMessage());
+                }
+            });
         }
 
-        if (!landlordReferenceFile.isEmpty()) {
-            String landlordReferenceUrl = uploadFileToS3(landlordReferenceFile, "landlordReference_" + UUID.randomUUID());
-            if(entity.getLandlordReference()==null) entity.setLandlordReference(new ArrayList<>(List.of(landlordReferenceUrl)));
-            else entity.getLandlordReference().add(landlordReferenceUrl);
+        if (landlordReferenceFile != null && landlordReferenceFile.length > 0) {
+            Arrays.stream(landlordReferenceFile).filter(file -> !file.isEmpty()).forEach(file -> {
+                try {
+                    String landlordReferenceUrl = uploadFileToS3(file, "landlordReference_" + UUID.randomUUID());
+                    if (entity.getLandlordReference() == null) {
+                        entity.setLandlordReference(new ArrayList<>(List.of(landlordReferenceUrl)));
+                    } else {
+                        entity.getLandlordReference().add(landlordReferenceUrl);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Failed to upload landlord reference: " + e.getMessage());
+                }
+            });
         }
 
         userService.updateUserProfile(entity, updatedUser);

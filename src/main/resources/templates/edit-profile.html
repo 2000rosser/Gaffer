@@ -40,13 +40,13 @@
                             <textarea id="description" th:field="*{description}" name="description"></textarea>
                         
                             <label>Attach ID (e.g. passport, driver's license):</label>
-                            <input type="file" id="idDoc" name="idDoc" accept=".jpg,.jpeg,.png,.pdf" />
-                        
+                            <input type="file" id="idDoc" name="idDoc[]" accept=".jpg,.jpeg,.png,.pdf" multiple />
+
                             <label>Attach Work Reference:</label>
-                            <input type="file" id="workDoc" name="workDoc" accept=".jpg,.jpeg,.png,.pdf" />
-                        
+                            <input type="file" id="workDoc" name="workDoc[]" accept=".jpg,.jpeg,.png,.pdf" multiple />
+
                             <label>Attach Previous Landlord Reference:</label>
-                            <input type="file" id="landDoc" name="landDoc" accept=".jpg,.jpeg,.png,.pdf" />
+                            <input type="file" id="landDoc" name="landDoc[]" accept=".jpg,.jpeg,.png,.pdf" multiple />
                             
                             <div class="search-buttons">
                                 <button type="submit">Save Changes</button>
