@@ -2,15 +2,22 @@ package com.example.gaffer.controllers;
 
 import java.util.Set;
 import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import com.example.gaffer.models.ReferenceRequestDTO;
 import com.example.gaffer.models.UserEntity;
@@ -34,6 +41,21 @@ public class ProfileController {
         UserEntity entity = (UserEntity) authentication.getPrincipal();
         ReferenceRequestDTO profile = userService.getUserProfile(entity.getId());
         model.addAttribute("user", profile);
+        if (entity.getIdDocument() != null) {
+            String base64IdDocument = Base64.getEncoder().encodeToString(entity.getIdDocument());
+            model.addAttribute("base64IdDocument", base64IdDocument);
+        }
+
+        if (entity.getWorkReference() != null) {
+            String base64WorkReference = Base64.getEncoder().encodeToString(entity.getWorkReference());
+            model.addAttribute("base64WorkReference", base64WorkReference);
+        }
+
+        if (entity.getLandlordReference() != null) {
+            String base64LandlordReference = Base64.getEncoder().encodeToString(entity.getLandlordReference());
+            model.addAttribute("base64LandlordReference", base64LandlordReference);
+        }
+
         return "profile";
     }
     
@@ -63,10 +85,32 @@ public class ProfileController {
         return "edit-profile";
     }
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
+    }
+
     @PostMapping("/edit-profile")
-    public String updateProfile(@ModelAttribute("user") UserEntity updatedUser, Authentication authentication) {
+    public String updateProfile(@ModelAttribute("user") UserEntity updatedUser,
+                                Authentication authentication,
+                                @RequestParam("idDocument") MultipartFile idDocumentFile,
+                                @RequestParam("workReference") MultipartFile workReferenceFile,
+                                @RequestParam("landlordReference") MultipartFile landlordReferenceFile) throws IOException {
+        
         UserEntity entity = (UserEntity) authentication.getPrincipal();
+
+        if (!idDocumentFile.isEmpty()) {
+            entity.setIdDocument(idDocumentFile.getBytes());
+        }
+        if (!workReferenceFile.isEmpty()) {
+            entity.setWorkReference(workReferenceFile.getBytes());
+        }
+        if (!landlordReferenceFile.isEmpty()) {
+            entity.setLandlordReference(landlordReferenceFile.getBytes());
+        }
+
         userService.updateUserProfile(entity, updatedUser);
+
         return "redirect:/profile";
     }
 }

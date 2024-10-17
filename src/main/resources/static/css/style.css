@@ -83,36 +83,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container {
-    flex: 1;
-    background-color: #fff;
-    padding-top: 30px;
-    padding-bottom: 0px;
-    padding-left: 90px;
-    padding-right: 40px;
-    margin-bottom: 0px;
-    display: flex;
-    flex-direction: column;
-}
-
-.edit-profile-form {
-    width: 60%;
-    align-self: center;
-    align-content: center;
-}
-
-.form-container h1 {
-    font-size: 24px;
-    color: #00b2a9;;
-    margin-bottom: 20px;
-}
-.form-container p {
-    /* font-size: 24px; */
-    color: rgba(0, 0, 0, 0.5);
-    margin-bottom: 20px;
-    /* opacity: 2px; */
-}
-
 .form-group {
     margin-bottom: 15px;
 }
@@ -216,16 +186,9 @@ body {
     padding-right: 30px;
 }
 .search-container {
-    /* margin: 20px; */
-    /* padding: 20px; */
-    /* border: 1px solid #dee2e6; */
-    /* border-radius: 5px; */
     color: #00b2a9;;
     display: flex;
 }
-/* .form-container button {
-    background-color: #00b2a9;
-} */
 .search-container h2 {
     margin-bottom: 15px;
 }
@@ -264,6 +227,51 @@ body {
 }
 .search-container button:hover {
     background-color: #0056b3;
+}
+.form-container {
+    flex: 1;
+    background-color: #fff;
+    padding-top: 30px;
+    padding-bottom: 0px;
+    padding-left: 90px;
+    padding-right: 40px;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .edit-profile-form {
+    width: 60%;
+    align-self: center;
+    align-content: center;
+} */
+
+.form-container h1 {
+    font-size: 24px;
+    color: #00b2a9;;
+    margin-bottom: 20px;
+}
+.form-container p {
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #666;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.edit-button {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+}
+.edit-profile-form {
+    width: 60%;
+    align-self: center;
 }
 .search-buttons {
     display: flex;

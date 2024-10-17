@@ -19,6 +19,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Entity
@@ -47,6 +48,18 @@ public class UserEntity implements UserDetails {
 
     @Column
     private Set<String> applications;
+
+    @Lob
+    @Column(columnDefinition = "BLOB")
+    private byte[] idDocument;
+
+    @Lob
+    @Column(columnDefinition = "BLOB")
+    private byte[] workReference;
+
+    @Lob
+    @Column(columnDefinition = "BLOB")
+    private byte[] landlordReference;
 
     @Column
     private String occupation;
@@ -210,6 +223,30 @@ public class UserEntity implements UserDetails {
 
     public void setApplications(Set<String> applications) {
         this.applications = applications;
+    }
+
+    public byte[] getIdDocument() {
+        return this.idDocument;
+    }
+
+    public void setIdDocument(byte[] idDocument) {
+        this.idDocument = idDocument;
+    }
+
+    public byte[] getWorkReference() {
+        return this.workReference;
+    }
+
+    public void setWorkReference(byte[] workReference) {
+        this.workReference = workReference;
+    }
+
+    public byte[] getLandlordReference() {
+        return this.landlordReference;
+    }
+
+    public void setLandlordReference(byte[] landlordReference) {
+        this.landlordReference = landlordReference;
     }
 
     public String getOccupation() {

@@ -4,68 +4,6 @@
         <title>User Profile</title>
         <link th:href="@{/css/style.css}" rel="stylesheet">
         <script th:src="@{/js/navbar.js}"></script>
-        <style>
-            .profile-container {
-                position: relative;
-                margin: 20px;
-                padding: 20px;
-                border: 1px solid #dee2e6;
-                border-radius: 5px;
-                background-color: #f9f9f9;
-            }
-            .profile-container h2 {
-                margin-bottom: 15px;
-            }
-            .profile-container p {
-                margin: 10px 0;
-            }
-            .profile-container label {
-                font-weight: bold;
-            }
-            .edit-button {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                padding: 5px 10px;
-                background-color: #007bff;
-                color: white;
-                text-decoration: none;
-                border-radius: 3px;
-                font-size: 14px;
-            }
-            .reference-button {
-                position: absolute;
-                top: 250px;
-                right: 10px;
-                padding: 5px 10px;
-                background-color: #007bff;
-                color: white;
-                text-decoration: none;
-                border-radius: 3px;
-                font-size: 14px;
-            }
-            .edit-button:hover {
-                background-color: #0056b3;
-            }
-            .references-container {
-                margin-top: 30px;
-                padding-top: 20px;
-                border-top: 1px solid #dee2e6;
-            }
-            .reference {
-                margin-bottom: 20px;
-                padding: 10px;
-                border: 1px solid #ced4da;
-                border-radius: 3px;
-                background-color: #e9ecef;
-            }
-            .reference h4 {
-                margin: 0 0 10px;
-            }
-            .reference p {
-                margin: 5px 0;
-            }
-        </style>
     </head>
     <body>
 
@@ -74,8 +12,12 @@
         <div class="search-container">
             <div class="form-container">
                 <div class="edit-profile-form">
-                    <a th:href="@{/edit-profile}">Edit Profile</a>
-                    <h2>Personal Information</h2>
+                    <div class="header">
+                        <h2>Personal Information</h2>
+                        <form action="/edit-profile" method="GET">
+                            <button type="submit" class="edit-button">Edit Profile</button>
+                        </form>
+                    </div>
 
                     <label>Name:</label> 
                     <p th:text="${user.name}" class="profile-value"></p>
@@ -101,13 +43,22 @@
                     <h2>Verification Documents</h2>
 
                     <label>Attached ID:</label>
-                    <!-- <p th:text="${user.idDocument ?: 'No document uploaded'}" class="profile-value"></p> -->
+                    <div th:if="${base64IdDocument != null}">
+                        <img th:src="'data:image/jpeg;base64,' + ${base64IdDocument}" alt="ID Document" />
+                    </div>
+                    <p th:if="${base64IdDocument == null}">No document uploaded</p>
 
                     <label>Work Reference:</label>
-                    <!-- <p th:text="${user.workReference ?: 'No document uploaded'}" class="profile-value"></p> -->
+                    <div th:if="${base64WorkReference != null}">
+                        <img th:src="'data:image/jpeg;base64,' + ${base64WorkReference}" alt="Work Reference" />
+                    </div>
+                    <p th:if="${base64WorkReference == null}">No document uploaded</p>
 
                     <label>Previous Landlord Reference:</label>
-                    <!-- <p th:text="${user.landlordReference ?: 'No document uploaded'}" class="profile-value"></p> -->
+                    <div th:if="${base64LandlordReference != null}">
+                        <img th:src="'data:image/jpeg;base64,' + ${base64LandlordReference}" alt="Landlord Reference" />
+                    </div>
+                    <p th:if="${base64LandlordReference == null}">No document uploaded</p>
                 </div>
             </div>
         </div>

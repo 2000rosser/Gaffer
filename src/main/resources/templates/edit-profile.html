@@ -16,42 +16,42 @@
             <div class="search-container">
                 <div class="form-container">
                     <div class="edit-profile-form">
-                        <form id="searchForm" th:action="@{/edit-profile}" th:object="${user}" method="post">
+                        <form id="searchForm" th:action="@{/edit-profile}" th:object="${user}" method="post" enctype="multipart/form-data">
                             <h2>Personal Information</h2>
                             <label>Name:</label> 
-                            <input type="text" id="location" th:field="*{name}" name="name">  
-
+                            <input type="text" id="name" th:field="*{name}" name="name">  
+                        
                             <label>Email:</label> 
-                            <input type="text" id="username" th:field="*{username}" name="name">  
-
+                            <input type="text" id="username" th:field="*{username}" name="username">  
+                        
                             <label>Phone Number:</label>
-                            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" />
-
+                            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" name="phoneNumber" />
+                        
                             <label for="location">Location:</label>
-                            <input type="text" id="location" th:field="*{location}" />
-
+                            <input type="text" id="location" th:field="*{location}" name="location" />
+                        
                             <label for="occupation">Occupation:</label>
-                            <input type="text" id="occupation" th:field="*{occupation}"/>
-
+                            <input type="text" id="occupation" th:field="*{occupation}" name="occupation"/>
+                        
                             <label for="placeOfWork">Place of Work:</label>
-                            <input type="text" id="placeOfWork" th:field="*{placeOfWork}"/>
-
+                            <input type="text" id="placeOfWork" th:field="*{placeOfWork}" name="placeOfWork"/>
+                        
                             <label for="description">About me:</label>
-                            <textarea id="description" th:field="*{description}"></textarea>
-                            
+                            <textarea id="description" th:field="*{description}" name="description"></textarea>
+                        
                             <label>Attach ID (e.g. passport, driver's license):</label>
                             <input type="file" id="idDocument" name="idDocument" accept=".jpg,.jpeg,.png,.pdf" />
-
+                        
                             <label>Attach Work Reference:</label>
                             <input type="file" id="workReference" name="workReference" accept=".jpg,.jpeg,.png,.pdf" />
-
+                        
                             <label>Attach Previous Landlord Reference:</label>
                             <input type="file" id="landlordReference" name="landlordReference" accept=".jpg,.jpeg,.png,.pdf" />
                             
                             <div class="search-buttons">
                                 <button type="submit">Save Changes</button>
                             </div>
-                        </form>
+                        </form>                        
                     </div>
                 </div>
             </div>
