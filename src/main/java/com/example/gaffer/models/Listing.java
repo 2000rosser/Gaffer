@@ -9,9 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
+@Table(name = "listing")
 public class Listing {
 
     @Id
@@ -59,7 +61,7 @@ public class Listing {
     @Column
     private String furnishing;
 
-    @Column
+    @Column(length = 1024)
     private List<String> images;
 
     @Column

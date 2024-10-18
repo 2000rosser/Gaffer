@@ -1,29 +1,29 @@
 package com.example.gaffer.controllers;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
 import com.example.gaffer.models.Listing;
+import com.example.gaffer.models.UserDto;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.ListingRepository;
+import com.example.gaffer.repositories.UserEntityRepository;
 import com.example.gaffer.services.AutoRentService;
 
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -33,17 +33,20 @@ import software.amazon.awssdk.services.s3.S3Client;
 @Controller
 public class LandlordController {
 
-    @Autowired
     S3Client s3Client;
     private static final String BUCKET_NAME = "my-local-bucket"; 
 
     ListingRepository listingRepository;
     AutoRentService autoService;
+    UserEntityRepository userRepository;
 
-    public LandlordController(ListingRepository listingRepository, AutoRentService autoService){
-        this.listingRepository=listingRepository;
-        this.autoService=autoService;
+    public LandlordController(S3Client s3Client, ListingRepository listingRepository, AutoRentService autoService, UserEntityRepository userRepository) {
+        this.s3Client = s3Client;
+        this.listingRepository = listingRepository;
+        this.autoService = autoService;
+        this.userRepository = userRepository;
     }
+
     
     @GetMapping("/dashboard")
     public String getDashboard(){
@@ -95,10 +98,19 @@ public class LandlordController {
     public String viewApplications(Model model, @PathVariable(required=true, name="id") String id){
 
         Listing listing = listingRepository.getReferenceById(id);
-        List<String> users = new ArrayList<>();
-        for(String user : listing.getApplications()) users.add(user);
+        Set<String> applications = listing.getApplications();
+        Iterable<Long> users = applications.stream()
+            .map(application -> Long.valueOf(application))
+            .collect(Collectors.toList());
+ 
+        List<UserDto> userDtos = new ArrayList<>();
+        for(UserEntity user : userRepository.findAllById(users)){
+            userDtos.add(new UserDto(user.getId(), user.getName(), user.getPhoneNumber(), 
+                                    user.getLocation(), user.getDescription(), 
+                                    user.getOccupation(), user.getUsername()));
+        }
 
-        model.addAttribute("users", users);
+        model.addAttribute("users", userDtos);
         return "view-applications";
     }
 

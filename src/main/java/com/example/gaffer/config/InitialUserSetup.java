@@ -28,6 +28,10 @@ public class InitialUserSetup {
             if (repository.findByUsername("a@a.com").isEmpty()) {
                 UserEntity admin = new UserEntity();
                 admin.setUsername("a@a.com");
+                admin.setDescription("Hi, I am interested in renting your property. Please let me know what you require and I'll provide it.");
+                admin.setPhoneNumber("0872970140");
+                admin.setName("Ross Murphy");
+                admin.setOccupation("Software Engineer");
                 admin.setPassword(passwordEncoder.encode("a"));
                 admin.setEnabled(true);
                 admin.setAccountNonExpired(true);

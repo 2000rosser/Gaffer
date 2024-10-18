@@ -65,10 +65,9 @@
                             <!-- <div th:each="image : ${listing.images}" class="mySlides fade">
                               <img th:src="${image}" style="width:100%">
                             </div> -->
-                            <label>Attached ID:</label>
                             <ul th:if="${listing.images != null}">
                                 <div th:each="url : ${listing.images}" class="mySlides fade">
-                                    <img th:src="${url}" target="_blank" style="width:100%">
+                                    <img th:src="${url}" target="_blank">
                                 </li>
                             </ul>
                           
@@ -79,6 +78,8 @@
                     <div class="details-container" th:if="${listings != null}">
                         <h2>Listings</h2>
                         <div class="listing-details">
+                            <p>Title:</p>
+                            <p class="listing-value"><span th:text="${listing.title}"></span></p>
                             <p>Property Type:</p>
                             <p class="listing-value"><span th:text="${listing.propertyType}"></span></p>
                             <p>Location:</p>

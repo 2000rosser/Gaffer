@@ -18,19 +18,23 @@
             <table class="listings-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone Number</th>
+                        <th>Location</th>
+                        <th>Occupation</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="userId : ${users}">
-                        <td th:text="${userId}"></td>
-                        <!-- <td th:text="${listing.title}"></td>
-                        <td th:text="${listing.price}"></td>
-                        <td th:text="${listing.numBedrooms}"></td>
-                        <td th:text="${listing.numBathrooms}"></td>
-                        <td th:text="${listing.propertyType}"></td> -->
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}" style="display: none;"></td>
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.phoneNumber}"></td>
+                        <td th:text="${user.location}"></td>
+                        <td th:text="${user.occupation}"></td>
+                        <td th:text="${user.username}"></td>
                         <td>
-                            <a th:href="@{/profile/{id}(id=${userId})}" class="btn edit-btn">View Profile</a>
+                            <a th:href="@{/profile/{id}(id=${user.id})}" class="btn edit-btn">View Profile</a>
                         </td>
                     </tr>
                 </tbody>                
