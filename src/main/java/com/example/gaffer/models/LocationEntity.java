@@ -15,6 +15,17 @@ public class LocationEntity {
 
     private String slug;
 
+    @Override
+    public String toString() {
+        return "{" +
+            " code='" + getCode() + "'" +
+            ", bigName='" + getBigName() + "'" +
+            ", name='" + getName() + "'" +
+            ", slug='" + getSlug() + "'" +
+            "}";
+    }
+
+
     public String getCode() {
         return code;
     }

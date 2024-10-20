@@ -32,6 +32,7 @@ public class InitialUserSetup {
                 admin.setPhoneNumber("0872970140");
                 admin.setName("Ross Murphy");
                 admin.setOccupation("Software Engineer");
+                admin.setProfilePicture("https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsib3ZlcmxheVdpdGgiOnsiYnVja2V0IjoibWVkaWFtYXN0ZXItczNldSIsIm9wdGlvbnMiOnsiZ3Jhdml0eSI6ImNlbnRyZSJ9LCJrZXkiOiJ3YXRlcm1hcmstZGFmdC1sb2dvLWxhcmdlLXYzLnBuZyJ9LCJyZXNpemUiOnsiZml0IjoiY292ZXIiLCJ3aWR0aCI6NzIwLCJoZWlnaHQiOjQ4MH19LCJvdXRwdXRGb3JtYXQiOiJqcGVnIiwia2V5IjoiYy8zL2MzZmUzMjVkNzU2YzRlYTZiNThiMzE3YzgyMjQwZDBhLmpwZyJ9?signature=369df980dc188caa6a6e368b9a4c4c7f9db45ec8e1c675562e01dbee7476084c");
                 admin.setPassword(passwordEncoder.encode("a"));
                 admin.setEnabled(true);
                 admin.setAccountNonExpired(true);
@@ -48,7 +49,8 @@ public class InitialUserSetup {
                 admin.setUsername("rossmurphy974@gmail.com");
                 admin.setDescription("Hi, I am interested in renting your property. Please let me know what you require and I'll provide it.");
                 admin.setPhoneNumber("0872970140");
-                admin.setName("Ross Murphy");
+                admin.setProfilePicture("https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsib3ZlcmxheVdpdGgiOnsiYnVja2V0IjoibWVkaWFtYXN0ZXItczNldSIsIm9wdGlvbnMiOnsiZ3Jhdml0eSI6ImNlbnRyZSJ9LCJrZXkiOiJ3YXRlcm1hcmstZGFmdC1sb2dvLWxhcmdlLXYzLnBuZyJ9LCJyZXNpemUiOnsiZml0IjoiY292ZXIiLCJ3aWR0aCI6NzIwLCJoZWlnaHQiOjQ4MH19LCJvdXRwdXRGb3JtYXQiOiJqcGVnIiwia2V5IjoiYy8zL2MzZmUzMjVkNzU2YzRlYTZiNThiMzE3YzgyMjQwZDBhLmpwZyJ9?signature=369df980dc188caa6a6e368b9a4c4c7f9db45ec8e1c675562e01dbee7476084c");
+                admin.setName("Johnnie");
                 admin.setPassword(passwordEncoder.encode("a"));
                 admin.setEnabled(true);
                 admin.setAccountNonExpired(true);
@@ -66,6 +68,7 @@ public class InitialUserSetup {
                 admin.setUsername("kamilko199@gmail.com");
                 admin.setDescription("Hi, I am interested in renting your property. Please let me know what you require and I'll provide it.");
                 admin.setPhoneNumber("0872970140");
+                admin.setProfilePicture("https://media.daft.ie/eyJidWNrZXQiOiJtZWRpYW1hc3Rlci1zM2V1IiwiZWRpdHMiOnsib3ZlcmxheVdpdGgiOnsiYnVja2V0IjoibWVkaWFtYXN0ZXItczNldSIsIm9wdGlvbnMiOnsiZ3Jhdml0eSI6ImNlbnRyZSJ9LCJrZXkiOiJ3YXRlcm1hcmstZGFmdC1sb2dvLWxhcmdlLXYzLnBuZyJ9LCJyZXNpemUiOnsiZml0IjoiY292ZXIiLCJ3aWR0aCI6NzIwLCJoZWlnaHQiOjQ4MH19LCJvdXRwdXRGb3JtYXQiOiJqcGVnIiwia2V5IjoiYy8zL2MzZmUzMjVkNzU2YzRlYTZiNThiMzE3YzgyMjQwZDBhLmpwZyJ9?signature=369df980dc188caa6a6e368b9a4c4c7f9db45ec8e1c675562e01dbee7476084c");
                 admin.setName("Kamil Murphy");
                 admin.setPassword(passwordEncoder.encode("a"));
                 admin.setEnabled(true);

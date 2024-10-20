@@ -50,6 +50,9 @@ public class UserEntity implements UserDetails {
     @Column
     private Set<String> applications;
 
+    @Column(length = 1024)
+    private String profilePicture;
+
     @Column
     private List<String> idDocument;
 
@@ -254,6 +257,14 @@ public class UserEntity implements UserDetails {
 
     public void setApplications(Set<String> applications) {
         this.applications = applications;
+    }
+
+    public String getProfilePicture() {
+        return this.profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public List<String> getIdDocument() {

@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +59,11 @@ public class DataImporter implements CommandLineRunner {
             locationEntityRepository.save(location);
         }
 
+        List<LocationEntity> allOfThem = locationEntityRepository.findAll();
+        Collections.sort(allOfThem, (a, b) -> Integer.valueOf(a.getCode()) - Integer.valueOf(b.getCode()));
+        // for(LocationEntity val : allOfThem){
+        //     System.out.println(val.toString());
+        // }
         System.out.println("Locations have been imported successfully.");
 
         RestTemplate restTemplate = new RestTemplate();
@@ -156,6 +162,10 @@ public class DataImporter implements CommandLineRunner {
             }
         }
         System.out.println("Listings have been imported successfully.");
+
+        // for(LocationEntity val : allOfThem){
+        //     System.out.println(val.toString());
+        // }
 
     }
 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Homesync</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet">
+        <link th:href="@{/css/chat.css}" rel="stylesheet">
+        <script th:src="@{/js/navbar.js}"></script>
+        <script th:src="@{/js/chat.js}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+    </head>
+    <body>
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+        <div id="frame">
+            <div id="sidepanel">
+                <div id="profile">
+                    <div class="wrap">
+                        <img id="profile-img" th:src="${currentUser.profilePicture}" class="online" alt="Profile Picture"/>
+                        <p th:text="${currentUser.name}"></p>
+                    </div>
+                </div>
+                <div id="contacts">
+                    <ul id="contact-list"></ul>
+                </div>
+                <div id="bottom-bar">
+                    <button id="addcontact"><i class="fa fa-user fa-fw"></i><span>Profile</span></button>
+                    <button id="settings"><i class="fa fa-cog fa-fw"></i><span>Settings</span></button>
+                </div>
+            </div>
+            <div class="content">
+                <div class="contact-profile">
+                    <img id="active-contact-img" alt=""/>
+                    <p id="active-contact-name"></p>
+                </div>
+                <div id="messages"></div>
+                <div class="message-input">
+                    <div class="wrap">
+                        <input type="text" id="message-text" placeholder="Write your message..." onkeypress="checkEnter(event)" />
+                        <button id="send-btn" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

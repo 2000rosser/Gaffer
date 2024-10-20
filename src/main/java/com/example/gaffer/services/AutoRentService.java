@@ -198,4 +198,60 @@ public class AutoRentService {
         String jsonPayload = objectMapper.writeValueAsString(listingRequest);
         return jsonPayload;
     }
+
+    // public List<Listing> generateListings(ResponseEntity<String> response) throws ParseException{
+    //     List<Listing> listings = new ArrayList<>();
+
+    //     try {
+    //         JSONObject obj = new JSONObject(response.getBody());
+    //         JSONArray jsonlisting = obj.getJSONArray("listings");
+    //         for (int i=0; i<jsonlisting.length(); i++) {
+    //             JSONObject listingObject = jsonlisting.getJSONObject(i).getJSONObject("listing");
+
+    //             String id = String.valueOf(listingObject.getInt("id"));
+    //             String title = listingObject.optString("title");
+    //             String seoTitle = listingObject.getString("seoTitle");
+
+    //             JSONArray sectionsArray = listingObject.getJSONArray("sections");
+    //             List<String> sections = new ArrayList<>();
+    //             for (int j = 0; j < sectionsArray.length(); j++) {
+    //                 sections.add(sectionsArray.getString(j));
+    //             }
+
+    //             JSONArray saleTypeArray = listingObject.getJSONArray("saleType");
+    //             List<String> saleType = new ArrayList<>();
+    //             for (int j = 0; j < saleTypeArray.length(); j++) {
+    //                 saleType.add(saleTypeArray.getString(j));
+    //             }
+
+    //             long publishDateMillis = listingObject.getLong("publishDate");
+    //             LocalDateTime publishDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(publishDateMillis), ZoneId.systemDefault());
+
+    //             String price = listingObject.getString("price");
+    //             String abbreviatedPrice = listingObject.optString("abbreviatedPrice");
+    //             String numBedrooms = listingObject.optString("numBedrooms");
+    //             String numBathrooms = listingObject.optString("numBathrooms");
+    //             String propertyType = listingObject.optString("propertyType");
+
+    //             JSONArray imagesArray = listingObject.getJSONObject("media").getJSONArray("images");
+    //             List<String> images = new ArrayList<>();
+    //             for (int j = 0; j < imagesArray.length(); j++) {
+    //                 images.add(imagesArray.getJSONObject(j).optString("size720x480", ""));
+    //             }
+
+    //             String xPoint = listingObject.getJSONObject("point").optString("xPoint", "");
+    //             String yPoint = listingObject.getJSONObject("point").optString("yPoint", "");
+    //             String seoFriendlyPath = listingObject.optString("seoFriendlyPath");
+    //             String category = listingObject.optString("category");
+    //             String state = listingObject.optString("state");
+    //             Listing listing = new Listing();
+
+    //             listings.add(listing);
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return listings;
+    
+    // }
 }
