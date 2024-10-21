@@ -21,10 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
-import com.example.gaffer.models.ReferenceRequestDTO;
+import com.example.gaffer.models.UserDto;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.models.Listing;
 import com.example.gaffer.repositories.ListingRepository;
+import com.example.gaffer.repositories.UserEntityRepository;
 import com.example.gaffer.services.UserService;
 
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -40,6 +41,7 @@ public class ProfileController {
 
     UserService userService;
     ListingRepository listingRepository;
+    @Autowired UserEntityRepository userRepository;
 
     public ProfileController(UserService userService, ListingRepository listingRepository){
         this.userService=userService;
@@ -49,7 +51,7 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Model model, Authentication authentication) {
         UserEntity entity = (UserEntity) authentication.getPrincipal();
-        ReferenceRequestDTO profile = userService.getUserProfile(entity.getId());
+        UserDto profile = userService.getUserProfile(entity.getId());
         model.addAttribute("user", profile);
 
         if (entity.getIdDocument() != null && !entity.getIdDocument().isEmpty()) {
@@ -70,20 +72,29 @@ public class ProfileController {
     @GetMapping("/profile/{id}")
     public String publicProfile(Model model, Authentication authentication, @PathVariable(required=true,name="id") String id) {
         UserEntity entity = (UserEntity) authentication.getPrincipal();
-        Set<String> applications = entity.getApplications();
-        List<Listing> listings = new ArrayList<>();
-        for(String value : applications) listings.add(listingRepository.getReferenceById(value));
+        List<Listing> listings = listingRepository.findByUserId(String.valueOf(entity.getId()));
         boolean allowed=false;
-        for(Listing listing : listings) {
-            if(listing.getUserId().equals(String.valueOf(entity.getId()))){
-                allowed=true;
+        for(Listing listing : listings){
+            if(listing.getApplications().contains(id)){
+                allowed = true;
             }
         }
         if(allowed==false) return "home";
 
-        ReferenceRequestDTO profile = userService.getUserProfile(entity.getId());
+        UserDto profile = userService.getUserProfile(Long.valueOf(id));
         model.addAttribute("user", profile);
-        return "profile";
+        if (entity.getIdDocument() != null && !entity.getIdDocument().isEmpty()) {
+            model.addAttribute("idDocumentUrls", entity.getIdDocument());
+        }
+
+        if (entity.getWorkReference() != null && !entity.getWorkReference().isEmpty()) {
+            model.addAttribute("workReferenceUrls", entity.getWorkReference());
+        }
+
+        if (entity.getLandlordReference() != null && !entity.getLandlordReference().isEmpty()) {
+            model.addAttribute("landlordReferenceUrls", entity.getLandlordReference());
+        }
+        return "profile-view";
     }
 
     @GetMapping("/edit-profile")

@@ -68,6 +68,9 @@ public class UserEntity implements UserDetails {
     @Column
     private String placeOfWork;
 
+    @Column
+    private Set<Long> contacts;
+
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -326,6 +329,14 @@ public class UserEntity implements UserDetails {
 
     public void setLandlord(boolean landlord) {
         this.landlord = landlord;
+    }
+
+    public Set<Long> getContacts() {
+        return this.contacts;
+    }
+
+    public void setContacts(Set<Long> contacts) {
+        this.contacts = contacts;
     }
 
     @Override

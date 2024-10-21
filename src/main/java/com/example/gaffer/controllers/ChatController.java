@@ -1,6 +1,6 @@
 package com.example.gaffer.controllers;
 
-import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.gaffer.models.ChatMessage;
 import com.example.gaffer.models.ChatNotification;
+import com.example.gaffer.models.UserDto;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.UserEntityRepository;
 import com.example.gaffer.services.ChatMessageService;
 import com.example.gaffer.services.ChatRoomService;
+import com.example.gaffer.services.UserService;
 
 @Controller
 public class ChatController {
@@ -38,31 +40,45 @@ public class ChatController {
     @Autowired
     private UserEntityRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/open-chat")
     public String openChat(Model model, Authentication authentication){
-        model.addAttribute("currentUser", (UserEntity) authentication.getPrincipal());
+        model.addAttribute("currentUser", userService.getUserProfileWithEntity((UserEntity) authentication.getPrincipal()));
+        return "chat";
+    }
+
+    @GetMapping("/open-chat/{recipientId}")
+    public String openChatWithUser(@PathVariable String recipientId, Model model, Authentication authentication){
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        if(user.getContacts()==null) {
+            user.setContacts(new LinkedHashSet<>());
+        }
+        if(!user.getContacts().contains(Long.valueOf(recipientId)) && Long.valueOf(recipientId) != user.getId()){
+            user.getContacts().add(Long.valueOf(recipientId));
+            userRepository.save(user);
+        }
+        model.addAttribute("currentUser", userService.getUserProfileWithEntity(user));
         return "chat";
     }
 
     @GetMapping("/current-user")
     @ResponseBody
-    public UserEntity getCurrentUser(Authentication authentication){
-        return (UserEntity) authentication.getPrincipal(); 
+    public UserDto getCurrentUser(Authentication authentication){
+        return userService.getUserProfileWithEntity((UserEntity) authentication.getPrincipal()); 
     }
 
     @GetMapping("/users")
     @ResponseBody
     public List<UserEntity> getAllUsers(Authentication authentication){
-        List<UserEntity> users = userRepository.findAll();
-        UserEntity curr = (UserEntity) authentication.getPrincipal();
-        Iterator<UserEntity> iterator = users.iterator();
-
-        while (iterator.hasNext()) {
-            UserEntity user = iterator.next();
-            if (curr.getId().equals(user.getId())) {
-                iterator.remove(); 
-            }
+        UserEntity authUser = (UserEntity) authentication.getPrincipal();
+        UserEntity user = userRepository.findById(authUser.getId()).get();
+        if(user.getContacts()==null) {
+            user.setContacts(new LinkedHashSet<>());
+            userRepository.save(user);
         }
+        List<UserEntity> users = userRepository.findAllById(user.getContacts());
         
         return users;
     }
@@ -74,6 +90,12 @@ public class ChatController {
         chatMessage.setChatId(chatId.get());
         chatMessage.setId(UUID.randomUUID().toString());
         ChatMessage saved = chatMessageService.save(chatMessage);
+        UserEntity recipient = userRepository.findById(Long.valueOf(chatMessage.getRecipientId())).get();
+        if(recipient.getContacts()==null) recipient.setContacts(new LinkedHashSet<>());
+        if(!recipient.getContacts().contains(Long.valueOf(saved.getSenderId()))){
+            recipient.getContacts().add(Long.valueOf(saved.getSenderId()));
+        }
+        userRepository.save(recipient);
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getRecipientId(),"/queue/messages",
                 new ChatNotification(

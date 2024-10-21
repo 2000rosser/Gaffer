@@ -105,9 +105,9 @@ public class LandlordController {
  
         List<UserDto> userDtos = new ArrayList<>();
         for(UserEntity user : userRepository.findAllById(users)){
-            userDtos.add(new UserDto(user.getId(), user.getName(), user.getPhoneNumber(), 
-                                    user.getLocation(), user.getDescription(), 
-                                    user.getOccupation(), user.getUsername()));
+            userDtos.add(new UserDto(user.getId(), user.getName(), user.getPhoneNumber(), user.getLocation(),
+            user.getDescription(), user.getOccupation(), user.getUsername(), user.getPlaceOfWork(),
+            user.getProfilePicture(), user.getIdDoc(), user.getWorkDoc(), user.getLandDoc()));
         }
 
         model.addAttribute("users", userDtos);

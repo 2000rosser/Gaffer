@@ -76,9 +76,11 @@ function loadContacts() {
         .then(response => response.json())
         .then(users => {
             let contactsList = document.getElementById("contact-list");
+            let i=0;
             contactsList.innerHTML = "";
             users.forEach(user => {
                 let contactItem = document.createElement("li");
+                i++;
                 contactItem.className = "contact";
                 contactItem.onclick = () => setActiveContact(user);
                 contactItem.innerHTML = `
@@ -89,6 +91,9 @@ function loadContacts() {
                         </div>
                     </div>`;
                 contactsList.appendChild(contactItem);
+                if (activeContact == null && i === 1){
+                    setActiveContact(user);
+                }
             });
         });
 }

@@ -82,10 +82,11 @@ public class SearchListings {
         listingApps.add(String.valueOf(user.getId()));
         applyingTo.setApplications(listingApps);
         listingRepository.save(applyingTo);
-        if(user.getApplications()==null) user.setApplications(new HashSet<>());
-        Set<String> userApps = user.getApplications();
-        userApps.add(listing.getId());
-        user.setApplications(userApps);
+        UserEntity landlord = userRepository.findById(Long.valueOf(applyingTo.getUserId())).get();
+        if(landlord.getApplications()==null) landlord.setApplications(new HashSet<>());
+        Set<String> landlordApps = landlord.getApplications();
+        landlordApps.add(listing.getId());
+        user.setApplications(landlordApps);
         userRepository.save(user);
         
         return ResponseEntity.ok("Success");        

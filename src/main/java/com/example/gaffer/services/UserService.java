@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.gaffer.models.Reference;
-import com.example.gaffer.models.ReferenceRequestDTO;
+import com.example.gaffer.models.UserDto;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.UserEntityRepository;
 
@@ -19,10 +19,17 @@ public class UserService {
         this.repository=repository;
     }
 
-    public ReferenceRequestDTO getUserProfile(Long userId) {
+    public UserDto getUserProfile(Long userId) {
         UserEntity user = repository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return new ReferenceRequestDTO(user.getName(), user.getUsername(), user.getPhoneNumber(), user.getLocation(), user.getDescription(), 
-                                    user.getReferences(), user.getOccupation(), user.getPlaceOfWork());
+        return new UserDto(user.getId(), user.getName(), user.getPhoneNumber(), user.getLocation(),
+        user.getDescription(), user.getOccupation(), user.getUsername(), user.getPlaceOfWork(),
+        user.getProfilePicture(), user.getIdDoc(), user.getWorkDoc(), user.getLandDoc());
+    }
+
+    public UserDto getUserProfileWithEntity(UserEntity user) {
+        return new UserDto(user.getId(), user.getName(), user.getPhoneNumber(), user.getLocation(),
+        user.getDescription(), user.getOccupation(), user.getUsername(), user.getPlaceOfWork(),
+        user.getProfilePicture(), user.getIdDoc(), user.getWorkDoc(), user.getLandDoc());
     }
 
     public void updateUserProfile(UserEntity entity, UserEntity updatedUser) {

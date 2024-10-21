@@ -36,6 +36,7 @@
                         <td th:text="${user.username}"></td>
                         <td>
                             <a th:href="@{/profile/{id}(id=${user.id})}" class="btn edit-btn">View Profile</a>
+                            <a th:href="@{/open-chat/{recipientId}(recipientId=${user.id})}" class="btn edit-btn">Message</a>
                         </td>
                     </tr>
                 </tbody>                

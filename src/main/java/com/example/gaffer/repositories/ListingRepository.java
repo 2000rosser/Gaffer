@@ -10,7 +10,7 @@ import com.example.gaffer.models.Listing;
 
 public interface ListingRepository extends JpaRepository<Listing, String> {
     
-    List<Listing> findByUserId(@Param("name") String name);
+    List<Listing> findByUserId(@Param("id") String id);
 
     @Query("SELECT l FROM Listing l WHERE " +
        "(:location IS NULL OR l.seoTitle = :location) " +
