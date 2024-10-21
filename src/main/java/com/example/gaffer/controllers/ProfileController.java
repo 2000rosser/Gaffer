@@ -99,7 +99,8 @@ public class ProfileController {
 
     @GetMapping("/edit-profile")
     public String showEditProfile(Model model, Authentication authentication) {
-        UserEntity entity = (UserEntity) authentication.getPrincipal();
+        UserEntity authEntity = (UserEntity) authentication.getPrincipal();
+        UserEntity entity = userRepository.findById(authEntity.getId()).get();
         model.addAttribute("user", entity);
         return "edit-profile";
     }
@@ -112,12 +113,21 @@ public class ProfileController {
     @PostMapping("/edit-profile")
     public String updateProfile(@ModelAttribute("user") UserEntity updatedUser,
                                 Authentication authentication,
+                                @RequestParam("profilePic") MultipartFile profilePicture,
                                 @RequestParam("idDoc[]") MultipartFile[] idDocumentFile,
                                 @RequestParam("workDoc[]") MultipartFile[] workReferenceFile,
                                 @RequestParam("landDoc[]") MultipartFile[] landlordReferenceFile) throws IOException {
 
         UserEntity entity = (UserEntity) authentication.getPrincipal();
 
+        if (profilePicture != null) {
+            try {
+                String idDocumentUrl = uploadFileToS3(profilePicture, "profilePicture_" + UUID.randomUUID());
+                entity.setProfilePicture(idDocumentUrl);
+            } catch (Exception e) {
+                System.err.println("Failed to upload ID document: " + e.getMessage());
+            }
+        }
         if (idDocumentFile != null && idDocumentFile.length > 0) {
             Arrays.stream(idDocumentFile).filter(file -> !file.isEmpty()).forEach(file -> {
                 try {

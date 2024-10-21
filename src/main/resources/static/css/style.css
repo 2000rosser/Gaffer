@@ -90,7 +90,7 @@ body {
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    color: #666;
+    /* color: #666; */
 }
 
 .form-group input {
@@ -185,6 +185,11 @@ body {
     padding-left: 0px;
     padding-right: 30px;
 }
+#searchForm img {
+    width: 90px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
 .search-container {
     color: #00b2a9;;
     display: flex;
@@ -238,6 +243,12 @@ body {
     margin-bottom: 0px;
     display: flex;
     flex-direction: column;
+}
+
+.form-container img {
+    width: 90px;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 /* .edit-profile-form {

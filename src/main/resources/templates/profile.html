@@ -19,52 +19,77 @@
                         </form>
                     </div>
             
-                    <label>Name:</label> 
-                    <p th:text="${user.name}" class="profile-value"></p>
-            
-                    <label>Email:</label> 
-                    <p th:text="${user.username}" class="profile-value"></p>
-            
-                    <label>Phone Number:</label>
-                    <p th:text="${user.phoneNumber}" class="profile-value"></p>
-            
-                    <label>Location:</label>
-                    <p th:text="${user.location}" class="profile-value"></p>
-            
-                    <label>Occupation:</label>
-                    <p th:text="${user.occupation}" class="profile-value"></p>
-            
-                    <label>Place of Work:</label>
-                    <p th:text="${user.placeOfWork}" class="profile-value"></p>
-            
-                    <label>About me:</label>
-                    <p th:text="${user.description}" class="profile-value"></p>
-            
+                    <div class="form-group">
+                        <label>Name:</label> 
+                        <p th:text="${user.name}" class="profile-value"></p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Profile Picture:</label>
+                        <img th:src="${user.profilePicture}" class="profile-picture"/>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Email:</label> 
+                        <p th:text="${user.username}" class="profile-value"></p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Phone Number:</label>
+                        <p th:text="${user.phoneNumber}" class="profile-value"></p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Location:</label>
+                        <p th:text="${user.location}" class="profile-value"></p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Occupation:</label>
+                        <p th:text="${user.occupation}" class="profile-value"></p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Place of Work:</label>
+                        <p th:text="${user.placeOfWork}" class="profile-value"></p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>About me:</label>
+                        <p th:text="${user.description}" class="profile-value"></p>
+                    </div>
+        
                     <h2>Verification Documents</h2>
-            
-                    <label>Attached ID:</label>
-                    <ul th:if="${idDocumentUrls != null}">
-                        <li th:each="url : ${idDocumentUrls}">
-                            <a th:href="${url}" target="_blank">Download ID Document</a>
-                        </li>
-                    </ul>
-                    <p th:if="${idDocumentUrls == null}">No document uploaded</p>
-            
-                    <label>Work Reference:</label>
-                    <ul th:if="${workReferenceUrls != null}">
-                        <li th:each="url : ${workReferenceUrls}">
-                            <a th:href="${url}" target="_blank">Download Work Reference</a>
-                        </li>
-                    </ul>
-                    <p th:if="${workReferenceUrls == null}">No document uploaded</p>
-            
-                    <label>Previous Landlord Reference:</label>
-                    <ul th:if="${landlordReferenceUrls != null}">
-                        <li th:each="url : ${landlordReferenceUrls}">
-                            <a th:href="${url}" target="_blank">Download Landlord Reference</a>
-                        </li>
-                    </ul>
-                    <p th:if="${landlordReferenceUrls == null}">No document uploaded</p>
+        
+                    <div class="form-group">
+                        <label>Attached ID:</label>
+                        <ul th:if="${idDocumentUrls != null}">
+                            <li th:each="url : ${idDocumentUrls}">
+                                <a th:href="${url}" target="_blank">Download ID Document</a>
+                            </li>
+                        </ul>
+                        <p th:if="${idDocumentUrls == null}">No document uploaded</p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Work Reference:</label>
+                        <ul th:if="${workReferenceUrls != null}">
+                            <li th:each="url : ${workReferenceUrls}">
+                                <a th:href="${url}" target="_blank">Download Work Reference</a>
+                            </li>
+                        </ul>
+                        <p th:if="${workReferenceUrls == null}">No document uploaded</p>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Previous Landlord Reference:</label>
+                        <ul th:if="${landlordReferenceUrls != null}">
+                            <li th:each="url : ${landlordReferenceUrls}">
+                                <a th:href="${url}" target="_blank">Download Landlord Reference</a>
+                            </li>
+                        </ul>
+                        <p th:if="${landlordReferenceUrls == null}">No document uploaded</p>
+                    </div>
                 </div>
             </div>
         </div>
