@@ -13,47 +13,55 @@
         <div th:replace="~{fragments/navbar :: navbar}"></div>
         
         <div>
-            <div class="search-container">
-                <div class="image-container">
-                    <img src="images/search-img.png" alt="Search Image" />
-                </div>
-                <div class="form-container">
-                    <h2>Set your personal filters.</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit tortor eu dolorol egestas morbi sem vulputate etiam facilisis pellentesque ut quis.</p>
-                    <form id="searchForm" th:action="@{/search}" th:object="${listingDto}" method="post">
-                        <label>Location:</label> 
-                        <input type="text" id="location" th:field="*{location}" name="location">  
-                        <label for="minPrice">Select Min Price:</label>
-                        <select id="minPrice" name="minPrice" th:field="*{minPrice}"></select>
-                        <label for="maxPrice">Select Max Price:</label>
-                        <select id="maxPrice" name="maxPrice" th:field="*{maxPrice}"></select>
-                        
-                        <label for="minBeds">Select Min Beds:</label>
-                        <select id="minBeds" name="minBeds" th:field="*{minBeds}"></select>
-                        <label for="maxBeds">Select Max Beds:</label>
-                        <select id="maxBeds" name="maxBeds" th:field="*{maxBeds}"></select>
-                        
-                        <label for="type">Type:</label>
-                        <select id="type" th:field="*{propertyType}">
-                            <option value="any">Any Property</option>
-                            <option value="house">House</option>
-                            <option value="apartment">Apartment</option>
-                            <option value="studio">Studio Apartment</option>
-                        </select>
-                        
-                        <label for="furnished">Furnishing:</label>
-                        <select id="furnished" th:field="*{furnishing}">
-                            <option value="any">Any Furnishing</option>
-                            <option value="furnished">Furnished</option>
-                            <option value="unfurnished">Unfurnished</option>
-                        </select>
+            <div class="search-section">
+                <div class="search-form-wrapper">
+                    <form id="searchForm" th:action="@{/search}" th:object="${listingDto}" method="post" class="search-form-columns">
+                        <div class="search-row">
+                            <div class="search-column">
+                                <label>Location:</label>
+                                <input type="text" id="location" th:field="*{location}" name="location">
+                            </div>
+                            <div class="search-column">
+                                <label for="minPrice">Min Price:</label>
+                                <select id="minPrice" name="minPrice" th:field="*{minPrice}"></select>
+                            </div>
+                            <div class="search-column">
+                                <label for="maxPrice">Max Price:</label>
+                                <select id="maxPrice" name="maxPrice" th:field="*{maxPrice}"></select>
+                            </div>
+                            <div class="search-column">
+                                <label for="minBeds">Min Beds:</label>
+                                <select id="minBeds" name="minBeds" th:field="*{minBeds}"></select>
+                            </div>
+                            <div class="search-column">
+                                <label for="maxBeds">Max Beds:</label>
+                                <select id="maxBeds" name="maxBeds" th:field="*{maxBeds}"></select>
+                            </div>
+                            <div class="search-column">
+                                <label for="type">Type:</label>
+                                <select id="type" th:field="*{propertyType}">
+                                    <option value="any">Any Property</option>
+                                    <option value="house">House</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="studio">Studio Apartment</option>
+                                </select>
+                            </div>
+                            <div class="search-column">
+                                <label for="furnished">Furnishing:</label>
+                                <select id="furnished" th:field="*{furnishing}">
+                                    <option value="any">Any Furnishing</option>
+                                    <option value="furnished">Furnished</option>
+                                    <option value="unfurnished">Unfurnished</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="search-buttons">
                             <button type="button" onclick="submitForm('/search')">View Listings</button>
-                            <button type="button" onclick="submitForm('/add-auto')">Create Auto-Apply</button>
                             <button id="save-search" type="button">Save Search</button>
                         </div>
-                </form>
-            </div>
+                    </form>
+                </div>
+            </div> 
         </div>
 
         <div class="listing-container">

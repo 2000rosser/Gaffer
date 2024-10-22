@@ -49,6 +49,18 @@ public class SearchListings {
         return "auto-rent";
     }
 
+    @GetMapping("home")
+    public String getHome(Model model){
+        model.addAttribute("listingDto", new ListingDTO());
+        return "home";
+    }
+
+    @GetMapping("/")
+    public String getRoot(Model model){
+        model.addAttribute("listingDto", new ListingDTO());
+        return "home";
+    }
+
     @GetMapping("/autocomplete-auto")
     @ResponseBody
     public List<String> getLocations(@RequestParam("term") String term) {

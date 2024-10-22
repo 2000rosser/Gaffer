@@ -2,15 +2,151 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <title>Homesync</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <link th:href="@{/css/style.css}" rel="stylesheet">
         <script th:src="@{/js/navbar.js}"></script>
     </head>
     <body>
         <div th:replace="~{fragments/navbar :: navbar}"></div>
+        <div class="search-section">
+            <div class="search-form-wrapper">
+                <form id="searchForm" th:action="@{/search}" th:object="${listingDto}" method="post" class="search-form-columns">
+                    <div class="search-row">
+                        <div class="search-column">
+                            <label>Location:</label>
+                            <input type="text" id="location" th:field="*{location}" name="location">
+                        </div>
+                        <div class="search-column">
+                            <label for="minPrice">Min Price:</label>
+                            <select id="minPrice" name="minPrice" th:field="*{minPrice}"></select>
+                        </div>
+                        <div class="search-column">
+                            <label for="maxPrice">Max Price:</label>
+                            <select id="maxPrice" name="maxPrice" th:field="*{maxPrice}"></select>
+                        </div>
+                        <div class="search-column">
+                            <label for="minBeds">Min Beds:</label>
+                            <select id="minBeds" name="minBeds" th:field="*{minBeds}"></select>
+                        </div>
+                        <div class="search-column">
+                            <label for="maxBeds">Max Beds:</label>
+                            <select id="maxBeds" name="maxBeds" th:field="*{maxBeds}"></select>
+                        </div>
+                        <div class="search-column">
+                            <label for="type">Type:</label>
+                            <select id="type" th:field="*{propertyType}">
+                                <option value="any">Any Property</option>
+                                <option value="house">House</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="studio">Studio Apartment</option>
+                            </select>
+                        </div>
+                        <div class="search-column">
+                            <label for="furnished">Furnishing:</label>
+                            <select id="furnished" th:field="*{furnishing}">
+                                <option value="any">Any Furnishing</option>
+                                <option value="furnished">Furnished</option>
+                                <option value="unfurnished">Unfurnished</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="search-buttons">
+                        <button type="button" onclick="submitForm('/search')">View Listings</button>
+                        <button id="save-search" type="button">Save Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>             
         <div class="background">
             
             <img th:src="@{images/background.png}" alt="cat">
         </div>
 
     </body>
+    <script>
+        $(document).ready(function() {
+            populateSelectOptions();
+            $('#applyForm').on('submit', function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+                
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        $('#applyButton').text("Success");
+                        $('#applyButton').prop('disabled', true)
+                        $('#applyButton').css('background-color', '#cccccc')
+                    },
+                    badrequest: function(response) {
+                        $('#applyButton').text("Success");
+                    },
+                    error: function(xhr, status, error) {
+                        $('#applyButton').text('Failed');
+                    }
+                });
+            });
+        });
+        $(function() {
+            $("#location").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "/autocomplete-auto",
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function(data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 3
+            });
+        });
+        function generatePrices() {
+            var res = [];
+            var incrementer=100;
+            for (var i = 200; i < 20001; i+=incrementer){
+                res.push(i);
+                if(i==2500){
+                    incrementer=500;
+                }
+            }
+            return res;
+        }
+
+        function generateBeds() {
+            var res = [];
+            for (var i = 1; i < 16; i+=1){
+                res.push(i);
+            }
+            return res;
+        }
+
+        function populateSelectOptions() {
+            var prices = generatePrices();
+            var beds = generateBeds();
+            var $selectMinPrice = $("#minPrice");
+            var $selectMaxPrice = $("#maxPrice");
+            var $selectMinBeds = $("#minBeds");
+            var $selectMaxBeds = $("#maxBeds");
+            prices.forEach(function(price) {
+                $selectMinPrice.append($('<option></option>').val(price).text('€' + price));
+                $selectMaxPrice.append($('<option></option>').val(price).text('€' + price));
+            });
+            beds.forEach(function(bed) {
+                $selectMinBeds.append($('<option></option>').val(bed).text(bed));
+                $selectMaxBeds.append($('<option></option>').val(bed).text(bed));
+            });
+        }
+        function submitForm(actionUrl) {
+            var form = document.getElementById('searchForm');
+            form.action = actionUrl;
+            form.submit();
+        }
+    </script>
 </html>
