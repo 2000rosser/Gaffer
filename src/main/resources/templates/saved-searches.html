@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link th:href="@{/css/style.css}" rel="stylesheet">
+        <script th:src="@{/js/navbar.js}"></script>
+        <title>Spring Security Example</title>
+    </head>
+    <body>
+
+        <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+        <div class="saved-searches-container">
+            <h2>Saved Searches</h2>
+            <div class="saved-searches" th:each="listingDto : ${listingDtos}">
+                <div class="saved-search" th:if="${listingDto != null}">
+                    <div class="search-row">
+                        <div class="search-column">
+                            <strong>Location:</strong>
+                            <span th:text="${listingDto.location}"></span>
+                        </div>
+                        <div class="search-column">
+                            <strong>Min Price:</strong>
+                            <span th:text="${listingDto.minPrice}"></span>
+                        </div>
+                        <div class="search-column">
+                            <strong>Max Price:</strong>
+                            <span th:text="${listingDto.maxPrice}"></span>
+                        </div>
+                        <div class="search-column">
+                            <strong>Min Bedrooms:</strong>
+                            <span th:text="${listingDto.minBeds}"></span>
+                        </div>
+                        <div class="search-column">
+                            <strong>Max Bedrooms:</strong>
+                            <span th:text="${listingDto.maxBeds}"></span>
+                        </div>
+                        <div class="search-column">
+                            <strong>Property Type:</strong>
+                            <span th:text="${listingDto.propertyType}"></span>
+                        </div>
+                        <div class="search-column">
+                            <strong>Property Type:</strong>
+                            <span th:text="${listingDto.furnishing}"></span>
+                        </div>
+                    </div>
+                    <form id="applyForm" th:action="@{/search}" method="post">
+                        <input type="hidden" name="location" th:value="${listingDto.location}"/>
+                        <input type="hidden" name="minPrice" th:value="${listingDto.minPrice}"/>
+                        <input type="hidden" name="maxPrice" th:value="${listingDto.maxPrice}"/>
+                        <input type="hidden" name="minBeds" th:value="${listingDto.minBeds}"/>
+                        <input type="hidden" name="maxBeds" th:value="${listingDto.maxBeds}"/>
+                        <input type="hidden" name="propertyType" th:value="${listingDto.propertyType}"/>
+                        <input type="hidden" name="furnishing" th:value="${listingDto.furnishing}"/>
+                        <button type="submit" id="applyButton">View Listings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

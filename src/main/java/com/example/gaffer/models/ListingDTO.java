@@ -2,6 +2,7 @@ package com.example.gaffer.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import java.util.Objects;
 
 @Embeddable
 public class ListingDTO {
@@ -107,5 +108,45 @@ public class ListingDTO {
 
     public void setFurnishing(String furnishing) {
         this.furnishing = furnishing;
+    }
+
+    public ListingDTO location(String location) {
+        setLocation(location);
+        return this;
+    }
+
+    public ListingDTO minPrice(String minPrice) {
+        setMinPrice(minPrice);
+        return this;
+    }
+
+    public ListingDTO maxPrice(String maxPrice) {
+        setMaxPrice(maxPrice);
+        return this;
+    }
+
+    public ListingDTO minBeds(String minBeds) {
+        setMinBeds(minBeds);
+        return this;
+    }
+
+    public ListingDTO maxBeds(String maxBeds) {
+        setMaxBeds(maxBeds);
+        return this;
+    }
+
+    public ListingDTO propertyType(String propertyType) {
+        setPropertyType(propertyType);
+        return this;
+    }
+
+    public ListingDTO furnishing(String furnishing) {
+        setFurnishing(furnishing);
+        return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(location, minPrice, maxPrice, minBeds, maxBeds, propertyType, furnishing);
     }
 }

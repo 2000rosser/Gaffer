@@ -71,6 +71,9 @@ public class UserEntity implements UserDetails {
     @Column
     private Set<Long> contacts;
 
+    @Column
+    private Set<Long> savedSearches;
+
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -337,6 +340,14 @@ public class UserEntity implements UserDetails {
 
     public void setContacts(Set<Long> contacts) {
         this.contacts = contacts;
+    }
+
+    public Set<Long> getSavedSearches() {
+        return this.savedSearches;
+    }
+
+    public void setSavedSearches(Set<Long> savedSearches) {
+        this.savedSearches = savedSearches;
     }
 
     @Override

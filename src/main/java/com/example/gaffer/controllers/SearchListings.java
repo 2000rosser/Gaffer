@@ -1,10 +1,12 @@
 package com.example.gaffer.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.HashSet;
 
-import org.apache.tomcat.util.json.ParseException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +23,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.gaffer.models.Listing;
 import com.example.gaffer.models.ListingDTO;
+import com.example.gaffer.models.SavedSearch;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.ListingRepository;
+import com.example.gaffer.repositories.SavedSearchRepository;
 import com.example.gaffer.repositories.UserEntityRepository;
 import com.example.gaffer.services.AutoRentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,11 +40,13 @@ public class SearchListings {
     private final AutoRentService autoService;
     private final ListingRepository listingRepository;
     private final UserEntityRepository userRepository;
+    private final SavedSearchRepository savedSearchRepository;
 
-    public SearchListings(AutoRentService autoService, ListingRepository listingRepository, UserEntityRepository userRepository) {
+    public SearchListings(AutoRentService autoService, ListingRepository listingRepository, UserEntityRepository userRepository, SavedSearchRepository savedSearchRepository) {
         this.autoService = autoService;
         this.listingRepository = listingRepository;
         this.userRepository = userRepository;
+        this.savedSearchRepository = savedSearchRepository;
     }
 
     @GetMapping("auto-rent")
@@ -70,16 +76,96 @@ public class SearchListings {
     }
 
     @PostMapping("/search")
-    public String fetchListings(@ModelAttribute ListingDTO listingDto, Model model) throws JsonProcessingException, ParseException{
-        if(listingDto.getFurnishing().equals("any")) listingDto.setFurnishing(null);
-        if(listingDto.getPropertyType().equals("any")) listingDto.setPropertyType(null);
+    public String fetchListings(@ModelAttribute ListingDTO listingDto, Model model){
+        if(listingDto.getFurnishing().equals("any") || listingDto.getFurnishing().equals("")) listingDto.setFurnishing(null);
+        if(listingDto.getPropertyType().equals("any") || listingDto.getPropertyType().equals("")) listingDto.setPropertyType(null);
         List<Listing> listings = listingRepository.searchListings(listingDto.getLocation(), Integer.valueOf(listingDto.getMinPrice()), Integer.valueOf(listingDto.getMaxPrice()), 
         Integer.valueOf(listingDto.getMinBeds()), Integer.valueOf(listingDto.getMaxBeds()), listingDto.getPropertyType(), listingDto.getFurnishing());
         model.addAttribute("listings", listings);
+        model.addAttribute("listingDto", listingDto);
+        
+        return "auto-rent";
+    }
+
+    /*
+     * Saved search database. ID is the hashcode of the search filter,
+     * Have a set of of user ID's that use the filter.
+     * When new notification posted, should loop through each filter and send notification to each user
+     * 
+     * OR
+     * do we also store the filters in the SearchFilter
+     * could then queery matching filters when new listing posted
+     */
+    @PostMapping("/save-search")
+    public String saveSearch(@ModelAttribute ListingDTO listingDto, Model model, Authentication authentication) {
+        Optional<UserEntity> optionalUser = userRepository.findById(((UserEntity) authentication.getPrincipal()).getId());
+        UserEntity user = new UserEntity();
+        if(optionalUser.isPresent()) user = optionalUser.get();
+        else return "/login";
+
+        if(listingDto.getFurnishing().equals("any") || listingDto.getFurnishing().equals("")) listingDto.setFurnishing(null);
+        if(listingDto.getPropertyType().equals("any") || listingDto.getPropertyType().equals("")) listingDto.setPropertyType(null);
+
+        Long hash = Long.valueOf(listingDto.hashCode());
+
+        Optional<SavedSearch> search = savedSearchRepository.findById(hash);
+
+        Set<Long> userSavedSearches = new HashSet<>();
+        if(search.isPresent()){
+            Set<Long> filterSubscribers = search.get().getUserIds();
+            filterSubscribers.add(user.getId());
+            savedSearchRepository.save(search.get());
+            if(user.getSavedSearches()==null){
+                userSavedSearches.add(hash);
+            }else{
+                userSavedSearches = user.getSavedSearches();
+                userSavedSearches.add(hash);
+            }
+            
+        }else{
+            Set<Long> filterSubscribers = new HashSet<>();
+            filterSubscribers.add(user.getId());
+            SavedSearch searchNew = new SavedSearch(Long.valueOf(listingDto.hashCode()), listingDto, filterSubscribers);
+            savedSearchRepository.save(searchNew);
+            if(user.getSavedSearches()==null){
+                userSavedSearches.add(hash);
+            }else{
+                userSavedSearches = user.getSavedSearches();
+                userSavedSearches.add(hash);
+            }
+        }
+
+        user.setSavedSearches(userSavedSearches);
+
+        userRepository.save(user);
+
         model.addAttribute("listingDto", new ListingDTO());
         
         return "auto-rent";
     }
+
+    @GetMapping("/save-search")
+    public String getSaveSearch(Model model, Authentication authentication) {
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        
+        Optional<UserEntity> optionalUser = userRepository.findById(user.getId());
+        if (!optionalUser.isPresent()) {
+            return "redirect:/login";
+        }
+
+        Set<Long> searchIds = optionalUser.get().getSavedSearches();
+        List<ListingDTO> dtos = new ArrayList<>();
+        if(searchIds!=null && searchIds.size()>0){
+            List<SavedSearch> savedSearches = savedSearchRepository.findAllById(searchIds);
+
+            dtos = savedSearches.stream()
+                                                .map(SavedSearch::getFilters)
+                                                .collect(Collectors.toList());
+        }
+        model.addAttribute("listingDtos", dtos);
+        return "saved-searches";
+    }
+
 
     /*
      * Landlords have a List<int> applications where each value in list is an application ID/user ID?
