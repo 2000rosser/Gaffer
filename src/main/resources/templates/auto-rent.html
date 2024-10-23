@@ -131,7 +131,13 @@
                         $('#applyButton').css('background-color', '#cccccc')
                     },
                     badrequest: function(response) {
-                        $('#applyButton').text("Success");
+                        $('#applyButton').text("Failed");
+                    },
+                    statusCode: {
+                        401: function(response) {
+                            $('#applyButton').text("Apply to Rent");
+                            window.location.href = '/login';
+                        }
                     },
                     error: function(xhr, status, error) {
                         $('#applyButton').text('Failed');

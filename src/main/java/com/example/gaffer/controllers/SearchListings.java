@@ -87,6 +87,7 @@ public class SearchListings {
      */
     @PostMapping("/apply")
     public ResponseEntity<String> applyToRent(@ModelAttribute Listing listing, Authentication authentication, Model model, @SessionAttribute("listings") List<Listing> listings) throws JsonProcessingException {
+        if(authentication==null || !authentication.isAuthenticated()) return ResponseEntity.status(401).body("Unauthorised");
         UserEntity user = (UserEntity) authentication.getPrincipal();
         Listing applyingTo = listingRepository.getReferenceById(listing.getId());
         Set<String> listingApps = applyingTo.getApplications();
