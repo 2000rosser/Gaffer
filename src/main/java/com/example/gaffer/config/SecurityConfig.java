@@ -27,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/home", "/register", "/auto-rent", "/apply", "/autocomplete-auto", "/search", "/api/user", "/api/user/verify", "/api/user/login", "/h2-console", "fragments/**", "images/**", "css/**", "js/**").permitAll()
+                .requestMatchers("/", "/home", "/register", "/listings", "/apply", "/autocomplete-auto", "/search", "/api/user", "/api/user/verify", "/api/user/login", "/h2-console", "fragments/**", "images/**", "css/**", "js/**").permitAll()
                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                 .requestMatchers("/admin/**", "/open-chat", "/current-user", "/chat", "/messages", "/messages/**", "/app", "/app/**", "/ws", "/**", "/dashboard", "listing-management").hasRole("ADMIN")
                 .requestMatchers("/dashboard").hasRole("LANDLORD")

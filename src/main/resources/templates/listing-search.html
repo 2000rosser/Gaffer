@@ -40,18 +40,18 @@
                             <div class="search-column">
                                 <label for="type">Type:</label>
                                 <select id="type" th:field="*{propertyType}">
-                                    <option value="any">Any Property</option>
-                                    <option value="house">House</option>
-                                    <option value="apartment">Apartment</option>
-                                    <option value="studio">Studio Apartment</option>
+                                    <option value="Any">Any Property</option>
+                                    <option value="House">House</option>
+                                    <option value="Apartment">Apartment</option>
+                                    <option value="Studio">Studio Apartment</option>
                                 </select>
                             </div>
                             <div class="search-column">
                                 <label for="furnished">Furnishing:</label>
                                 <select id="furnished" th:field="*{furnishing}">
-                                    <option value="any">Any Furnishing</option>
-                                    <option value="furnished">Furnished</option>
-                                    <option value="unfurnished">Unfurnished</option>
+                                    <option value="Any">Any Furnishing</option>
+                                    <option value="Furnished">Furnished</option>
+                                    <option value="Unfurnished">Unfurnished</option>
                                 </select>
                             </div>
                         </div>
@@ -65,55 +65,26 @@
         </div>
 
         <div class="listing-container">
-            <div class="single-listing">
-                <div th:each="listing : ${listings}" class="listing-box">
-                    <div class="image-container" th:if="${listings != null}">
-                        <div class="slideshow-container">
-
-                            <!-- <div th:each="image : ${listing.images}" class="mySlides fade">
-                              <img th:src="${image}" style="width:100%">
-                            </div> -->
-                            <ul th:if="${listing.images != null}">
-                                <div th:each="url : ${listing.images}" class="mySlides fade">
-                                    <img th:src="${url}" target="_blank">
-                                </li>
-                            </ul>
-                          
-                            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                        </div>
+            <div th:each="listing : ${listings}" class="single-listing">
+                <div class="listing-box">
+                    <div class="image-container" th:if="${listing.images != null and #lists.size(listing.images) > 0}">
+                        <img th:src="${listing.images[0]}" alt="Listing Image" />
                     </div>
-                    <div class="details-container" th:if="${listings != null}">
-                        <h2>Listings</h2>
-                        <div class="listing-details">
-                            <p>Title:</p>
-                            <p class="listing-value"><span th:text="${listing.title}"></span></p>
-                            <p>Property Type:</p>
-                            <p class="listing-value"><span th:text="${listing.propertyType}"></span></p>
-                            <p>Location:</p>
-                            <p class="listing-value"><span th:text="${listing.seoTitle}"></span></p>
-                            <p>Monthly Price (€):</p>
-                            <p class="listing-value"><span th:text="${listing.price}"></span></p>
-                            <p>Bedrooms:</p>
-                            <p class="listing-value"><span th:text="${listing.numBedrooms}"></span></p>
-                            <p>Bathrooms:</p>
-                            <p class="listing-value"><span th:text="${listing.numBathrooms}"></span></p>
-                        </div>
-                        
+                    <div class="details-container">
+                        <h3 th:text="${listing.title}"></h3>
+                        <p class="price" th:text="'€' + ${listing.price} + ' per month'"></p>
+                        <p class="summary">
+                            <span th:text="${listing.numBedrooms} + ' Bed • ' + ${listing.numBathrooms} + ' Bath • ' + ${listing.propertyType}"></span>
+                        </p>
                         <form id="applyForm" th:action="@{/apply}" method="post">
-                            <input type="hidden" name="id" th:value="${listing.id}"/>
-                            <input type="hidden" name="title" th:value="${listing.title}"/>
-                            <input type="hidden" name="price" th:value="${listing.price}"/>
-                            <input type="hidden" name="numBedrooms" th:value="${listing.numBedrooms}"/>
-                            <input type="hidden" name="numBathrooms" th:value="${listing.numBathrooms}"/>
-                            <input type="hidden" name="propertyType" th:value="${listing.propertyType}"/>
+                            <input type="hidden" name="id" th:value="${listing.id}" />
                             <button type="submit" id="applyButton">Apply to Rent</button>
                         </form>
-                        
                     </div>
                 </div>
             </div>
         </div>
+        
     </body>
     <script>
         $(document).ready(function() {

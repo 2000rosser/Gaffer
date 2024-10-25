@@ -49,13 +49,13 @@ public class SearchListings {
         this.savedSearchRepository = savedSearchRepository;
     }
 
-    @GetMapping("auto-rent")
+    @GetMapping("/listings")
     public String getAutoRent(Model model){
         model.addAttribute("listingDto", new ListingDTO());
-        return "auto-rent";
+        return "listing-search";
     }
 
-    @GetMapping("home")
+    @GetMapping("/home")
     public String getHome(Model model){
         model.addAttribute("listingDto", new ListingDTO());
         return "home";
@@ -77,14 +77,14 @@ public class SearchListings {
 
     @PostMapping("/search")
     public String fetchListings(@ModelAttribute ListingDTO listingDto, Model model){
-        if(listingDto.getFurnishing().equals("any") || listingDto.getFurnishing().equals("")) listingDto.setFurnishing(null);
-        if(listingDto.getPropertyType().equals("any") || listingDto.getPropertyType().equals("")) listingDto.setPropertyType(null);
-        List<Listing> listings = listingRepository.searchListings(listingDto.getLocation(), Integer.valueOf(listingDto.getMinPrice()), Integer.valueOf(listingDto.getMaxPrice()), 
+        if(listingDto.getFurnishing().equals("Any") || listingDto.getFurnishing().equals("")) listingDto.setFurnishing(null);
+        if(listingDto.getPropertyType().equals("Any") || listingDto.getPropertyType().equals("")) listingDto.setPropertyType(null);
+        List<Listing> listings = listingRepository.searchListings(listingDto.getLocation().isEmpty() || listingDto.getLocation() == null ? null : listingDto.getLocation(), Integer.valueOf(listingDto.getMinPrice()), Integer.valueOf(listingDto.getMaxPrice()), 
         Integer.valueOf(listingDto.getMinBeds()), Integer.valueOf(listingDto.getMaxBeds()), listingDto.getPropertyType(), listingDto.getFurnishing());
         model.addAttribute("listings", listings);
         model.addAttribute("listingDto", listingDto);
         
-        return "auto-rent";
+        return "listing-search";
     }
 
     /*
@@ -141,7 +141,7 @@ public class SearchListings {
 
         model.addAttribute("listingDto", new ListingDTO());
         
-        return "auto-rent";
+        return "listing-search";
     }
 
     @GetMapping("/save-search")

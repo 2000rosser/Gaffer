@@ -126,9 +126,9 @@ public class DataImporter implements CommandLineRunner {
                     // }
                     // String numBathrooms = listingObject.optString("numBathrooms");
                     String propertyType = listingObject.optString("propertyType");
-                    if(propertyType.equals("Apartment")) propertyType = "apartment";
-                    if(propertyType.equals("House")) propertyType = "house";
-                    if(propertyType.equals("Studio")) propertyType = "studio";
+                    // if(propertyType.equals("Apartment")) propertyType = "apartment";
+                    // if(propertyType.equals("House")) propertyType = "house";
+                    // if(propertyType.equals("Studio")) propertyType = "studio";
 
                     List<String> images = new ArrayList<>();
                     JSONObject mediaObject = listingObject.getJSONObject("media");
