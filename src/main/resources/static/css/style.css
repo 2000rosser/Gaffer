@@ -301,6 +301,22 @@ body {
     margin: 20px auto;
 }
 
+.listing-box a.btn {
+    padding: 10px 20px;
+    background-color: #00b2a9;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.listing-box a.btn:hover {
+    background-color: #008a7f;
+}
+
 .image-container {
     flex: 1;
     max-width: 250px;
@@ -659,4 +675,52 @@ h1 {
     .search-row {
         grid-template-columns: 1fr;
     }
+}
+
+.ad-listing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.image-ad-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+.main-ad-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.side-ad-images {
+    display: grid;
+    gap: 10px;
+}
+
+.side-ad-images img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.ad-details-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.ad-details-container h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.price, .summary {
+    font-size: 1.2em;
+    margin-bottom: 10px;
 }

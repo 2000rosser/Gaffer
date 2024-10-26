@@ -76,10 +76,7 @@
                         <p class="summary">
                             <span th:text="${listing.numBedrooms} + ' Bed • ' + ${listing.numBathrooms} + ' Bath • ' + ${listing.propertyType}"></span>
                         </p>
-                        <form id="applyForm" th:action="@{/apply}" method="post">
-                            <input type="hidden" name="id" th:value="${listing.id}" />
-                            <button type="submit" id="applyButton">Apply to Rent</button>
-                        </form>
+                        <a th:href="@{/listing/{id}(id=${listing.id})}" class="btn">View Listing</a>
                     </div>
                 </div>
             </div>

@@ -31,7 +31,7 @@ public class Listing {
     @Column
     private Set<String> applications;
 
-    @Column
+    @Column(length = 1024)
     private String description;
 
     @Column
@@ -63,7 +63,7 @@ public class Listing {
 
     @Column(length = 1024)
     private List<String> images;
-
+    
     @Column
     private String xPoint;
 
