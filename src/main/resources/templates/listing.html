@@ -6,22 +6,35 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <link th:href="@{/css/style.css}" rel="stylesheet">
         <script th:src="@{/js/navbar.js}"></script>
-        <title>Spring Security Example</title>
+        <title>Property Listing</title>
     </head>
     <body>
 
         <div th:replace="~{fragments/navbar :: navbar}"></div>
 
         <div class="ad-listing-container">
-            <h3 th:text="${listing.title}"></h3>
+            <h3 class="listing-title" th:text="${listing.title}"></h3>
             <div class="listing-ad-box">
                 <div class="image-ad-container" th:if="${listing.images != null and #lists.size(listing.images) > 0}">
                     <div class="main-ad-image">
-                        <img th:src="${listing.images[0]}" alt="Listing Image" />
+                        <img th:src="${listing.images[0]}" onclick="openModal();currentSlide(0)" alt="Listing Image" />
                     </div>
                     <div class="side-ad-images" th:if="${#lists.size(listing.images) > 2}">
-                        <img th:src="${listing.images[1]}" alt="Listing Image" />
-                        <img th:src="${listing.images[2]}" alt="Listing Image" />
+                        <img th:src="${listing.images[1]}" onclick="openModal();currentSlide(1)" alt="Listing Image" />
+                        <img th:src="${listing.images[2]}" onclick="openModal();currentSlide(2)" alt="Listing Image" />
+                    </div>
+                </div>
+                <div id="myModal" class="modal">
+                    <span class="close cursor" onclick="closeModal()">&times;</span>
+                    <div class="modal-content">
+                  
+                        <div class="mySlides" th:each="image, stat : ${listing.images}">
+                            <div class="numbertext" th:text="${stat.index + 1} + ' / ' + ${#lists.size(listing.images)}"></div>
+                            <img th:src="${image}" style="width:100%">
+                        </div>
+                    
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
                     </div>
                 </div>
                 <div class="ad-details-container">
@@ -35,12 +48,13 @@
                     </p>
                     <form id="applyForm" th:action="@{/apply}" method="post">
                         <input type="hidden" name="id" th:value="${listing.id}" />
-                        <button type="submit" id="applyButton">Apply to Rent</button>
+                        <button type="submit" id="applyButton" class="apply-button">Apply to Rent</button>
                     </form>
                 </div>
             </div>
         </div>
     </body>
+
     <script>
         $(document).ready(function() {
             $('#applyForm').on('submit', function(event) {
@@ -71,5 +85,35 @@
                 });
             });
         });
+
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n + 1);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
     </script>
 </html>

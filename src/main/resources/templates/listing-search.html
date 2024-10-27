@@ -66,7 +66,7 @@
 
         <div class="listing-container">
             <div th:each="listing : ${listings}" class="single-listing">
-                <div class="listing-box">
+                <a th:href="@{/listing/{id}(id=${listing.id})}" class="listing-box">
                     <div class="image-container" th:if="${listing.images != null and #lists.size(listing.images) > 0}">
                         <img th:src="${listing.images[0]}" alt="Listing Image" />
                     </div>
@@ -76,11 +76,10 @@
                         <p class="summary">
                             <span th:text="${listing.numBedrooms} + ' Bed • ' + ${listing.numBathrooms} + ' Bath • ' + ${listing.propertyType}"></span>
                         </p>
-                        <a th:href="@{/listing/{id}(id=${listing.id})}" class="btn">View Listing</a>
                     </div>
-                </div>
+                </a>
             </div>
-        </div>
+        </div>        
         
     </body>
     <script>
