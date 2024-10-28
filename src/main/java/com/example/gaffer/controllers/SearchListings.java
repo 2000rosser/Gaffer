@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.example.gaffer.models.Listing;
 import com.example.gaffer.models.ListingDTO;
 import com.example.gaffer.models.SavedSearch;
+import com.example.gaffer.models.UserDto;
 import com.example.gaffer.models.UserEntity;
 import com.example.gaffer.repositories.ListingRepository;
 import com.example.gaffer.repositories.SavedSearchRepository;
 import com.example.gaffer.repositories.UserEntityRepository;
 import com.example.gaffer.services.AutoRentService;
+import com.example.gaffer.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 
@@ -42,13 +45,19 @@ public class SearchListings {
     private final ListingRepository listingRepository;
     private final UserEntityRepository userRepository;
     private final SavedSearchRepository savedSearchRepository;
+    private final UserService userService;
 
-    public SearchListings(AutoRentService autoService, ListingRepository listingRepository, UserEntityRepository userRepository, SavedSearchRepository savedSearchRepository) {
+    @Value("${google.maps.api.key}")
+    private String apiKey;
+
+    public SearchListings(AutoRentService autoService, ListingRepository listingRepository, UserEntityRepository userRepository, SavedSearchRepository savedSearchRepository, UserService userService) {
         this.autoService = autoService;
         this.listingRepository = listingRepository;
         this.userRepository = userRepository;
         this.savedSearchRepository = savedSearchRepository;
+        this.userService = userService;
     }
+
 
     @GetMapping("/listings")
     public String getAutoRent(Model model){
@@ -195,7 +204,16 @@ public class SearchListings {
     @GetMapping("/listing/{id}")
     public String viewListing(Model model, @PathVariable(required=true, name="id") String id){
         Listing listing = listingRepository.findById(id).get();
+        UserDto userDto = userService.getUserProfile(Long.valueOf(listing.getUserId()));
+        model.addAttribute("landlord", userDto);
         model.addAttribute("listing", listing);
         return "listing";
+    }
+
+    @GetMapping("/map-url")
+    @ResponseBody
+    public String getMapUrl(@RequestParam("lat") double lat, @RequestParam("lng") double lng) {
+        String mapUrl = "https://www.google.com/maps/embed/v1/place?key=" + apiKey + "&q=" + lat + "," + lng;
+        return mapUrl;
     }
 }

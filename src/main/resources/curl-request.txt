@@ -166,3 +166,17 @@ curl -X POST "https://gateway.daft.ie/old/v1/listings" \
    "to": "now",
    "name": "firstPublishDate"
 }
+curl -X POST "https://gateway.daft.ie/old/v1/listings" ^
+-H "Content-Type: application/json" ^
+-H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15" ^
+-H "brand: daft" ^
+-H "platform: web" ^
+-d "{\"section\": \"residential-to-rent\", \"geoFilter\": { \"storedShapeIds\": [\"1\"], \"geoSearchType\": \"STORED_SHAPES\" }, \"paging\": { \"from\": \"0\", \"pagesize\": \"1\" }}"
+
+
+curl -X POST "https://gateway.daft.ie/old/v1/listings" ^
+-H "Content-Type: application/json" ^
+-H "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15" ^
+-H "brand: daft" ^
+-H "platform: web" ^
+-d "{\"section\": \"residential-to-rent\", \"geoFilter\": { \"storedShapeIds\": [\"1\"], \"geoSearchType\": \"STORED_SHAPES\" }, \"paging\": { \"from\": \"0\", \"pagesize\": \"1\" }, \"ranges\": [{ \"from\": \"now-10h\", \"to\": \"now\", \"name\": \"firstPublishDate\" }]}"

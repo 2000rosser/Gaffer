@@ -138,21 +138,26 @@ public class DataImporter implements CommandLineRunner {
                             images.add(imagesArray.getJSONObject(j).optString("size720x480", ""));
                         }
                     }
-
-                    String xPoint = listingObject.getJSONObject("point").optString("xPoint", "");
-                    String yPoint = listingObject.getJSONObject("point").optString("yPoint", "");
+                    mediaObject = listingObject.getJSONObject("point");
+                    String xPoint = "";
+                    String yPoint = "";
+                    if (mediaObject.has("coordinates")) {
+                        JSONArray coordinatesArray = listingObject.getJSONObject("point").getJSONArray("coordinates");
+                        xPoint = String.valueOf(coordinatesArray.getDouble(0));
+                        yPoint = String.valueOf(coordinatesArray.getDouble(1));
+                    }                    
                     String seoFriendlyPath = listingObject.optString("seoFriendlyPath");
                     String category = listingObject.optString("category");
                     String state = listingObject.optString("state");
                     // Listing listing = new Listing(String.valueOf(i), title, seoTitle, sections, saleType, publishDate, Integer.valueOf(price),
                     //         abbreviatedPrice, numBedrooms, numBathrooms, propertyType, images, xPoint, yPoint,
                             // seoFriendlyPath, category, state);
-                    Listing listing = new Listing(String.valueOf(i+1), title, "Dublin County", sections, saleType, publishDate, Integer.valueOf(price), 
+                    Listing listing = new Listing(String.valueOf(i+1), title, "Dublin County", sections, saleType, publishDate, Integer.parseInt(price), 
                             abbreviatedPrice, 1, 1, propertyType, 
                             images, xPoint, yPoint, seoFriendlyPath, category, state);
                     
                     listing.setUserId("1");
-                    listing.setApplications(new HashSet<String>());
+                    listing.setApplications(new HashSet<>());
                     listing.setDescription("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 
                     listingRepository.save(listing);
