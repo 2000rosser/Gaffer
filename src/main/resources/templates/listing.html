@@ -46,6 +46,10 @@
                     <p>
                         <span th:text="${listing.description}"></span>
                     </p>
+                    <h4>Features</h4>
+                    <div th:each="feature : ${listing.features}">
+                        <span th:text="${feature}"></span>
+                    </div>
                     <h4>Landlord</h4>
                     <div class="landlord-listing-section">
                         <img th:src="${landlord.profilePicture}"/>

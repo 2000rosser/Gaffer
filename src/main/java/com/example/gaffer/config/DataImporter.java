@@ -154,7 +154,7 @@ public class DataImporter implements CommandLineRunner {
                             // seoFriendlyPath, category, state);
                     Listing listing = new Listing(String.valueOf(i+1), title, "Dublin County", sections, saleType, publishDate, Integer.parseInt(price), 
                             abbreviatedPrice, 1, 1, propertyType, 
-                            images, xPoint, yPoint, seoFriendlyPath, category, state);
+                            images, xPoint, yPoint, seoFriendlyPath, category, state, new ArrayList<>(List.of("TV", "Internet", "Jacuzzi", "Stripper pole")));
                     
                     listing.setUserId("1");
                     listing.setApplications(new HashSet<>());

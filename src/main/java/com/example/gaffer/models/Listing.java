@@ -63,6 +63,9 @@ public class Listing {
 
     @Column(length = 1024)
     private List<String> images;
+
+    @Column
+    private List<String> features;
     
     @Column
     private String xPoint;
@@ -89,7 +92,7 @@ public class Listing {
     public Listing(String id, String title, String seoTitle, List<String> sections, List<String> saleType,
     LocalDateTime publishDate, int price, String abbreviatedPrice, int numBedrooms,
     int numBathrooms, String propertyType, List<String> images,
-    String xPoint, String yPoint, String seoFriendlyPath, String category, String state) {
+    String xPoint, String yPoint, String seoFriendlyPath, String category, String state, List<String> features) {
         this.id = id;
         this.title = title;
         this.seoTitle = seoTitle;
@@ -107,6 +110,7 @@ public class Listing {
         this.seoFriendlyPath = seoFriendlyPath;
         this.category = category;
         this.state = state;
+        this.features = features;
     }
     
     public String getId() {
@@ -227,6 +231,14 @@ public class Listing {
 
     public void setFurnishing(String furnishing) {
         this.furnishing = furnishing;
+    }
+
+    public List<String> getFeatures() {
+        return this.features;
+    }
+
+    public void setFeatures(List<String> features) {
+        this.features = features;
     }
     
     public List<String> getImages() {
