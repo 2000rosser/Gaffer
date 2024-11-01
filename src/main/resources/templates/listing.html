@@ -38,10 +38,131 @@
                     </div>
                 </div>
                 <div class="ad-details-container">
-                    <p class="price" th:text="'€' + ${listing.price} + ' per month'"></p>
-                    <p class="summary">
-                        <span th:text="${listing.numBedrooms} + ' Bed • ' + ${listing.numBathrooms} + ' Bath • ' + ${listing.propertyType}"></span>
-                    </p>
+                    <div class="listing-facts-container">
+                        <div class="listing-fact">
+                            <h5>Monthly Price</h5>
+                            <p th:text="'€' + ${listing.price}"></p>
+                        </div>
+                        <div class="listing-fact">
+                            <h5>Property Type</h5>
+                            <p th:text="${listing.propertyType}"></p>
+                        </div>
+                        <div class="listing-fact">
+                            <h5>Number of Beds</h5>
+                            <p th:text="${listing.numBedrooms}"></p>
+                        </div>
+                        <div class="listing-fact">
+                            <h5>Furnished?</h5>
+                            <p th:text="${listing.furnishing}"></p>
+                        </div>
+                        <button class="apply-button" onclick="openFormOptions()">Apply to Property</button>
+                    </div>
+
+                    <div id="form-options" class="modal">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeFormOptions()">&times;</span>
+                            <h2>Your Profile</h2>
+                            <div class="listing-profile-view">
+            
+                                <div class="listing-user-details">
+                                    <label>Name:</label> 
+                                    <p th:text="${user.name}" class="profile-value"></p>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>Profile Picture:</label>
+                                    <img th:src="${user.profilePicture}" class="profile-picture"/>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>Email:</label> 
+                                    <p th:text="${user.username}" class="profile-value"></p>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>Phone Number:</label>
+                                    <p th:text="${user.phoneNumber}" class="profile-value"></p>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>Location:</label>
+                                    <p th:text="${user.location}" class="profile-value"></p>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>Occupation:</label>
+                                    <p th:text="${user.occupation}" class="profile-value"></p>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>Place of Work:</label>
+                                    <p th:text="${user.placeOfWork}" class="profile-value"></p>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>About me:</label>
+                                    <p th:text="${user.description}" class="profile-value"></p>
+                                </div>
+                    
+                                <h2>Verification Documents</h2>
+                    
+                                <!-- <div class="listing-user-details">
+                                    <label>Attached ID:</label>
+                                    <ul th:if="${idDocumentUrls != null}">
+                                        <li th:each="url : ${idDocumentUrls}">
+                                            <a th:href="${url}" target="_blank">Download ID Document</a>
+                                        </li>
+                                    </ul>
+                                    <p th:if="${idDocumentUrls == null}">No document uploaded</p>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>Work Reference:</label>
+                                    <ul th:if="${workReferenceUrls != null}">
+                                        <li th:each="url : ${workReferenceUrls}">
+                                            <a th:href="${url}" target="_blank">Download Work Reference</a>
+                                        </li>
+                                    </ul>
+                                    <p th:if="${workReferenceUrls == null}">No document uploaded</p>
+                                </div>
+                    
+                                <div class="listing-user-details">
+                                    <label>Previous Landlord Reference:</label>
+                                    <ul th:if="${landlordReferenceUrls != null}">
+                                        <li th:each="url : ${landlordReferenceUrls}">
+                                            <a th:href="${url}" target="_blank">Download Landlord Reference</a>
+                                        </li>
+                                    </ul>
+                                    <p th:if="${landlordReferenceUrls == null}">No document uploaded</p>
+                                </div> -->
+                            </div>
+                            <button onclick="useProfile()">Use Profile</button>
+                            <button onclick="fillApplicationForm()">Fill Application Form</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Popup form for application -->
+                    <div id="application-form" class="modal">
+                        <div class="modal-content form-content">
+                            <span class="close" onclick="closeApplicationForm()">&times;</span>
+                            <h2>Request to apply</h2>
+                            <form>
+                                <label class="application-form-label">Full Name</label>
+                                <input type="text" class="application-form-input" placeholder="First & last name" required />
+                            
+                            
+                                <label class="application-form-label">Signed in email</label>
+                                <p th:text="${user.username}"></p>
+                            
+                                <h4>Will be sent to</h4>
+                                <span class="verified">Verified</span>
+                            
+                                <p class="consent-text">By choosing to contact a property, you consent to receive calls or text...</p>
+                            
+                                <button type="submit" class="submit-button">Submit</button>
+                            </form>
+                        </div>
+                    </div>
                     <h4>Summary</h4>
                     <p>
                         <span th:text="${listing.description}"></span>
@@ -149,6 +270,27 @@
                 slides[i].style.display = "none";
             }
             slides[slideIndex - 1].style.display = "block";
+        }
+        function openFormOptions() {
+            document.getElementById('form-options').style.display = 'flex';
+        }
+
+        function closeFormOptions() {
+            document.getElementById('form-options').style.display = 'none';
+        }
+
+        function useProfile() {
+            alert("Using Profile details.");
+            closeFormOptions();
+        }
+
+        function fillApplicationForm() {
+            closeFormOptions();
+            document.getElementById('application-form').style.display = 'flex';
+        }
+
+        function closeApplicationForm() {
+            document.getElementById('application-form').style.display = 'none';
         }
     </script>
 </html>

@@ -202,11 +202,12 @@ public class SearchListings {
     }
 
     @GetMapping("/listing/{id}")
-    public String viewListing(Model model, @PathVariable(required=true, name="id") String id){
+    public String viewListing(Model model, @PathVariable(required=true, name="id") String id, Authentication authentication){
         Listing listing = listingRepository.findById(id).get();
         UserDto userDto = userService.getUserProfile(Long.valueOf(listing.getUserId()));
         model.addAttribute("landlord", userDto);
         model.addAttribute("listing", listing);
+        model.addAttribute("user", userService.getUserProfile(((UserEntity) authentication.getPrincipal()).getId()));
         return "listing";
     }
 
