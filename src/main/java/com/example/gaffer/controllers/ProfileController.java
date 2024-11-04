@@ -1,11 +1,10 @@
 package com.example.gaffer.controllers;
 
-import java.util.Set;
-import java.util.UUID;
-import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import com.example.gaffer.models.Listing;
 import com.example.gaffer.models.UserDto;
 import com.example.gaffer.models.UserEntity;
-import com.example.gaffer.models.Listing;
 import com.example.gaffer.repositories.ListingRepository;
 import com.example.gaffer.repositories.UserEntityRepository;
 import com.example.gaffer.services.UserService;
@@ -116,7 +115,8 @@ public class ProfileController {
                                 @RequestParam("profilePic") MultipartFile profilePicture,
                                 @RequestParam("idDoc[]") MultipartFile[] idDocumentFile,
                                 @RequestParam("workDoc[]") MultipartFile[] workReferenceFile,
-                                @RequestParam("landDoc[]") MultipartFile[] landlordReferenceFile) throws IOException {
+                                @RequestParam("landDoc[]") MultipartFile[] landlordReferenceFile,
+                                @RequestParam("fromListing") String fromListing) throws IOException {
 
         UserEntity entity = (UserEntity) authentication.getPrincipal();
 
@@ -174,6 +174,7 @@ public class ProfileController {
         }
 
         userService.updateUserProfile(entity, updatedUser);
+        if(fromListing!=null && !fromListing.equals("") && !fromListing.equals("none")) return "redirect:/listing/" + fromListing;
 
         return "redirect:/profile";
     }
