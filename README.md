@@ -1,6 +1,46 @@
 # **Gaffer**
 
-Welcome to Gaffer! This guide will help you set up the project locally on your machine.
+Welcome to Gaffer!
+
+# Personal Project: Spring Web Application
+
+This project is a personal endeavor aimed at gaining hands-on experience in developing Spring web applications. It demonstrates key features of modern web apps and uses **real-world data** scraped from [daft.ie](https://www.daft.ie) (as sample data).  
+
+---
+
+## 🌟 **Features**
+### 🔐 User Profiles
+- **Profile creation**  
+- **Email verification**  
+- **Profile setup**  
+
+### 📤 Document Management
+- Upload documents (e.g., ID, references) to an **S3 bucket**  
+
+### 🏠 Property Listings
+- Search for properties using filters  
+- Apply to a property using your profile  
+
+### 📊 Landlord Dashboard
+- View all property listings  
+- Review applications for a specific listing  
+- **Initiate a chat** with applicants directly  
+
+### 💬 Real-time Communication
+- **Live chat** using **WebSockets** for seamless interaction  
+
+---
+
+## 🚀 **Technologies Used**
+- **Spring Framework** (Spring Boot, Spring MVC, Spring Data)  
+- **AWS S3** for document storage  
+- **WebSockets** for real-time messaging  
+- **Thymeleaf** for server-side rendering  
+
+---
+
+Feel free to suggest improvements or contribute to this project! 😊
+
 
 ---
 
